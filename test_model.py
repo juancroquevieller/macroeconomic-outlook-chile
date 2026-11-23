@@ -26,6 +26,12 @@ class ModelTests(unittest.TestCase):
         self.assertTrue(all(a+pd.DateOffset(months=11)==b for a,b in zip(inflation.issued,inflation.target)))
         self.assertEqual(len(refs(self.data)),2)
         self.assertTrue((metrics.common_n>0).all())
+    def test_reference_preserves_missing_price_month_as_gap(self):
+        import copy
+        d=copy.deepcopy(self.data)
+        d['series']['cpi']['rows']=[row for row in d['series']['cpi']['rows'] if not row[0].startswith('2020-02')]
+        for reference_line in refs(d).values():
+            self.assertTrue(pd.isna(reference_line.loc['2020-02-01']))
 class StreamlitTests(unittest.TestCase):
     def test_populated_views(self):
         from streamlit.testing.v1 import AppTest

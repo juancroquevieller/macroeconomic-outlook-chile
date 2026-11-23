@@ -52,7 +52,7 @@ def refs(snapshot):
     for start,end in [('2010-01','2014-12'),('2015-01','2019-09')]:
         data=reference(rows('fx'),rows('cpi'),rows('us_cpi'),start,end)
         s=pd.Series({pd.Timestamp(d):v for d,v in data},dtype=float)
-        if not s.empty: result[start+' to '+end]=s
+        if not s.empty: result[start+' to '+end]=s.reindex(pd.date_range(s.index.min(),s.index.max(),freq='MS'))
     return result
 def evaluate(snapshot):
     records=[]
