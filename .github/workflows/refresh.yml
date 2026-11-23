@@ -1,6 +1,8 @@
 name: Refresh official data
 on:
   workflow_dispatch:
+  push:
+    paths: ["refresh.py", "registry.json", ".github/workflows/refresh.yml"]
   schedule:
     - cron: '17 8 1,16 * *'
       timezone: America/Chicago
