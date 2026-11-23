@@ -19,16 +19,16 @@ class FrequencyTests(unittest.TestCase):
         from streamlit.testing.v1 import AppTest
         a=AppTest.from_file('app.py',default_timeout=60).run();self.assertFalse(a.exception)
         self.assertEqual(a.title[0].value,'Macroeconomic - Chile');self.assertEqual(len(a.metric),0)
-        a.sidebar.radio[1].set_value('Quarterly').run();self.assertFalse(a.exception)
-        a.sidebar.date_input[0].set_value(date(2018,1,1)).run()
-        a.sidebar.date_input[1].set_value(date(2020,12,31)).run();self.assertFalse(a.exception)
+        a.radio[1].set_value('Quarterly').run();self.assertFalse(a.exception)
+        a.selectbox(key='from_Q').set_value(pd.Period('2018Q1')).run()
+        a.selectbox(key='to_Q').set_value(pd.Period('2020Q4')).run();self.assertFalse(a.exception)
+        self.assertEqual(len(a.date_input),0)
+        self.assertFalse(any(r.label=='History' for r in a.selectbox))
         for chart in a.get('plotly_chart'):
             spec=json.loads(chart.proto.spec)
-            for trace in spec['data']:
-                for x in trace.get('x',[]):
-                    self.assertLessEqual(pd.Timestamp(x),pd.Timestamp('2020-12-31'))
-        a.sidebar.radio[0].set_value('Retail outlook').run();self.assertFalse(a.exception)
-        a.sidebar.radio[1].set_value('Monthly').run();self.assertFalse(a.exception)
+            self.assertEqual(pd.Timestamp(spec['layout']['xaxis']['range'][1]),pd.Timestamp('2020-12-31'))
+        a.radio[0].set_value('Retail outlook').run();self.assertFalse(a.exception)
+        a.radio[1].set_value('Monthly').run();self.assertFalse(a.exception)
         demand=next(r for r in a.radio if r.label=='Demand measure');demand.set_value('Goods consumption').run();self.assertFalse(a.exception)
         self.assertTrue(any('Quarterly' in c.value for c in a.caption))
 if __name__=='__main__':unittest.main()

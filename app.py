@@ -8,13 +8,13 @@ from model import monthly,quarterly,observations,refs,evaluate
 ROOT=Path(__file__).parent
 st.set_page_config(page_title='Chile | Macro & Retail',page_icon='🇨🇱',layout='wide')
 st.markdown('''<style>
-.block-container{padding:3.8rem 2rem 2rem;max-width:1500px}
+.block-container{padding:2.7rem 2rem 1rem;max-width:1900px}
 h1{font-size:1.9rem!important;font-weight:600!important;letter-spacing:-.025em;padding-bottom:.4rem!important}
 h3{font-size:1.2rem!important;letter-spacing:-.02em}
-[data-testid="stSidebar"]{min-width:250px!important;max-width:250px!important}
+[role="dialog"]{width:96vw!important;max-width:96vw!important;height:94vh;overflow:auto} [data-testid="stVerticalBlock"]{gap:.65rem} .readout{margin-top:4px}
 [data-testid="stCaptionContainer"] p{color:#526773!important;font-size:.86rem!important}
 .readout{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;line-height:1.6;margin:0 0 3px}
-.readout b{font-size:18px;margin-left:4px}
+.readout b{font-size:14px;margin-left:4px}
 .channel-table{width:100%;border-collapse:collapse;font-size:14px}
 .channel-table th,.channel-table td{text-align:right;padding:10px 5px;border-bottom:1px solid #e3eaea}
 .channel-table th{font-size:13px;color:#526773}
@@ -23,21 +23,29 @@ h3{font-size:1.2rem!important;letter-spacing:-.02em}
 </style>''',unsafe_allow_html=True)
 data=json.loads((ROOT/'data/snapshot.json').read_text(encoding='utf-8'))
 series=data['series']
-view=st.sidebar.radio('Explore',['Macroeconomic outlook','Retail outlook','Assignment view','Sources & methodology'])
-timeframe=st.sidebar.radio('Timeframe',['Monthly','Quarterly'],horizontal=True)
-history=st.sidebar.selectbox('History',['5 years','10 years','Since 2018','All available'])
-today=pd.Timestamp.now().normalize()
-earliest=min(pd.Timestamp(s['rows'][0][0]) for s in series.values() if s['rows'])
-default_start={'5 years':today-pd.DateOffset(years=5),'10 years':today-pd.DateOffset(years=10),'Since 2018':pd.Timestamp('2018-01-01'),'All available':earliest}[history]
-start=pd.Timestamp(st.sidebar.date_input('Start date',max(earliest,default_start).date(),min_value=earliest.date(),max_value=today.date(),key='start_'+history,format='YYYY-MM-DD'))
-end=pd.Timestamp(st.sidebar.date_input('End date',today.date(),min_value=earliest.date(),max_value=today.date(),key='end_'+history,format='YYYY-MM-DD'))
-if start>end: st.error('The start date must precede the end date.');st.stop()
-st.sidebar.caption('Edit either date above. Each chart uses its own available history; missing periods are not filled.')
-st.sidebar.caption('Monthly: IMACEC activity proxy. Quarterly: GDP. Panels containing GDP or goods consumption stay quarterly.')
+nav,freq=st.columns([4,1])
+with nav: view=st.radio('Explore',['Macroeconomic outlook','Retail outlook','Sources & methodology'],horizontal=True,label_visibility='collapsed')
+with freq: timeframe=st.radio('Timeframe',['Monthly','Quarterly'],horizontal=True,label_visibility='collapsed')
+today=pd.Timestamp.now(tz='America/Chicago').tz_localize(None).normalize()
+earliest=min(pd.Timestamp(v['rows'][0][0]) for v in series.values() if v['rows'])
+code='Q' if timeframe=='Quarterly' else 'M'
+limit=(today.to_period('M')+12).end_time.normalize()
+periods=pd.period_range(earliest,limit,freq=code)
+periods=periods[periods.end_time.normalize()<=limit]
+def period_label(p): return f'{p.year} Q{p.quarter}' if code=='Q' else p.strftime('%Y · %b')
+left,right,note=st.columns([1,1,3])
+with left: first=st.selectbox('From',periods,index=max(0,len(periods)-72 if code=='M' else len(periods)-24),format_func=period_label,key='from_'+code)
+with right: last=st.selectbox('To',periods,index=periods.get_loc(today.to_period(code)),format_func=period_label,key='to_'+code)
+start=first.start_time;end=last.end_time.normalize()
+with note: st.caption('Choose months or quarters · end dates extend up to 12 months ahead for expectations. Actual data retain their publication lags.')
+if start>end: st.error('Choose a starting period before the ending period.');st.stop()
 def stamp(v): return pd.Timestamp(v).tz_convert('America/Chicago').strftime('%d %b %Y · %H:%M %Z') if v else 'Not completed'
-st.sidebar.caption('Last successful refresh: '+stamp(data.get('last_success')))
-st.sidebar.caption('Last attempt: '+stamp(data.get('last_attempt'))+' · Scheduled 1st & 16th.')
-st.title({'Macroeconomic outlook':'Macroeconomic - Chile','Retail outlook':'Retail - Chile','Assignment view':'Key indicators - Chile','Sources & methodology':'Sources & methodology - Chile'}[view])
+def period(d,f): return str(d.to_period('Q')) if f=='Quarterly' else d.strftime('%b %Y')
+relevant=['imacec_total','cpi','fx','unemployment'] if view=='Macroeconomic outlook' else ['retail','retail_value','online_all']
+latest=max((observations(data,k,timeframe).index.max() for k in relevant),default=pd.NaT)
+heading,meta=st.columns([3,2])
+with heading: st.title({'Macroeconomic outlook':'Macroeconomic - Chile','Retail outlook':'Retail - Chile','Sources & methodology':'Sources & methodology - Chile'}[view])
+with meta: st.caption('Refreshed '+stamp(data.get('last_success'))+'  |  Newest available: '+period(latest,timeframe)+' · '+timeframe.lower())
 if data.get('failures'): st.warning('Partial refresh: some series retain previous observations. See Sources & methodology.')
 COLORS=['#14776a','#c46b22','#7562ad','#367fa0','#ad536d']
 LABELS={'gdp':'Total GDP','mining':'Mining GDP','nonmining':'Non-mining GDP','imacec_total':'Total IMACEC','imacec_mining':'Mining IMACEC','imacec':'Non-mining IMACEC','imacec_commerce':'Commerce IMACEC','cpi':'CPI inflation','tpm':'Policy rate','participation':'Participation','offline':'In-store sales','online_all':'Online sales','penetration_all':'Online share','consumption_durable':'Durable goods','consumption_nondurable':'Non-durable goods','durables':'Durables','nondurables':'Non-durables','retail_value':'Retail sales','sales_expectations':'Sales expectations'}
@@ -62,7 +70,55 @@ def style(fig,unit,height=295):
     fig.update_xaxes(showgrid=False,nticks=6,tickformat='%b %y' if (end-start).days<1100 else '%Y')
     fig.update_yaxes(gridcolor='#e6eded',zeroline=True,zerolinecolor='#b3c4c7')
     return fig
-def render(fig,unit,height=295): st.plotly_chart(style(fig,unit,height),width='stretch',config={'displayModeBar':False})
+@st.dialog('Expanded chart workspace',width='large')
+def chart_workspace(fig,unit,title):
+    st.subheader(title)
+    st.caption('Select lines, adjust the period and axes, or drag to zoom. Double-click the plot to reset. Toolbar: pan, zoom and PNG download.')
+    names=[t.name for t in fig.data]
+    chosen=st.multiselect('Variables',names,default=[t.name for t in fig.data if t.visible!='legendonly'])
+    ca,cb=st.columns(2)
+    with ca: fp=st.selectbox('Chart from',periods,index=periods.get_loc(first),format_func=period_label)
+    with cb: tp=st.selectbox('Chart to',periods,index=periods.get_loc(last),format_func=period_label)
+    if fp>tp: st.error('Chart from must precede Chart to.');return
+    edited=go.Figure(fig)
+    for trace in edited.data: trace.visible=trace.name in chosen
+    edited.update_xaxes(range=[fp.start_time,tp.end_time.normalize()])
+    clipped=0
+    for axis in ['yaxis','yaxis2']:
+        if axis=='yaxis2' and not any(t.yaxis=='y2' for t in fig.data):continue
+        axis_name='Left axis' if axis=='yaxis' else 'Right axis'
+        col1,col2,col3=st.columns([2,1,1])
+        with col1: mode=st.selectbox(axis_name,['Automatic','Custom range'],key=title+axis)
+        vals=[float(y) for t in fig.data if t.name in chosen and (t.yaxis or 'y')==('y' if axis=='yaxis' else 'y2') for x,y in zip(t.x,t.y) if pd.notna(y) and fp.start_time<=pd.Timestamp(x)<=tp.end_time]
+        lo,hi=(min(vals),max(vals)) if vals else (0.,100.)
+        with col2: low=st.number_input(axis_name+' minimum',value=float(lo),disabled=mode=='Automatic',key=title+axis+'lo')
+        with col3: high=st.number_input(axis_name+' maximum',value=float(hi if hi>lo else lo+1),disabled=mode=='Automatic',key=title+axis+'hi')
+        if mode=='Automatic':
+            pad=max((hi-lo)*.12,.3)
+            edited.update_layout(**{axis:dict(range=[lo-pad,hi+pad],autorange=False)})
+        if mode=='Custom range':
+            if low>=high: st.error('Axis minimum must be less than maximum.');return
+            edited.update_layout(**{axis:dict(range=[low,high],autorange=False)})
+            clipped+=sum(v<low or v>high for v in vals)
+    if clipped: st.warning(f'{clipped} selected observations fall outside the custom axes. They remain in the data download; reset to Automatic to see them.')
+    edited.update_layout(height=560)
+    st.plotly_chart(edited,width='stretch',config={'displayModeBar':True,'displaylogo':False,'scrollZoom':True})
+    rows=[{'series':t.name,'period':x,'value':y} for t in edited.data if t.name in chosen for x,y in zip(t.x,t.y) if fp.start_time<=pd.Timestamp(x)<=tp.end_time]
+    st.download_button('Download selected data',pd.DataFrame(rows).to_csv(index=False),title.lower().replace(' ','-')+'.csv','text/csv')
+    st.caption('CSV includes the selected traces and periods. No observations are removed when axes are narrowed. Historical values use the latest revised data.')
+
+def render(fig,unit,height=310,title=None):
+    title=title or st.session_state.get('_chart_title','Chart')
+    fig=style(fig,unit,height)
+    fig.update_xaxes(range=[start,end])
+    for axis,ref in [('yaxis','y'),('yaxis2','y2')]:
+        ys=[float(y) for t in fig.data if t.visible!='legendonly' and (t.yaxis or 'y')==ref for x,y in zip(t.x,t.y) if pd.notna(y) and start<=pd.Timestamp(x)<=end]
+        if ys and fig.layout.barmode!='stack':
+            pad=max((max(ys)-min(ys))*.12,.3)
+            fig.update_layout(**{axis:dict(range=[min(ys)-pad,max(ys)+pad])})
+    st.plotly_chart(fig,width='stretch',config={'displayModeBar':True,'displaylogo':False,'modeBarButtonsToRemove':['select2d','lasso2d']})
+    if st.button('Expand / customize',key='expand_'+title,use_container_width=True): chart_workspace(fig,unit,title)
+
 def expectation(key):
     s=monthly(data,key);s=s[s.index<=end]
     if not len(s): return
@@ -72,7 +128,7 @@ def expectation(key):
     st.caption(f'EEE outlook · {name}: {v:.1f}% for {target} · survey {d:%b %Y}. '+('Quarterly GDP outlook, not a monthly IMACEC forecast.' if key!='eee_inflation' and timeframe=='Monthly' else 'Survey consensus, not an observed value.'))
 
 def draw(title,keys,growth=None,unit=None,target=None,f=None,forecast=None):
-    f=grain(keys,f);st.subheader(title)
+    f=grain(keys,f);st.subheader(title);st.session_state['_chart_title']=title
     fig=go.Figure();units=set();readouts=[];dates=[];plotted=[]
     for i,k in enumerate(keys):
         s=values(k,f,growth)
@@ -82,14 +138,21 @@ def draw(title,keys,growth=None,unit=None,target=None,f=None,forecast=None):
         d=s.index[-1];dates.append(period(d,f));plotted.append((k,s,u))
         suffix='%' if '%' in u else ''
         readouts.append(f'<span style="color:{COLORS[i%5]}">{escape(label(k))} <b>{s.iloc[-1]:,.1f}{suffix}</b></span>')
-        full=s.reindex(pd.date_range(s.index.min(),s.index.max(),freq='QS' if f=='Quarterly' else 'MS'))
-        fig.add_trace(go.Scatter(x=ends(full.index,f),y=full,name=label(k),mode='lines',connectgaps=False,line=dict(color=COLORS[i%5],width=2.3,shape='hv' if k=='tpm' else 'linear'),hovertemplate='%{x|%b %Y}: %{y:,.2f}<extra>%{fullData.name}</extra>'))
+        all_obs=observations(data,k,f,growth)
+        full=all_obs.reindex(pd.date_range(all_obs.index.min(),all_obs.index.max(),freq='QS' if f=='Quarterly' else 'MS'))
+        fig.add_trace(go.Scatter(x=ends(full.index,f),y=full,name=label(k),visible='legendonly' if k in ['mining','imacec_mining'] else True,mode='lines',connectgaps=False,line=dict(color=COLORS[i%5],width=2.3,shape='hv' if k=='tpm' else 'linear'),hovertemplate='%{x|%b %Y}: %{y:,.2f}<extra>%{fullData.name}</extra>'))
     if not plotted: st.info('No observations in the selected range. Try an earlier/later date or a longer history.');return
-    st.markdown('<div class="readout">'+''.join(readouts)+'</div>',unsafe_allow_html=True)
+    readout_html='<div class="readout">'+''.join(r for r,k in zip(readouts,[p[0] for p in plotted]) if k not in ['mining','imacec_mining'])+'</div>'
     date_text=dates[0] if len(set(dates))==1 else ' · '.join(label(k)+': '+period(s.index[-1],f) for k,s,u in plotted)
     st.caption(f+' · latest '+date_text)
+    if forecast and (forecast=='eee_inflation' or f=='Quarterly'):
+        survey=monthly(data,forecast);survey=survey[survey.index<=end]
+        if len(survey):
+            issued=survey.index[-1];due=(issued+pd.DateOffset(months=11)).to_period('M').end_time.normalize() if forecast=='eee_inflation' else issued.to_period('Q').end_time.normalize()
+            fig.add_trace(go.Scatter(x=[due],y=[survey.iloc[-1]],name='EEE target '+due.strftime('%b %Y'),mode='markers',marker=dict(symbol='diamond-open',size=11,color='#ad536d'),hovertemplate='EEE consensus: %{y:.1f}%<br>Target %{x|%b %Y}<extra></extra>'))
     if target is not None: fig.add_hline(y=target,line_dash='dot',line_color='#74858e',annotation_text='3% inflation target' if target==3 else f'{target:g} neutral',annotation_position='top left')
-    render(fig,unit or ', '.join(sorted(units)))
+    render(fig,unit or ', '.join(sorted(units)),title=title)
+    st.markdown(readout_html,unsafe_allow_html=True)
     k,s,u=plotted[0];d=s.index[-1];prior=d-pd.DateOffset(months=3 if f=='Quarterly' else 1)
     if k=='retail_value':
         previous=observations(data,k,f,False).get(d-pd.DateOffset(years=1))
@@ -100,32 +163,22 @@ def draw(title,keys,growth=None,unit=None,target=None,f=None,forecast=None):
     if forecast: expectation(forecast)
     source(keys+([forecast] if forecast else []),f)
 
-def exchange():
-    mode=st.radio('Exchange-rate measure',['CLP/USD + references','Real exchange-rate index'],horizontal=True)
-    if mode=='Real exchange-rate index':
-        draw('Exchange rates',['tcr'],False)
-        st.caption('BCCh multilateral real exchange-rate index. A rise indicates real depreciation.');return
-    st.subheader('Exchange rates')
-    observed=values('fx',timeframe,False);fig=go.Figure();references=[]
-    for i,(name,s) in enumerate(refs(data).items()):
-        if timeframe=='Quarterly':
-            counts=s.resample('QS').count();s=s.resample('QS').mean().where(counts==3).dropna()
-        s=trim(s,timeframe)
-        if s.empty: continue
-        references.append(s)
-        fig.add_trace(go.Scatter(x=ends(s.index,timeframe),y=s,name=['Ref. 2010–14','Ref. 2015–Sep 19'][i],line=dict(color=['#b3a3ce','#c4ab85'][i],dash='dot',width=1.5),fill='tonexty' if i else None,fillcolor='rgba(150,130,175,.10)'))
-    if len(observed):
-        st.markdown(f'<div class="readout"><span style="color:{COLORS[0]}">CLP per USD <b>{observed.iloc[-1]:,.1f}</b></span></div>',unsafe_allow_html=True)
-        st.caption(timeframe+' average · latest '+period(observed.index[-1],timeframe))
-        fig.add_trace(go.Scatter(x=ends(observed.index,timeframe),y=observed,name='Observed CLP/USD',line=dict(color=COLORS[0],width=2.5)))
-    if not fig.data: st.info('No observations in this date range.');return
-    render(fig,'CLP per USD')
-    st.caption('Higher = weaker peso. Shading shows two historical price-adjusted anchors, not a forecast or confidence interval.')
-    with st.expander('How to interpret the reference range'):
-        st.write('Anchors: January 2010–December 2014 and January 2015–September 2019. The second excludes the October 2019 social unrest. Each line uses the median bilateral real exchange rate over its reference period, translated into nominal pesos using current relative consumer prices. Structural changes can keep the peso outside this range.')
-        st.latex(r'q_t=S_t CPI_{US,t}/CPI_{Chile,t},\quad S_t^{ref}=median(q_{anchor}) CPI_{Chile,t}/CPI_{US,t}')
-        st.caption('Reference lines start after each anchor ends and stop at the latest common CPI/FX month. Quarterly lines require three common months. This bilateral calculation differs from BCCh’s multilateral TCR.')
-    source(['fx','cpi','us_cpi'],timeframe)
+def dual(title,left_key,right_key,left_unit,right_unit):
+    st.subheader(title);fig=go.Figure()
+    for i,k in enumerate([left_key,right_key]):
+        obs=observations(data,k,timeframe,False)
+        full=obs.reindex(pd.date_range(obs.index.min(),obs.index.max(),freq='QS' if timeframe=='Quarterly' else 'MS')) if len(obs) else obs
+        fig.add_trace(go.Scatter(x=ends(full.index,timeframe),y=full,name=label(k),yaxis='y' if i==0 else 'y2',line=dict(color=COLORS[i],width=2.2),connectgaps=False))
+    if left_key=='fx':
+        for i,(name,rs) in enumerate(refs(data).items()):
+            if timeframe=='Quarterly':rs=rs.resample('QS').mean().where(rs.resample('QS').count()==3).dropna()
+            fig.add_trace(go.Scatter(x=ends(rs.index,timeframe),y=rs,name=['Anchor 2010–14','Anchor 2015–Sep 2019'][i],visible='legendonly',line=dict(color=COLORS[i+2],dash='dot')))
+    fig.update_layout(yaxis2=dict(title=right_unit,overlaying='y',side='right',showgrid=False,zeroline=False))
+    render(fig,left_unit,title=title)
+    for k in [left_key,right_key]:
+        obs=values(k,growth=False)
+        if len(obs):st.caption(f'{label(k)}: {obs.iloc[-1]:,.1f} · {period(obs.index[-1],timeframe)}')
+    source([left_key,right_key]+(['cpi','us_cpi'] if left_key=='fx' else []),timeframe)
 
 if view=='Macroeconomic outlook':
     a,b=st.columns(2,gap='medium')
@@ -135,15 +188,17 @@ if view=='Macroeconomic outlook':
         st.caption('IMACEC is a monthly activity proxy for GDP, not monthly GDP.' if timeframe=='Monthly' else 'Official real GDP and direct-sector mining split. Growth rates are not additive.')
     with b,st.container(border=True):
         draw('Inflation & policy',['cpi','tpm'],unit='Percent',target=3,forecast='eee_inflation')
-        st.caption('CPI: year-over-year inflation. Policy rate: period-end level. Forecasts stay outside the observed-data chart.')
+        st.caption('CPI: year-over-year inflation. Policy rate: period-end level. EEE diamonds mark target periods when inside the selected window.')
     a,b=st.columns(2,gap='medium')
-    with a,st.container(border=True): exchange()
+    with a,st.container(border=True):
+        dual('Exchange rates','fx','tcr','CLP per USD','Real FX index (1986=100)')
+        st.caption('Higher = weaker peso. Dotted historical anchors are available through the legend or Expand; they are not forecasts.')
+        with st.expander('Historical exchange-rate anchors'):
+            st.write('Two bilateral price-adjusted reference periods: January 2010–December 2014 and January 2015–September 2019, excluding the social unrest from October 2019. Each uses median(S × US CPI / Chile CPI) in its anchor period, translated with subsequent relative CPI. These are sensitivity references, not fair-value estimates or confidence bounds. They differ from the multilateral BCCh real FX index and end at the latest common CPI month.')
     with b,st.container(border=True):
-        mode=st.radio('Labor measure',['Unemployment','Participation'],horizontal=True)
-        draw('Employment',['unemployment' if mode=='Unemployment' else 'participation'],False,unit='% of workforce' if mode=='Unemployment' else '% of population aged 15+')
-        w=values('workforce',growth=False);p=values('participation',growth=False)
-        if len(w) and len(p): st.caption(f'Workforce {w.iloc[-1]:.2f} million · Participation {p.iloc[-1]:.1f}% · {period(w.index[-1],timeframe)}.')
-        st.caption('Monthly releases describe overlapping three-month windows ending in the labeled month.' if timeframe=='Monthly' else 'Calendar-quarter estimates selected from INE rolling-quarter releases.')
+        dual('Employment','unemployment','participation','Unemployment (% workforce)','Participation (% age 15+)')
+        w=values('workforce',growth=False)
+        if len(w):st.caption(f'Workforce {w.iloc[-1]:.2f} million · {period(w.index[-1],timeframe)}. Labor releases cover rolling three-month windows.')
 elif view=='Retail outlook':
     a,b=st.columns(2,gap='medium')
     with a,st.container(border=True):
@@ -170,7 +225,7 @@ elif view=='Retail outlook':
             if len(p):st.caption(f'In-store share: {100-p.iloc[-1]:.1f}% in {period(p.index[-1],timeframe)}. Monthly shares are seasonal; compare the same month a year earlier.')
         elif mode=='Sales growth':draw('Online versus in-store',['online_all','offline'],True,unit='Nominal % YoY')
         else:
-            st.subheader('Online versus in-store');p=values('penetration_all',growth=False);fig=go.Figure()
+            st.subheader('Online versus in-store');st.session_state['_chart_title']='Online versus in-store';p=values('penetration_all',growth=False);fig=go.Figure()
             for name,s,color in [('Online',p,COLORS[0]),('In-store',100-p,'#dbe5e3')]:fig.add_trace(go.Bar(x=ends(s.index,timeframe),y=s,name=name,marker_color=color))
             render(fig.update_layout(barmode='stack',yaxis_range=[0,100]),'% of nominal sales')
             if len(p):st.caption(timeframe+' · latest '+period(p.index[-1],timeframe))
@@ -197,11 +252,7 @@ elif view=='Retail outlook':
             selected=st.selectbox('Channel detail',names,format_func=lambda k:label('online_'+k))
             draw('Online penetration',['penetration_'+selected],False)
         st.caption('Department & home includes home improvement. Specialists cover apparel, footwear and household goods. Online platforms include online-only sellers and intermediaries; this is not marketplace GMV.')
-elif view=='Assignment view':
-    items=[('Economic activity','imacec_total' if timeframe=='Monthly' else 'gdp'),('Non-mining activity','imacec' if timeframe=='Monthly' else 'nonmining'),('Inflation','cpi'),('Policy rate','tpm'),('CLP per USD','fx'),('Unemployment','unemployment'),('Real retail growth','retail'),('Online penetration','penetration_all')]
-    for offset in range(0,8,2):
-        for col,(title,key) in zip(st.columns(2),items[offset:offset+2]):
-            with col,st.container(border=True):draw(title,[key])
+
 else:
     st.write('Monthly is the default. IMACEC approximates monthly economic activity; GDP and household consumption remain quarterly. Any panel with a quarterly-only input aggregates every series to quarters. Quarterly averages of IMACEC are still activity indices, not GDP. Labor series remain rolling three-month estimates in monthly mode.')
     st.write('Year-over-year growth compares the same calendar month or quarter one year earlier. Missing observations are not interpolated. Quarterly penetration uses sales weights: sum(online index) / sum(online index / monthly share). In-store relative sales = online index × (1 − share) / share. Independently based indices cannot be summed into channel monetary totals.')

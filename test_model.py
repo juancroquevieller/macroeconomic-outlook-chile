@@ -31,10 +31,10 @@ class StreamlitTests(unittest.TestCase):
         from streamlit.testing.v1 import AppTest
         app=AppTest.from_file('app.py',default_timeout=60).run()
         self.assertFalse(app.exception)
-        for view in ['Retail outlook','Assignment view','Sources & methodology']:
-            app.sidebar.radio[0].set_value(view).run()
+        for view in ['Retail outlook','Sources & methodology']:
+            app.radio[0].set_value(view).run()
             self.assertFalse(app.exception,view)
-        app.sidebar.radio[0].set_value('Macroeconomic outlook').run()
+        app.radio[0].set_value('Macroeconomic outlook').run()
         app.radio[0].set_value('Real exchange-rate index').run() if app.radio[0].label=='Exchange-rate measure' else None
         self.assertFalse(app.exception)
 if __name__=='__main__': unittest.main()
