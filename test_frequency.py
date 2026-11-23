@@ -31,8 +31,7 @@ class FrequencyTests(unittest.TestCase):
             self.assertEqual(pd.Timestamp(spec['layout']['xaxis']['range'][1]),pd.Timestamp('2020-12-31'))
         a.radio[0].set_value('Retail outlook').run();self.assertFalse(a.exception)
         a.radio[1].set_value('Monthly').run();self.assertFalse(a.exception)
-        demand=next(r for r in a.radio if r.label=='Demand measure');demand.set_value('Goods consumption').run();self.assertFalse(a.exception)
-        self.assertEqual(json.loads(a.get('plotly_chart')[0].proto.spec)['layout']['xaxis']['tickformat'],'Q%q %Y')
+        self.assertEqual(len(a.get('plotly_chart')),4)
     def test_chart_workspace_controls_and_dual_axes(self):
         from streamlit.testing.v1 import AppTest
         a=AppTest.from_file('app.py',default_timeout=60).run()
@@ -55,4 +54,22 @@ class FrequencyTests(unittest.TestCase):
         self.assertEqual(specs[-1]['data'][0]['name'],'Total GDP')
         self.assertEqual(specs[-1]['layout']['xaxis']['tickformat'],'Q%q %Y')
         self.assertRegex(specs[-1]['data'][0]['customdata'][-1],r'^Q[1-4] [0-9]{4}$')
+    def test_submission_views(self):
+        from streamlit.testing.v1 import AppTest
+        a=AppTest.from_file('app.py',default_timeout=60).run()
+        specs=[json.loads(c.proto.spec) for c in a.get('plotly_chart')]
+        self.assertEqual(specs[1]['layout']['yaxis']['rangemode'],'tozero')
+        self.assertEqual(specs[3]['layout']['yaxis']['rangemode'],'tozero')
+        self.assertTrue(all(t.get('visible') is True for t in specs[2]['data'] if 'anchor' in t.get('meta',{})))
+        self.assertEqual(max(map(int,a.selectbox(key='to_M_year').options)),2026)
+        self.assertFalse(any('forecast' in t.get('meta',{}) for spec in specs for t in spec['data']))
+        a.radio[0].set_value('Retail outlook').run()
+        self.assertFalse(a.exception)
+        specs=[json.loads(c.proto.spec) for c in a.get('plotly_chart')]
+        self.assertEqual(specs[1]['data'][0]['type'],'bar')
+        self.assertEqual(len(specs[3]['data']),5)
+        self.assertTrue(all('Sales expectations' not in r.options for r in a.radio))
+        next(r for r in a.radio if r.label=='Channel measure').set_value('Online penetration').run()
+        self.assertFalse(a.exception)
+        self.assertEqual(json.loads(a.get('plotly_chart')[3].proto.spec)['layout']['yaxis']['rangemode'],'tozero')
 if __name__=='__main__':unittest.main()

@@ -87,3 +87,6 @@ Three views: Macroeconomic, Retail, Sources & methodology. Navigation, frequency
 Chart latest values and observation periods remain visible; explanations live in Sources & definitions. Quarterly axes, hover labels and readouts use Q1 2026 notation. Quarterly-only consumption panels retain quarterly frequency in the chart workspace.
 
 The visual palette is navy #014169, green #37968C, cyan #00C1D5 and teal #00859B. Economic activity orders total, non-mining, mining; mining starts hidden. Visible chart subtitles identify real versus nominal values, comparison period, units and coverage. Inflation-target text sits above the plotting area.
+
+
+Submission mode (November 2026): expectations are hidden from charts, controls, source tables and public downloads; refresh collection remains intact. Date controls end in December 2026. Retail uses INE sales volume by durability, BCCh nominal turnover bars, online/in-store growth or a stacked penetration chart, and channel growth/penetration lines. Zero is included by default for inflation, monetary policy rates, labor rates, shares and nominal turnover; negative observations remain visible. FX anchors start visible. IPC inflation is the 12-month index change, using the quarter-end month in quarterly mode.
