@@ -39,7 +39,8 @@ def reference(fx, chile_cpi, us_cpi, start, end):
     expected=(int(end[:4])-int(start[:4]))*12+int(end[5:7])-int(start[5:7])+1
     if len(anchor)!=expected: return []
     b=median(anchor)
-    return [(d,b*c[d]/u[d]) for d in common if d[:7]>=end]
+    # Retrospective reference: apply the fixed anchor to every supported date.
+    return [(d,b*c[d]/u[d]) for d in common]
 
 def errors(pairs):
     differences=[f-a for f,a in pairs]

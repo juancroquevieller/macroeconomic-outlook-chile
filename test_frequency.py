@@ -39,7 +39,7 @@ class FrequencyTests(unittest.TestCase):
         specs=[json.loads(c.proto.spec) for c in a.get('plotly_chart')]
         self.assertTrue(any(t.get('yaxis')=='y2' for t in specs[2]['data']))
         self.assertTrue(any(t.get('yaxis')=='y2' for t in specs[3]['data']))
-        self.assertEqual(specs[0]['data'][1]['visible'],'legendonly')
+        self.assertEqual(specs[0]['data'][2]['visible'],'legendonly')
         a.button(key='expand_Economic activity').click().run()
         self.assertFalse(a.exception)
         self.assertEqual(a.multiselect[0].value,['Total IMACEC','Non-mining IMACEC'])

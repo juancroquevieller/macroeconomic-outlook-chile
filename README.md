@@ -44,7 +44,7 @@ The app distinguishes successful-refresh time, attempt time, retrieval time per 
 
 This section is self-contained. For nominal CLP/USD S, calculate monthly bilateral real exchange rate q = S * US CPI / Chile CPI. Take median q over two historical periods: **January 2010–December 2014** and **January 2015–September 2019**. Convert each anchor back into nominal CLP/USD using contemporaneous relative CPIs. October 2019 and subsequent social unrest are excluded from the second reference period.
 
-The two lines provide sensitivity to historical anchors, not a confidence interval, fair-value estimate or prediction. They are distinct from BCCh's multilateral real exchange-rate index. A higher CLP/USD means a weaker peso. Only months with all three inputs are used; displayed quarterly references require three months.
+The two lines provide sensitivity to historical anchors, not a confidence interval, fair-value estimate or prediction. They are distinct from BCCh's multilateral real exchange-rate index. A higher CLP/USD means a weaker peso. The fixed anchors apply retrospectively to every historical month with all three inputs, including dates before the reference period ended. They were not forecasts available at those dates. Quarterly references require three months; the chart states the coverage and does not extrapolate past the last common input.
 
 ## Reproducibility and evidence
 
@@ -71,7 +71,7 @@ Dates filter observation period-ends. Source history outside the displayed range
 ## Chart review decisions
 
 - Policy rates use step lines; CPI retains the 3% target.
-- FX displays both historical reference lines with observed CLP/USD by default; the separate TCR view retains its own units.
+- FX combines observed CLP/USD with the real FX index on labeled axes. Both historical reference lines are selectable.
 - Retail demand separates broad commerce activity from quarterly household goods consumption and survey expectations. The sentiment view includes a neutral 50 line.
 - Online penetration defaults to a readable line chart; growth and 100% sales-mix views remain available.
 - Channel tables use one common date across all rows, one decimal place, and YoY percentage-point changes in online share.
@@ -85,3 +85,5 @@ Dates filter observation period-ends. Source history outside the displayed range
 Three views: Macroeconomic, Retail, Sources & methodology. Navigation, frequency and month/quarter selectors sit above the dashboard. The end selector extends at most twelve months ahead; EEE points retain explicit target dates. Each plot offers Expand / customize beside its title, with an independent Monthly / Quarterly switch plus period, variable and axis controls, clipped-observation warnings, CSV and PNG downloads. Mining and the two historical FX anchors are available but hidden initially. FX and labor use labeled dual axes. Refresh time and newest available period appear beside the top filters; individual releases may lag.
 
 Chart latest values and observation periods remain visible; explanations live in Sources & definitions. Quarterly axes, hover labels and readouts use Q1 2026 notation. Quarterly-only consumption panels retain quarterly frequency in the chart workspace.
+
+The visual palette is navy #014169, green #37968C, cyan #00C1D5 and teal #00859B. Economic activity orders total, non-mining, mining; mining starts hidden. Visible chart subtitles identify real versus nominal values, comparison period, units and coverage. Inflation-target text sits above the plotting area.

@@ -17,6 +17,8 @@ class EconomicsTests(unittest.TestCase):
   cpi=[(d,100) for d in dates]
   result=reference(fx,cpi,cpi,"2015-01","2019-09")
   self.assertTrue(all(v==600 for d,v in result))
+  self.assertEqual(result[0][0],dates[0])
+  self.assertEqual(result[-1][0],dates[-1])
   scaled=reference(fx,[(d,v*3) for d,v in cpi],cpi,"2015-01","2019-09")
   self.assertEqual(result,scaled)
  def test_errors(self):
