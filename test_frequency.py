@@ -18,7 +18,7 @@ class FrequencyTests(unittest.TestCase):
     def test_both_frequencies_and_historical_date_range(self):
         from streamlit.testing.v1 import AppTest
         a=AppTest.from_file('app.py',default_timeout=60).run();self.assertFalse(a.exception)
-        self.assertEqual(a.title[0].value,'Macroeconomic - Chile');self.assertEqual(len(a.metric),0)
+        self.assertEqual(len(a.title),0);self.assertEqual(len(a.metric),0)
         a.radio[1].set_value('Quarterly').run();self.assertFalse(a.exception)
         a.selectbox(key='from_Q_year').set_value(2018).run()
         a.selectbox(key='from_Q_part').set_value(1).run()
@@ -32,7 +32,7 @@ class FrequencyTests(unittest.TestCase):
         a.radio[0].set_value('Retail outlook').run();self.assertFalse(a.exception)
         a.radio[1].set_value('Monthly').run();self.assertFalse(a.exception)
         demand=next(r for r in a.radio if r.label=='Demand measure');demand.set_value('Goods consumption').run();self.assertFalse(a.exception)
-        self.assertTrue(any('Quarterly' in c.value for c in a.caption))
+        self.assertEqual(json.loads(a.get('plotly_chart')[0].proto.spec)['layout']['xaxis']['tickformat'],'Q%q %Y')
     def test_chart_workspace_controls_and_dual_axes(self):
         from streamlit.testing.v1 import AppTest
         a=AppTest.from_file('app.py',default_timeout=60).run()

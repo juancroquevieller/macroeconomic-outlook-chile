@@ -9,7 +9,7 @@ with sync_playwright() as p:
     page.goto(url,wait_until='domcontentloaded',timeout=90000);ui=None
     for attempt in range(90):
         for frame in page.frames:
-            if frame.get_by_text('Macroeconomic - Chile',exact=True).count():ui=frame;break
+            if frame.get_by_text('Economic activity',exact=True).count():ui=frame;break
         if ui is not None:break
         page.wait_for_timeout(500)
     if ui is None:
@@ -22,9 +22,13 @@ with sync_playwright() as p:
         errors.extend(ui.locator('[data-testid="stException"]').all_text_contents())
         page.screenshot(path=str(OUT/(name+'.png')),full_page=True)
     def click(name):ui.get_by_text(name,exact=True).first.click();page.wait_for_timeout(1000)
-    capture('macro-monthly-top','Macroeconomic - Chile');capture('macro-monthly-bottom','Employment')
-    click('Quarterly');capture('macro-quarterly-top','Macroeconomic - Chile');capture('macro-quarterly-bottom','Employment')
+    capture('macro-monthly-top','Economic activity');capture('macro-monthly-bottom','Employment')
+    click('Quarterly');capture('macro-quarterly-top','Economic activity');capture('macro-quarterly-bottom','Employment')
     ui.get_by_role('button',name='Expand / customize',exact=True).first.click();page.wait_for_timeout(1200)
+    ui.get_by_role('dialog').get_by_text('Monthly',exact=True).click();page.wait_for_timeout(800)
+    assert ui.get_by_role('dialog').get_by_text('Total IMACEC',exact=True).count()
+    ui.get_by_role('dialog').get_by_text('Quarterly',exact=True).click();page.wait_for_timeout(800)
+    assert ui.get_by_role('dialog').get_by_text('Total GDP',exact=True).count()
     ui.get_by_label('Left axis',exact=True).click();ui.get_by_role('option',name='Custom range',exact=True).click();page.wait_for_timeout(600)
     ui.get_by_label('Left axis minimum',exact=True).fill('-1');ui.get_by_label('Left axis minimum',exact=True).press('Enter');page.wait_for_timeout(600)
     ui.get_by_label('Left axis maximum',exact=True).fill('1');ui.get_by_label('Left axis maximum',exact=True).press('Enter');page.wait_for_timeout(600)
@@ -33,19 +37,19 @@ with sync_playwright() as p:
     (OUT/'dialog-dimensions.json').write_text(json.dumps(ui.locator('[role=dialog]').evaluate_all('(els)=>els.map(e=>({width:e.clientWidth,scroll:e.scrollWidth,parentWidth:e.parentElement.clientWidth,html:e.parentElement.outerHTML.slice(0,500)}))')))
     assert ui.locator('[role=dialog]').evaluate('(e)=>e.clientWidth <= e.parentElement.clientWidth'), 'Dialog overflows parent'
     ui.get_by_role('button',name='Close',exact=True).click();page.wait_for_timeout(600)
-    click('Monthly');click('Retail outlook');capture('retail-monthly-top','Retail - Chile');capture('retail-monthly-bottom','Retail channels')
-    click('Goods consumption');click('Nominal sales');capture('retail-consumption-nominal','Retail - Chile')
+    click('Monthly');click('Retail outlook');capture('retail-monthly-top','Consumer demand');capture('retail-monthly-bottom','Retail channels')
+    click('Goods consumption');click('Nominal sales');capture('retail-consumption-nominal','Consumer demand')
     click('Sales expectations');capture('retail-expectations','Consumer demand')
     click('Sales growth');capture('retail-online-growth','Online versus in-store')
     click('Sales mix');capture('retail-sales-mix','Online versus in-store')
     click('Explore a channel over time');capture('retail-channel-detail','Online penetration')
-    click('Quarterly');click('Activity');click('Real growth');click('Penetration trend');capture('retail-quarterly-top','Retail - Chile');capture('retail-quarterly-bottom','Retail channels')
+    click('Quarterly');click('Activity');click('Real growth');click('Penetration trend');capture('retail-quarterly-top','Consumer demand');capture('retail-quarterly-bottom','Retail channels')
     click('Monthly');click('Macroeconomic outlook')
     ui.get_by_label('From year',exact=True).fill('2007');ui.get_by_role('option',name='2007',exact=True).click();page.wait_for_timeout(700)
     ui.get_by_label('From month',exact=True).click();ui.get_by_role('option',name='Jan',exact=True).click();page.wait_for_timeout(700)
-    capture('macro-full-history','Macroeconomic - Chile')
+    capture('macro-full-history','Economic activity')
     page.set_viewport_size({'width':390,'height':844});page.wait_for_timeout(1000)
-    capture('mobile-macro','Macroeconomic - Chile');capture('mobile-employment','Employment')
+    capture('mobile-macro','Economic activity');capture('mobile-employment','Employment')
     (OUT/'checks.json').write_text(json.dumps({'url':url,'requested_source_commit':os.environ.get('GITHUB_SHA'),'frequencies':['Monthly','Quarterly'],'history':'Period selector and expanded chart workspace','chart_modes_checked':True,'exceptions':errors},indent=2))
     assert not errors,errors
     browser.close()
