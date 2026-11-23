@@ -855,7 +855,7 @@
           128.141386055554
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Índice de actividad del comercio al por menor, INE (prom 2018=100)",
       "key": "retail",
       "label": "Real retail sales",
@@ -1482,7 +1482,7 @@
           151.080833563013
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Índice de actividad del comercio al por menor, durables, INE (prom 2018=100)",
       "key": "durables",
       "label": "Durable retail sales",
@@ -2109,7 +2109,7 @@
           123.19669106458
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Índice de actividad del comercio al por menor, no durables, INE (prom 2018=100)",
       "key": "nondurables",
       "label": "Non-durable retail sales",
@@ -2936,7 +2936,7 @@
           114.13
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Serie Empalmada IPC Diciembre 2009 a la fecha, base 2023 = 100",
       "key": "cpi",
       "label": "Consumer prices",
@@ -20783,7 +20783,7 @@
           1017.17
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Tipo de cambio nominal (dólar observado $CLP/USD)\\ tipo de cambio \\ precio \\ diario \\ BCCh",
       "key": "fx",
       "label": "CLP per USD",
@@ -38634,7 +38634,7 @@
           4.5
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Tasa de política monetaria (TPM) (porcentaje)",
       "key": "tpm",
       "label": "Monetary policy rate",
@@ -39509,7 +39509,7 @@
           3.5
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Expectativas de inflación en 11 meses (variación 12 meses, mediana)",
       "key": "eee_inflation",
       "label": "Expected inflation in 11 months",
@@ -40384,7 +40384,7 @@
           0.9
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Expectativas PIB (variaciones 12 meses), en el trimestre calendario de la encuesta, mediana",
       "key": "eee_gdp",
       "label": "Expected current-quarter GDP growth",
@@ -40827,7 +40827,7 @@
           1.6
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Expectativas PIB No Minero, en el trimestre calendario de la encuesta",
       "key": "eee_nonmining",
       "label": "Expected current-quarter non-mining growth",
@@ -41698,7 +41698,7 @@
           50.0
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "IMCE:  Comercio   ",
       "key": "confidence",
       "label": "Commerce confidence",
@@ -41997,7 +41997,7 @@
           51309.7521565613
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "PIB, volumen a precios del año anterior encadenado, referencia 2018 (miles de millones de pesos encadenados)",
       "key": "gdp",
       "label": "Total GDP",
@@ -42297,7 +42297,7 @@
           3112.00690065764
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "PIB minería, volumen a precios del año anterior encadenado, referencia 2018 (miles de millones de pesos encadenados)",
       "key": "mining",
       "label": "Mining GDP",
@@ -42597,7 +42597,7 @@
           49295.9829316977
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "PIB no minero, volumen a precios del año anterior encadenado, referencia 2018 (miles de millones de pesos encadenados)",
       "key": "nonmining",
       "label": "Non-mining GDP",
@@ -42897,7 +42897,7 @@
           2709.51646921131
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Consumo bienes durables, a precios constantes serie empalmada, referencia 2018  (miles de millones de pesos encadenados)",
       "key": "consumption_durable",
       "label": "Durable goods consumption",
@@ -43197,7 +43197,7 @@
           13585.0601808355
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Consumo bienes no durables, a precios constantes serie empalmada, referencia 2018  (miles de millones de pesos encadenados)",
       "key": "consumption_nondurable",
       "label": "Non-durable goods consumption",
@@ -44065,7 +44065,7 @@
           115.279728298461
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Imacec no minero, serie empalmada (Indice 2018=100)",
       "key": "imacec",
       "label": "Non-mining IMACEC",
@@ -44933,7 +44933,7 @@
           108.209705853992
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Índice de tipo de cambio real - TCR (promedio 1986=100)",
       "key": "tcr",
       "label": "Real exchange rate",
@@ -45745,7 +45745,7 @@
           9.80262482382071
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Tasa de desocupación, total | No Ajustada | INE | Mensual | Porcentaje",
       "key": "unemployment",
       "label": "Unemployment",
@@ -46557,7 +46557,7 @@
           10.2827183724804
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Fuerza de trabajo, total | No Ajustada | INE | Mensual | Miles de Personas",
       "key": "workforce",
       "label": "Workforce",
@@ -47369,7 +47369,7 @@
           16.6991580155665
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Población de 15 años y más, INE ",
       "key": "population",
       "label": "Working-age population",
@@ -47801,7 +47801,7 @@
           6403.40161431683
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Total \\ Comercio minorista, ventas nominales por desglose de actividad económica, comercio , Indicador de Ventas por Estrato (IVE) \\ BCCh \\ Mensual \\ Millones de pesos chilenos",
       "key": "retail_value",
       "label": "Retail sales",
@@ -48673,7 +48673,7 @@
           59.8039215686275
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "IMCE: Comercio, Expectativas, Ventas",
       "key": "sales_expectations",
       "label": "Commerce sales expectations",
@@ -49109,7 +49109,7 @@
           423.291675274104
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Comercio Minorista | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
       "key": "online_all",
       "label": "Total retail",
@@ -49545,7 +49545,7 @@
           12.8167262483855
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Comercio Minorista | Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
       "key": "penetration_all",
       "label": "Total retail",
@@ -49981,7 +49981,7 @@
           2158.09907557288
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Supermercados | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
       "key": "online_supermarkets",
       "label": "Supermarkets",
@@ -50417,7 +50417,7 @@
           9.95104335312038
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Supermercados | Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
       "key": "penetration_supermarkets",
       "label": "Supermarkets",
@@ -50853,7 +50853,7 @@
           195.605350074605
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Grandes tiendas  | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
       "key": "online_department",
       "label": "Department & home-improvement stores",
@@ -51289,7 +51289,7 @@
           14.3346682508892
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Grandes tiendas  | Penetración de ventas online mensual | BCCh| Mensual | Porcentaje",
       "key": "penetration_department",
       "label": "Department & home-improvement stores",
@@ -51725,7 +51725,7 @@
           298.279387065203
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Vestuario, calzado y eq. Doméstico | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
       "key": "online_specialists",
       "label": "Apparel, footwear & household specialists",
@@ -52161,7 +52161,7 @@
           13.7437696206327
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Vestuario, calzado y eq. Doméstico| Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
       "key": "penetration_specialists",
       "label": "Apparel, footwear & household specialists",
@@ -52597,7 +52597,7 @@
           583.177551462174
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Plataformas de venta online | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
       "key": "online_platforms",
       "label": "Online platforms",
@@ -53033,7 +53033,7 @@
           100.0
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Plataformas de venta online mensual | Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
       "key": "penetration_platforms",
       "label": "Online platforms",
@@ -53469,7 +53469,7 @@
           344.143395271098
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Resto minoristas | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
       "key": "online_other",
       "label": "Other retailers",
@@ -53905,7 +53905,7 @@
           7.16190648024748
         ]
       ],
-      "retrieved_at": "2026-11-23T00:41:44.698714+00:00",
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
       "source_title": "Resto minoristas | Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
       "key": "penetration_other",
       "label": "Other retailers",
@@ -53917,13 +53917,843 @@
       "growth": false,
       "scale": 1,
       "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.POR.BCCH.2018.SA8.M"
+    },
+    "us_cpi": {
+      "key": "us_cpi",
+      "label": "US consumer prices",
+      "rows": [
+        [
+          "2009-01-01",
+          211.143
+        ],
+        [
+          "2009-02-01",
+          212.193
+        ],
+        [
+          "2009-03-01",
+          212.709
+        ],
+        [
+          "2009-04-01",
+          213.24
+        ],
+        [
+          "2009-05-01",
+          213.856
+        ],
+        [
+          "2009-06-01",
+          215.693
+        ],
+        [
+          "2009-07-01",
+          215.351
+        ],
+        [
+          "2009-08-01",
+          215.834
+        ],
+        [
+          "2009-09-01",
+          215.969
+        ],
+        [
+          "2009-10-01",
+          216.177
+        ],
+        [
+          "2009-11-01",
+          216.33
+        ],
+        [
+          "2009-12-01",
+          215.949
+        ],
+        [
+          "2010-01-01",
+          216.687
+        ],
+        [
+          "2010-02-01",
+          216.741
+        ],
+        [
+          "2010-03-01",
+          217.631
+        ],
+        [
+          "2010-04-01",
+          218.009
+        ],
+        [
+          "2010-05-01",
+          218.178
+        ],
+        [
+          "2010-06-01",
+          217.965
+        ],
+        [
+          "2010-07-01",
+          218.011
+        ],
+        [
+          "2010-08-01",
+          218.312
+        ],
+        [
+          "2010-09-01",
+          218.439
+        ],
+        [
+          "2010-10-01",
+          218.711
+        ],
+        [
+          "2010-11-01",
+          218.803
+        ],
+        [
+          "2010-12-01",
+          219.179
+        ],
+        [
+          "2011-01-01",
+          220.223
+        ],
+        [
+          "2011-02-01",
+          221.309
+        ],
+        [
+          "2011-03-01",
+          223.467
+        ],
+        [
+          "2011-04-01",
+          224.906
+        ],
+        [
+          "2011-05-01",
+          225.964
+        ],
+        [
+          "2011-06-01",
+          225.722
+        ],
+        [
+          "2011-07-01",
+          225.922
+        ],
+        [
+          "2011-08-01",
+          226.545
+        ],
+        [
+          "2011-09-01",
+          226.889
+        ],
+        [
+          "2011-10-01",
+          226.421
+        ],
+        [
+          "2011-11-01",
+          226.23
+        ],
+        [
+          "2011-12-01",
+          225.672
+        ],
+        [
+          "2012-01-01",
+          226.665
+        ],
+        [
+          "2012-02-01",
+          227.663
+        ],
+        [
+          "2012-03-01",
+          229.392
+        ],
+        [
+          "2012-04-01",
+          230.085
+        ],
+        [
+          "2012-05-01",
+          229.815
+        ],
+        [
+          "2012-06-01",
+          229.478
+        ],
+        [
+          "2012-07-01",
+          229.104
+        ],
+        [
+          "2012-08-01",
+          230.379
+        ],
+        [
+          "2012-09-01",
+          231.407
+        ],
+        [
+          "2012-10-01",
+          231.317
+        ],
+        [
+          "2012-11-01",
+          230.221
+        ],
+        [
+          "2012-12-01",
+          229.601
+        ],
+        [
+          "2013-01-01",
+          230.28
+        ],
+        [
+          "2013-02-01",
+          232.166
+        ],
+        [
+          "2013-03-01",
+          232.773
+        ],
+        [
+          "2013-04-01",
+          232.531
+        ],
+        [
+          "2013-05-01",
+          232.945
+        ],
+        [
+          "2013-06-01",
+          233.504
+        ],
+        [
+          "2013-07-01",
+          233.596
+        ],
+        [
+          "2013-08-01",
+          233.877
+        ],
+        [
+          "2013-09-01",
+          234.149
+        ],
+        [
+          "2013-10-01",
+          233.546
+        ],
+        [
+          "2013-11-01",
+          233.069
+        ],
+        [
+          "2013-12-01",
+          233.049
+        ],
+        [
+          "2014-01-01",
+          233.916
+        ],
+        [
+          "2014-02-01",
+          234.781
+        ],
+        [
+          "2014-03-01",
+          236.293
+        ],
+        [
+          "2014-04-01",
+          237.072
+        ],
+        [
+          "2014-05-01",
+          237.9
+        ],
+        [
+          "2014-06-01",
+          238.343
+        ],
+        [
+          "2014-07-01",
+          238.25
+        ],
+        [
+          "2014-08-01",
+          237.852
+        ],
+        [
+          "2014-09-01",
+          238.031
+        ],
+        [
+          "2014-10-01",
+          237.433
+        ],
+        [
+          "2014-11-01",
+          236.151
+        ],
+        [
+          "2014-12-01",
+          234.812
+        ],
+        [
+          "2015-01-01",
+          233.707
+        ],
+        [
+          "2015-02-01",
+          234.722
+        ],
+        [
+          "2015-03-01",
+          236.119
+        ],
+        [
+          "2015-04-01",
+          236.599
+        ],
+        [
+          "2015-05-01",
+          237.805
+        ],
+        [
+          "2015-06-01",
+          238.638
+        ],
+        [
+          "2015-07-01",
+          238.654
+        ],
+        [
+          "2015-08-01",
+          238.316
+        ],
+        [
+          "2015-09-01",
+          237.945
+        ],
+        [
+          "2015-10-01",
+          237.838
+        ],
+        [
+          "2015-11-01",
+          237.336
+        ],
+        [
+          "2015-12-01",
+          236.525
+        ],
+        [
+          "2016-01-01",
+          236.916
+        ],
+        [
+          "2016-02-01",
+          237.111
+        ],
+        [
+          "2016-03-01",
+          238.132
+        ],
+        [
+          "2016-04-01",
+          239.261
+        ],
+        [
+          "2016-05-01",
+          240.229
+        ],
+        [
+          "2016-06-01",
+          241.018
+        ],
+        [
+          "2016-07-01",
+          240.628
+        ],
+        [
+          "2016-08-01",
+          240.849
+        ],
+        [
+          "2016-09-01",
+          241.428
+        ],
+        [
+          "2016-10-01",
+          241.729
+        ],
+        [
+          "2016-11-01",
+          241.353
+        ],
+        [
+          "2016-12-01",
+          241.432
+        ],
+        [
+          "2017-01-01",
+          242.839
+        ],
+        [
+          "2017-02-01",
+          243.603
+        ],
+        [
+          "2017-03-01",
+          243.801
+        ],
+        [
+          "2017-04-01",
+          244.524
+        ],
+        [
+          "2017-05-01",
+          244.733
+        ],
+        [
+          "2017-06-01",
+          244.955
+        ],
+        [
+          "2017-07-01",
+          244.786
+        ],
+        [
+          "2017-08-01",
+          245.519
+        ],
+        [
+          "2017-09-01",
+          246.819
+        ],
+        [
+          "2017-10-01",
+          246.663
+        ],
+        [
+          "2017-11-01",
+          246.669
+        ],
+        [
+          "2017-12-01",
+          246.524
+        ],
+        [
+          "2018-01-01",
+          247.867
+        ],
+        [
+          "2018-02-01",
+          248.991
+        ],
+        [
+          "2018-03-01",
+          249.554
+        ],
+        [
+          "2018-04-01",
+          250.546
+        ],
+        [
+          "2018-05-01",
+          251.588
+        ],
+        [
+          "2018-06-01",
+          251.989
+        ],
+        [
+          "2018-07-01",
+          252.006
+        ],
+        [
+          "2018-08-01",
+          252.146
+        ],
+        [
+          "2018-09-01",
+          252.439
+        ],
+        [
+          "2018-10-01",
+          252.885
+        ],
+        [
+          "2018-11-01",
+          252.038
+        ],
+        [
+          "2018-12-01",
+          251.233
+        ],
+        [
+          "2019-01-01",
+          251.712
+        ],
+        [
+          "2019-02-01",
+          252.776
+        ],
+        [
+          "2019-03-01",
+          254.202
+        ],
+        [
+          "2019-04-01",
+          255.548
+        ],
+        [
+          "2019-05-01",
+          256.092
+        ],
+        [
+          "2019-06-01",
+          256.143
+        ],
+        [
+          "2019-07-01",
+          256.571
+        ],
+        [
+          "2019-08-01",
+          256.558
+        ],
+        [
+          "2019-09-01",
+          256.759
+        ],
+        [
+          "2019-10-01",
+          257.346
+        ],
+        [
+          "2019-11-01",
+          257.208
+        ],
+        [
+          "2019-12-01",
+          256.974
+        ],
+        [
+          "2020-01-01",
+          257.971
+        ],
+        [
+          "2020-02-01",
+          258.678
+        ],
+        [
+          "2020-03-01",
+          258.115
+        ],
+        [
+          "2020-04-01",
+          256.389
+        ],
+        [
+          "2020-05-01",
+          256.394
+        ],
+        [
+          "2020-06-01",
+          257.797
+        ],
+        [
+          "2020-07-01",
+          259.101
+        ],
+        [
+          "2020-08-01",
+          259.918
+        ],
+        [
+          "2020-09-01",
+          260.28
+        ],
+        [
+          "2020-10-01",
+          260.388
+        ],
+        [
+          "2020-11-01",
+          260.229
+        ],
+        [
+          "2020-12-01",
+          260.474
+        ],
+        [
+          "2021-01-01",
+          261.582
+        ],
+        [
+          "2021-02-01",
+          263.014
+        ],
+        [
+          "2021-03-01",
+          264.877
+        ],
+        [
+          "2021-04-01",
+          267.054
+        ],
+        [
+          "2021-05-01",
+          269.195
+        ],
+        [
+          "2021-06-01",
+          271.696
+        ],
+        [
+          "2021-07-01",
+          273.003
+        ],
+        [
+          "2021-08-01",
+          273.567
+        ],
+        [
+          "2021-09-01",
+          274.31
+        ],
+        [
+          "2021-10-01",
+          276.589
+        ],
+        [
+          "2021-11-01",
+          277.948
+        ],
+        [
+          "2021-12-01",
+          278.802
+        ],
+        [
+          "2022-01-01",
+          281.148
+        ],
+        [
+          "2022-02-01",
+          283.716
+        ],
+        [
+          "2022-03-01",
+          287.504
+        ],
+        [
+          "2022-04-01",
+          289.109
+        ],
+        [
+          "2022-05-01",
+          292.296
+        ],
+        [
+          "2022-06-01",
+          296.311
+        ],
+        [
+          "2022-07-01",
+          296.276
+        ],
+        [
+          "2022-08-01",
+          296.171
+        ],
+        [
+          "2022-09-01",
+          296.808
+        ],
+        [
+          "2022-10-01",
+          298.012
+        ],
+        [
+          "2022-11-01",
+          297.711
+        ],
+        [
+          "2022-12-01",
+          296.797
+        ],
+        [
+          "2023-01-01",
+          299.17
+        ],
+        [
+          "2023-02-01",
+          300.84
+        ],
+        [
+          "2023-03-01",
+          301.836
+        ],
+        [
+          "2023-04-01",
+          303.363
+        ],
+        [
+          "2023-05-01",
+          304.127
+        ],
+        [
+          "2023-06-01",
+          305.109
+        ],
+        [
+          "2023-07-01",
+          305.691
+        ],
+        [
+          "2023-08-01",
+          307.026
+        ],
+        [
+          "2023-09-01",
+          307.789
+        ],
+        [
+          "2023-10-01",
+          307.671
+        ],
+        [
+          "2023-11-01",
+          307.051
+        ],
+        [
+          "2023-12-01",
+          306.746
+        ],
+        [
+          "2024-01-01",
+          308.417
+        ],
+        [
+          "2024-02-01",
+          310.326
+        ],
+        [
+          "2024-03-01",
+          312.332
+        ],
+        [
+          "2024-04-01",
+          313.548
+        ],
+        [
+          "2024-05-01",
+          314.069
+        ],
+        [
+          "2024-06-01",
+          314.175
+        ],
+        [
+          "2024-07-01",
+          314.54
+        ],
+        [
+          "2024-08-01",
+          314.796
+        ],
+        [
+          "2024-09-01",
+          315.301
+        ],
+        [
+          "2024-10-01",
+          315.664
+        ],
+        [
+          "2024-11-01",
+          315.493
+        ],
+        [
+          "2024-12-01",
+          315.605
+        ],
+        [
+          "2025-01-01",
+          317.671
+        ],
+        [
+          "2025-02-01",
+          319.082
+        ],
+        [
+          "2025-03-01",
+          319.799
+        ],
+        [
+          "2025-04-01",
+          320.795
+        ],
+        [
+          "2025-05-01",
+          321.465
+        ],
+        [
+          "2025-06-01",
+          322.561
+        ],
+        [
+          "2025-07-01",
+          323.048
+        ],
+        [
+          "2025-08-01",
+          323.976
+        ],
+        [
+          "2025-09-01",
+          324.8
+        ],
+        [
+          "2025-11-01",
+          324.122
+        ],
+        [
+          "2025-12-01",
+          324.054
+        ],
+        [
+          "2026-01-01",
+          325.252
+        ],
+        [
+          "2026-02-01",
+          326.785
+        ]
+      ],
+      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "publisher": "BLS via BCCh",
+      "unit": "Index, 1982-84=100",
+      "frequency": "MONTHLY",
+      "aggregation": "mean",
+      "growth": false,
+      "id": "F019.IPC.IND.10.M",
+      "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EI/MN_EI11/EI_IndicePrecios_EEUU?idSerie=F019.IPC.IND.10.M"
     }
   },
-  "last_attempt": "2026-11-23T00:41:44.698714+00:00",
-  "failures": [
-    {
-      "series": "us_cpi",
-      "error": "ValueError"
-    }
-  ]
+  "last_attempt": "2026-11-23T00:44:28.062799+00:00",
+  "failures": [],
+  "last_success": "2026-11-23T00:44:28.062799+00:00"
 }
