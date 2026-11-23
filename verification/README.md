@@ -1,37 +1,28 @@
-# Verification record
+# Submission verification record
 
-The current dashboard passes **17 automated tests** and **38 independent published-source comparisons**. The source check covers every retrieved series, including total, mining and commerce IMACEC, at a common observation date with rounding and display-unit scaling accounted for.
+## Source observations
 
-## Data and computation
+[source_checks.json](source_checks.json) documents 38 published-source comparisons, all passing. Each record identifies the series, source URL, observation period, published value, API value, display scaling and rounding tolerance. This includes backend series that are not currently shown in the submission view. Data retrieval through BCCh preserves the original producers (including INE); US CPI is cross-checked against FRED's BLS republication.
 
-- Authenticated full-history refresh succeeded: https://github.com/juancroquevieller/macroeconomic-outlook-chile/actions/runs/45094832655
-- Full available BCCh series are requested from 1900, replacing the previous 2009 cutoff. The selected source definitions determine actual coverage: FX starts in August 1982, GDP/IMACEC in 1996, and retail activity in 2005.
-- Tests cover quarterly aggregation, missing calendar periods, sales-weighted penetration, reference-period cutoffs, forecast target alignment, failed-fetch preservation, and successful unchanged-data refreshes.
-- New tests cover monthly same-calendar-month YoY comparisons, rejection of monthly GDP upsampling, derived monthly participation/in-store sales, both UI frequencies, quarterly-only consumption panels and a historical end-date assertion on plotted timestamps.
-- See `source_checks.json` and `test-output.txt`. Run `python -m unittest -v` and `python verify_sources.py` to reproduce. The rendering tests require no API secret.
+[October 2025 CPI evidence](cpi-gap-2025.json) separately records the BLS shutdown footnote and the blank FRED observation. Monthly data remain missing. The annual FX references use the eleven available months for 2025 only, explicitly labeled; this is a dashboard calculation following BLS's available-month principle, not an official BLS FX series.
 
-## Direct visual review
+## Successful automatic-refresh pipeline
 
-Final successful browser run: https://github.com/juancroquevieller/macroeconomic-outlook-chile/actions/runs/45095507575
+[Successful full refresh and execution log](https://github.com/juancroquevieller/macroeconomic-outlook-chile/actions/runs/45118060827).
 
-Chromium rendered both the source version and the actual public Streamlit deployment. The assistant directly inspected the resulting PNGs, not another agent's descriptions. Both `browser/checks.json` and `browser/live/checks.json` report no Streamlit exceptions.
+The scheduled workflow runs on the 1st and 16th at 08:17 America/Chicago and can also be triggered manually. The successful run demonstrates retrieval and validation; a refresh need not change observation values. The app separates last successful refresh time from observation dates. Failed inputs retain prior data and prevent the full-success timestamp from advancing.
 
-The browser exercised monthly and quarterly modes, full and five-year history, both FX/labor measures, activity/consumption/sentiment demand views, real and nominal retail measures, online penetration/growth/sales mix, channel detail and mobile layout. The source-commit field in live metadata is the version requested for review, not an independently queried deployment hash; the deployed features were also checked visually.
+## Calculation and interface checks
 
-Current screenshots:
+37 automated tests passed during final data-method verification. They cover period aggregation, same-calendar-period growth, weighted online penetration, missing observations, the narrowly scoped 2025 reference exception, restoration to twelve months if official data become available, CPI-feed validation, and Streamlit controls. Run `python -m unittest discover -v` to reproduce. Older test-output.txt is retained as historical evidence, not the current test count.
 
-- [Monthly macro](browser/live/macro-monthly-top.png)
-- [FX references and employment](browser/live/macro-monthly-bottom.png)
-- [Quarterly macro](browser/live/macro-quarterly-top.png)
-- [Monthly retail](browser/live/retail-monthly-top.png)
-- [Online trend and channel table](browser/live/retail-monthly-bottom.png)
-- [Quarterly goods consumption with monthly nominal retail](browser/live/retail-consumption-nominal.png)
-- [Retail expectations](browser/live/retail-expectations.png)
-- [Online/in-store growth](browser/live/retail-online-growth.png)
-- [Channel history](browser/live/retail-channel-detail.png)
-- [Full history](browser/live/macro-full-history.png)
-- [Mobile](browser/live/mobile-macro.png)
+[Final successful source and live-browser review](https://github.com/juancroquevieller/macroeconomic-outlook-chile/actions/runs/45123024514) exercised Monthly, Quarterly and Annual, expanded charts, date selection, retail modes and mobile layout. [Live check results](browser/live/checks.json) report no application exceptions. The deployed screenshots were visually inspected, including the corrected title alignment.
 
-Visual findings corrected: the oversized introduction and signal strip were removed; date controls were separated to avoid clipping; forecasts were separated from observed series; FX references moved into the main view; policy rates use steps; nominal sales compare year over year; online share has a readable trend view; channel rows use a common date. GDP/consumption panels are explicitly quarterly even in monthly mode, and labor rolling-window semantics are disclosed.
+Dashboard examples:
 
-The captures verify the tested viewports and modes, not every possible browser or screen size. Data remains revised official history, not a real-time-vintage archive. Credentials stay solely in GitHub Secrets.
+- [Macroeconomic view](browser/live/macro-monthly-top.png)
+- [Retail view](browser/live/retail-monthly-top.png)
+- [Annual view](browser/live/macro-annual-top.png)
+- [Expanded annual FX references](browser/live/expanded-annual-fx.png)
+
+These checks cover the tested modes and viewports; historical observations use the latest revised data, not real-time vintages.
