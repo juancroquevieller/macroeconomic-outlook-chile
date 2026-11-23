@@ -1,0 +1,38 @@
+name: Refresh official data
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 8 1,16 * *'
+      timezone: America/Chicago
+permissions:
+  contents: write
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python -m unittest -v
+      - name: Retrieve and validate
+        id: fetch
+        continue-on-error: true
+        env:
+          BCCH_API_TOKEN: ${{ secrets.BCCH_API_TOKEN }}
+        run: python refresh.py
+      - name: Preserve refresh result
+        run: |
+          git config user.name "Dashboard refresh"
+          git config user.email "dashboard@users.noreply.github.com"
+          if [ -d data ]; then
+            git add data
+            git diff --cached --quiet || (git commit -m "Refresh official statistics" && git push)
+          fi
+      - name: Report failed refresh
+        if: steps.fetch.outcome == 'failure'
+        run: exit 1

@@ -1,0 +1,112 @@
+[
+  {
+    "key": "retail",
+    "label": "Real retail sales",
+    "id": "F034.VCC.IND.INE.2018.0.M",
+    "frequency": "MONTHLY",
+    "unit": "Index, 2018=100",
+    "aggregation": "mean",
+    "publisher": "INE",
+    "growth": true
+  },
+  {
+    "key": "durables",
+    "label": "Durable retail sales",
+    "id": "F034.VDU.IND.INE.2018.0.M",
+    "frequency": "MONTHLY",
+    "unit": "Index, 2018=100",
+    "aggregation": "mean",
+    "publisher": "INE",
+    "growth": true
+  },
+  {
+    "key": "nondurables",
+    "label": "Non-durable retail sales",
+    "id": "F034.VND.IND.INE.2018.0.M",
+    "frequency": "MONTHLY",
+    "unit": "Index, 2018=100",
+    "aggregation": "mean",
+    "publisher": "INE",
+    "growth": true
+  },
+  {
+    "key": "cpi",
+    "label": "Consumer prices",
+    "id": "F074.IPC.IND.Z.EP23.C.M",
+    "frequency": "MONTHLY",
+    "unit": "Index, 2023=100",
+    "aggregation": "last",
+    "publisher": "INE",
+    "growth": true
+  },
+  {
+    "key": "fx",
+    "label": "CLP per USD",
+    "id": "F073.TCO.PRE.Z.M",
+    "frequency": "MONTHLY",
+    "unit": "CLP per USD",
+    "aggregation": "mean",
+    "publisher": "BCCh",
+    "growth": false
+  },
+  {
+    "key": "tpm",
+    "label": "Monetary policy rate",
+    "id": "F022.TPM.TIN.D001.NO.Z.D",
+    "frequency": "DAILY",
+    "unit": "%",
+    "aggregation": "last",
+    "publisher": "BCCh",
+    "growth": false
+  },
+  {
+    "key": "eee_inflation",
+    "label": "Expected inflation in 11 months",
+    "id": "F089.IPC.V12.14.M",
+    "frequency": "MONTHLY",
+    "unit": "% YoY",
+    "aggregation": "forecast",
+    "publisher": "BCCh",
+    "growth": false
+  },
+  {
+    "key": "eee_gdp",
+    "label": "Expected current-quarter GDP growth",
+    "id": "F089.PIB.V12.33.M",
+    "frequency": "MONTHLY",
+    "unit": "% YoY",
+    "aggregation": "forecast",
+    "publisher": "BCCh",
+    "growth": false
+  },
+  {
+    "key": "eee_nonmining",
+    "label": "Expected current-quarter non-mining growth",
+    "id": "F089.PIBNM.V12.33.M",
+    "frequency": "MONTHLY",
+    "unit": "% YoY",
+    "aggregation": "forecast",
+    "publisher": "BCCh",
+    "growth": false
+  },
+  {
+    "key": "confidence",
+    "label": "Commerce confidence",
+    "id": "G089.IME.IND.A1.M",
+    "frequency": "MONTHLY",
+    "unit": "Diffusion index",
+    "aggregation": "mean",
+    "publisher": "ICARE/UAI",
+    "growth": false
+  },
+  {
+    "key": "supermarket_penetration",
+    "label": "Supermarkets online penetration",
+    "id": "F034.VDCM.POR.BCCH.2018.SA2.M",
+    "frequency": "MONTHLY",
+    "unit": "%",
+    "aggregation": "penetration",
+    "publisher": "BCCh",
+    "growth": false
+  }
+]

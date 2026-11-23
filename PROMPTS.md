@@ -1,0 +1,2 @@
+# Product decisions
+Chile macroeconomic and goods retail dashboard. English only. Quarterly charts plus latest monthly signals. Official direct mining split. Verified monetary values only. Refresh on the 1st and 16th. Self-contained bilateral FX reference range using 2010–2014 and January 2015–September 2019, excluding the estallido social. Eight-indicator assignment view alongside the full dashboard.
