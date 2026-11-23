@@ -78,3 +78,20 @@ def evaluate(snapshot):
     benchmark=matched.groupby(['series','lead_group']).agg(common_n=('error','count'),EEE_MAE_common=('error',lambda x:x.abs().mean()),Baseline_MAE_common=('baseline_error',lambda x:x.abs().mean())).reset_index()
     metrics=metrics.merge(benchmark,on=['series','lead_group'],how='left')
     return frame,metrics
+
+def observations(snapshot,key,timeframe='Monthly',growth=None):
+    """Display-frequency values; never upsample quarterly GDP into monthly data."""
+    if timeframe=='Quarterly': return quarterly(snapshot,key,growth)
+    if snapshot.get('series',{}).get(key,{}).get('frequency')=='QUARTERLY':
+        raise ValueError('Quarterly source requires a quarterly panel: '+key)
+    if key=='participation':
+        s=100*monthly(snapshot,'workforce')/monthly(snapshot,'population')
+    elif key=='offline':
+        on,p=monthly(snapshot,'online_all'),monthly(snapshot,'penetration_all')/100
+        s=(on*(1-p)/p).where((p>0)&(p<=1))
+    else: s=monthly(snapshot,key)
+    s=s[s.index.to_period('M')<pd.Timestamp.now().to_period('M')].sort_index()
+    if growth if growth is not None else snapshot.get('series',{}).get(key,{}).get('growth',key=='offline'):
+        if len(s): s=s.reindex(pd.date_range(s.index.min(),s.index.max(),freq='MS'))
+        s=100*(s/s.shift(12).where(s.shift(12)!=0)-1)
+    return s.dropna()
