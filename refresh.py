@@ -58,8 +58,14 @@ def refresh():
         rows.sort()
         if not rows: raise ValueError('BLS empty response')
         old['series']['us_cpi']=dict(key='us_cpi',label='US consumer prices',rows=rows,retrieved_at=now,publisher='BLS',unit='Index, 1982-84=100',frequency='MONTHLY',aggregation='mean',growth=False,source_url='https://data.bls.gov/timeseries/CUUR0000SA0')
-    except Exception as e:
-        failures.append({'series':'us_cpi','error':type(e).__name__})
+    except Exception:
+        try:
+            raw=request({'function':'GetSeries','timeseries':'F019.IPC.IND.10.M','firstdate':'2009-01-01'})
+            rows=sorted([[datetime.strptime(x['indexDateString'],'%d-%m-%Y').date().isoformat(),float(x['value'])] for x in raw['Series']['Obs'] if x.get('statusCode')=='OK'])
+            if not rows: raise ValueError('Empty US CPI fallback')
+            old['series']['us_cpi']=dict(key='us_cpi',label='US consumer prices',rows=rows,retrieved_at=now,publisher='BLS via BCCh',unit='Index, 1982-84=100',frequency='MONTHLY',aggregation='mean',growth=False,id='F019.IPC.IND.10.M',source_url='https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EI/MN_EI11/EI_IndicePrecios_EEUU?idSerie=F019.IPC.IND.10.M')
+        except Exception as e:
+            failures.append({'series':'us_cpi','error':type(e).__name__})
     old["failures"]=failures
     if not failures: old["last_success"]=now
     temp=path.with_suffix(".tmp")

@@ -1,118 +1,152 @@
 from pathlib import Path
 import json
 import pandas as pd
-import streamlit as st
 import plotly.graph_objects as go
-from economics import quarterly,yoy,reference
+import streamlit as st
+from model import monthly,quarterly,refs,evaluate
 ROOT=Path(__file__).parent
 st.set_page_config(page_title="Chile | Economy & Retail",page_icon="🇨🇱",layout="wide")
-st.title("Chile | Economy & Retail")
-st.caption("A personal briefing on economic activity, purchasing power and the changing retail market.")
-path=ROOT/"data"/"snapshot.json"
-data=json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"series":{}}
-series=data["series"]
-view=st.sidebar.radio("View",["Macroeconomic outlook","Retail outlook","Assignment view","Sources & methodology"])
-years=st.sidebar.selectbox("History",["Since 2018","5 years","10 years","All available"])
-cut={"Since 2018":"2018","5 years":str(pd.Timestamp.today().year-5),"10 years":str(pd.Timestamp.today().year-10),"All available":"0000"}[years]
-st.caption(f"Last successful full refresh: {data.get('last_success','Not yet completed')} · Latest attempt: {data.get('last_attempt','Not yet attempted')}")
-if not series: st.warning("Data setup pending. No synthetic observations are displayed. Configure the BCCh API token and run the refresh workflow.")
-if data.get("failures"): st.warning("Some sources failed at the last refresh. Their previous valid observations are retained.")
-def observations(key):
-    return series.get(key,{}).get("rows",[])
-def values(key,growth=None):
-    s=series.get(key,{})
-    rows=observations(key)
-    if not rows: return {}
-    method=s.get("aggregation","mean")
-    if s.get("frequency")=="QUARTERLY":
-        from economics import quarter
-        result={quarter(d):v for d,v in rows}
-    elif s.get("frequency")=="DAILY":
-        # Daily policy observations: retain each month's final published rate.
-        monthly={}
-        for d,v in rows: monthly[d[:7]+"-01"]=v
-        result=quarterly(sorted(monthly.items()),"last")
-    elif method in ("forecast","penetration"): return {}
-    else: result=quarterly(rows,method)
-    return yoy(result) if (s.get("growth") if growth is None else growth) else result
-def chart(title,keys,growth=None):
+st.markdown("<style>.block-container{padding-top:2rem;max-width:1450px}h1{letter-spacing:-.04em}div[data-testid=stMetric]{background:#f5f7f8;padding:16px;border-radius:10px}</style>",unsafe_allow_html=True)
+st.caption("CHILE OBSERVATORY")
+st.title("Economy & Retail")
+st.write("The economic backdrop. The consumer pulse. The shift online.")
+path=ROOT/'data/snapshot.json'
+data=json.loads(path.read_text(encoding='utf-8')) if path.exists() else {'series':{}}
+series=data['series']
+view=st.sidebar.radio("Explore",["Macroeconomic outlook","Retail outlook","Assignment view","Sources & methodology"])
+window=st.sidebar.selectbox("History",["Since 2018","5 years","10 years","All available"])
+cut={'Since 2018':pd.Timestamp('2018-01-01'),'5 years':pd.Timestamp.now()-pd.DateOffset(years=5),'10 years':pd.Timestamp.now()-pd.DateOffset(years=10),'All available':pd.Timestamp('1900-01-01')}[window]
+st.sidebar.caption("Complete calendar quarters. Monthly releases appear separately as latest signals.")
+def stamp(value):
+    return pd.Timestamp(value).tz_convert('America/Chicago').strftime('%b %d, %Y · %H:%M %Z') if value else 'Not completed'
+st.caption("Last successful full refresh: "+stamp(data.get('last_success'))+" | Last attempt: "+stamp(data.get('last_attempt')))
+if data.get('failures'): st.warning("Partial refresh: some series retain their previous valid observations. See Sources & methodology.")
+if not series: st.info("Official data is being connected. No synthetic observations are displayed.")
+COLORS=['#167565','#d07931','#7764a5','#3578ab','#b24e66']
+def label(k): return series.get(k,{}).get('label',{'participation':'Participation','offline':'In-store','online_all':'Online retail'}.get(k,k))
+def source(keys):
+    for key in keys:
+        spec=series.get(key)
+        if spec:
+            st.caption(f"{label(key)} · {spec['publisher']} · native {spec['frequency'].lower()} · latest observation {spec['rows'][-1][0]}")
+def draw(title,keys,growth=None,unit=None,target=None,forecast=None):
     st.subheader(title)
     fig=go.Figure()
-    for key in keys:
-        s=series.get(key,{})
-        result={d:v for d,v in values(key,growth).items() if d[:4]>=cut}
-        if result: fig.add_trace(go.Scatter(x=list(result),y=list(result.values()),name=s["label"],mode="lines"))
-    if not fig.data:
-        st.info("Awaiting verified source series for this panel.")
-        return
-    fig.update_layout(height=330,margin=dict(l=10,r=10,t=10,b=10),legend=dict(orientation="h"),template="plotly_white")
-    st.plotly_chart(fig,width="stretch")
-    for key in keys:
-        s=series.get(key)
-        if s: st.caption(f"{s['label']} · {s['publisher']} · {s['unit']} · native {s['frequency'].lower()} · latest {s['rows'][-1][0]} · quarterly {s['aggregation']}")
-def latest(keys):
-    cols=st.columns(len(keys))
-    for col,key in zip(cols,keys):
-        s=series.get(key)
-        if s:
-            d,v=s["rows"][-1]
-            col.metric(s["label"],f"{v:,.2f}")
-            col.caption(f"{s['unit']} · {d}")
-if view=="Macroeconomic outlook":
-    st.subheader("Latest signals")
-    latest(["eee_nonmining","eee_inflation","tpm"])
-    a,b=st.columns(2)
-    with a: chart("Economic activity",["gdp","mining","nonmining"])
-    with b:
-        chart("Inflation",["cpi"])
-        st.caption("Inflation target: 3% year over year. Survey expectations refer to a future target month.")
-        chart("Monetary policy",["tpm"])
-    a,b=st.columns(2)
-    with a:
-        chart("Exchange rate · CLP per USD",["fx"])
-        chart("Real exchange-rate index",["tcr"])
-        with st.expander("Historical exchange-rate reference range"):
-            st.write("Two historical anchors: January 2010–December 2014 and January 2015–September 2019. The latter excludes the social unrest beginning in October 2019.")
-            st.latex(r"q_t=S_t CPI_{US,t}/CPI_{Chile,t}")
-            st.latex(r"S^{reference}_t=median(q_{reference}) CPI_{Chile,t}/CPI_{US,t}")
-            st.write("The area between these references shows sensitivity to historical assumptions, not a confidence interval or forecast. Structural changes can move the exchange rate outside this range.")
-            fig=go.Figure()
-            for start,end in [("2010-01","2014-12"),("2015-01","2019-09")]:
-                rows=reference(observations("fx"),observations("cpi"),observations("us_cpi"),start,end)
-                q=quarterly(rows)
-                if q: fig.add_trace(go.Scatter(x=list(q),y=list(q.values()),name=f"{start} to {end}",fill="tonexty" if len(fig.data) else None))
-            if fig.data: st.plotly_chart(fig,width="stretch")
-            else: st.info("Reference range awaits complete, verified Chile–US CPI and FX histories.")
-    with b:
-        chart("Employment",["unemployment","participation"])
-        chart("Workforce · millions",["workforce"])
-elif view=="Retail outlook":
+    units=set()
+    for i,k in enumerate(keys):
+        s=quarterly(data,k,growth);s=s[s.index>=cut]
+        if not len(s): continue
+        fig.add_trace(go.Scatter(x=s.index+pd.offsets.QuarterEnd(0),y=s,name=label(k),line=dict(color=COLORS[i%5],width=2.5),hovertemplate='%{x|%Y Q%q}: %{y:,.2f}<extra>%{fullData.name}</extra>'))
+        units.add('% YoY' if (growth if growth is not None else series.get(k,{}).get('growth',k=='offline')) else series.get(k,{}).get('unit','%'))
+    if target is not None: fig.add_hline(y=target,line_dash='dot',annotation_text=f"{target:g}% inflation target")
+    if forecast:
+        fs=monthly(data,forecast)
+        if len(fs):
+            d,v=fs.index[-1],fs.iloc[-1]
+            when=d+pd.DateOffset(months=11) if forecast=='eee_inflation' else d+pd.offsets.QuarterEnd(0)
+            fig.add_trace(go.Scatter(x=[when],y=[v],name='EEE consensus · '+when.strftime('%b %Y'),mode='markers',marker=dict(symbol='diamond-open',size=12,color='#d07931'),hovertext='Survey issued '+d.strftime('%b %Y')))
+    if not fig.data: st.info("No verified observations available.");return
+    fig.update_layout(template='plotly_white',height=330,margin=dict(l=5,r=5,t=25,b=5),yaxis_title=unit or ', '.join(units),legend=dict(orientation='h',y=-.24),hovermode='x unified')
+    st.plotly_chart(fig,width='stretch')
+    source(keys)
+def signals(keys):
+    columns=st.columns(len(keys))
+    for col,key in zip(columns,keys):
+        s=monthly(data,key)
+        if len(s):
+            spec=series[key]; v=s.iloc[-1]
+            if spec.get('growth') and len(s)>12 and s.index[-1]-pd.DateOffset(months=12) in s.index:
+                v=100*(v/s.loc[s.index[-1]-pd.DateOffset(months=12)]-1);unit='% YoY'
+            else: unit=spec['unit']
+            col.metric(label(key),f"{v:,.1f}"+('%' if '%' in unit else ''))
+            col.caption(s.index[-1].strftime('%b %Y')+' · '+unit)
+def fx_details():
+    with st.expander("Historical reference range · what might relative prices imply?"):
+        st.write("Two anchors: January 2010–December 2014 and January 2015–September 2019. The second ends before the October 2019 social unrest.")
+        result=refs(data);fig=go.Figure()
+        for i,(name,s) in enumerate(result.items()):
+            s=s.resample('QS').mean();s=s[(s.index>=cut)&(s.index.to_period('Q')<pd.Timestamp.now().to_period('Q'))]
+            fig.add_trace(go.Scatter(x=s.index+pd.offsets.QuarterEnd(0),y=s,name=name,fill='tonexty' if i else None,line=dict(dash='dot')))
+        observed=quarterly(data,'fx',False);observed=observed[observed.index>=cut]
+        if len(observed): fig.add_trace(go.Scatter(x=observed.index+pd.offsets.QuarterEnd(0),y=observed,name='Observed CLP/USD',line=dict(color=COLORS[0])))
+        if result: st.plotly_chart(fig.update_layout(yaxis_title='CLP per USD',template='plotly_white',height=380),width='stretch')
+        else: st.info("Complete common CPI/FX history is not yet available.")
+        st.latex(r"q_t=S_t\frac{CPI_{US,t}}{CPI_{Chile,t}},\quad S_t^{ref}=median(q_{reference})\frac{CPI_{Chile,t}}{CPI_{US,t}}")
+        st.write("A higher CLP/USD number means a weaker peso. The band represents sensitivity to historical reference periods, not a confidence interval, official fair value, or forecast. Structural changes can place the exchange rate outside it. References stop at the latest common month with all three inputs.")
+        st.caption("Monthly calculations precede quarterly averaging. The bilateral reference is distinct from BCCh’s multilateral TCR.")
+if view=='Macroeconomic outlook':
+    st.subheader("Latest signals");signals(['imacec','eee_nonmining','eee_inflation','tpm'])
     a,b=st.columns(2)
     with a:
-        chart("Consumer demand",["nonmining","goods_consumption"])
-        chart("Commerce confidence",["confidence"],False)
-        st.caption("Confidence is a survey index, not a forecast of sales growth.")
+        draw("Economic activity",['gdp','mining','nonmining'],forecast='eee_nonmining')
+        st.caption("Official direct-sector mining split. Growth rates are not additive.")
     with b:
-        chart("Retail growth · real YoY",["retail","durables","nondurables"])
-        chart("Retail sales · CLP billions",["retail_value"],False)
+        draw("Inflation & policy",['cpi','tpm'],unit='Percent',target=3,forecast='eee_inflation')
+        st.caption("CPI: quarter-end year-over-year change. TPM: quarter-end policy rate. The EEE diamond refers to its exact future target month.")
     a,b=st.columns(2)
     with a:
-        chart("Online versus in-store",["online","offline"])
-        st.caption("CLP splits are shown only when monetary totals and penetration share the same coverage.")
+        which=st.radio("Exchange-rate measure",['Nominal CLP/USD','Real exchange-rate index'],horizontal=True)
+        draw("Exchange rates",['fx' if which.startswith('Nominal') else 'tcr'],False)
+        fx_details()
+    with b:
+        draw("Employment",['unemployment','participation'],False,unit='%')
+        w=quarterly(data,'workforce',False)
+        if len(w): st.metric('Workforce · '+str(w.index[-1].to_period('Q')),f'{w.iloc[-1]:.2f} million')
+        st.caption("Calendar-quarter estimates selected from INE’s rolling-quarter series; participation = workforce / population aged 15+.")
+elif view=='Retail outlook':
+    st.subheader("Latest signals");signals(['retail','online_all','penetration_all','sales_expectations'])
+    a,b=st.columns(2)
+    with a:
+        draw("Consumer demand",['nonmining','consumption_durable','consumption_nondurable'])
+        with st.expander("What do retailers expect?"):
+            draw("Commerce sales expectations",['sales_expectations'],False,unit='Diffusion index')
+            st.caption("Survey sentiment, not a sales-growth forecast. Household consumption and domestic retail turnover cover different economic concepts.")
+    with b:
+        mode=st.radio('Retail measure',['Real growth','Nominal sales'],horizontal=True)
+        draw("Retail scale & categories",['retail','durables','nondurables'] if mode=='Real growth' else ['retail_value'],None if mode=='Real growth' else False)
+        st.caption("Nominal sales: IVE, CLP billions per quarter. Real growth: INE volume indices. Independently based indices cannot establish category monetary shares.")
+    a,b=st.columns(2)
+    with a:
+        st.subheader("Online versus in-store")
+        p=quarterly(data,'penetration_all',False);p=p[p.index>=cut]
+        fig=go.Figure()
+        for name,s,color in [('Online',p,COLORS[0]),('In-store',100-p,'#c7d9d5')]:
+            fig.add_trace(go.Bar(x=s.index+pd.offsets.QuarterEnd(0),y=s,name=name,marker_color=color))
+        st.plotly_chart(fig.update_layout(barmode='stack',yaxis_title='% of nominal sales',height=300,template='plotly_white'),width='stretch')
+        draw("Channel growth",['online_all','offline'],True,unit='Nominal % YoY')
+        st.caption("Penetration and in-store growth are derived within IVOCM’s own population. Published rounded shares introduce approximation. IVE is not multiplied by IVOCM shares to invent CLP channel totals.")
     with b:
         st.subheader("Retail channels")
-        st.dataframe(pd.DataFrame({"Channel":["Supermarkets","Department & home-improvement stores","Apparel, footwear & household equipment","Online platforms","Other retailers"],"Status":["Awaiting compatible series"]*5}),hide_index=True)
-        latest(["supermarket_penetration"])
-elif view=="Assignment view":
-    for title,key in [("GDP growth","gdp"),("Non-mining GDP growth","nonmining"),("Inflation","cpi"),("Monetary policy rate","tpm"),("CLP per USD","fx"),("Unemployment","unemployment"),("Real retail growth","retail"),("Online penetration","penetration")]:
-        chart(title,[key])
+        names=['supermarkets','department','specialists','platforms','other'];rows=[]
+        for key in names:
+            p=quarterly(data,'penetration_'+key,False);g=quarterly(data,'online_'+key,True)
+            common=p.index.intersection(g.index)
+            if len(common):
+                d=common[-1]; prior=d-pd.DateOffset(years=1)
+                rows.append({'Channel':label('online_'+key),'Quarter':str(d.to_period('Q')),'Online YoY %':g[d],'Online share %':p[d],'Share change pp':p[d]-p.get(prior,float('nan'))})
+        st.dataframe(pd.DataFrame(rows),hide_index=True)
+        selected=st.selectbox('Channel detail',names,format_func=lambda k:label('online_'+k))
+        draw("Online penetration",['penetration_'+selected],False)
+        st.caption("Department stores include home improvement; platforms include digital intermediaries and online-only sellers. These are sector aggregates, not company market shares or marketplace GMV.")
+elif view=='Assignment view':
+    items=[('GDP growth','gdp'),('Non-mining GDP growth','nonmining'),('Inflation','cpi'),('Monetary policy rate','tpm'),('CLP per USD','fx'),('Unemployment','unemployment'),('Real retail growth','retail'),('Online penetration','penetration_all')]
+    for offset in range(0,8,2):
+        for col,(title,key) in zip(st.columns(2),items[offset:offset+2]):
+            with col: draw(title,[key])
 else:
-    st.subheader("Definitions and source coverage")
-    st.write("Complete calendar quarters only. Growth is calculated after aggregation. Nominal sales measure money spent; real indices measure volume. Non-mining activity uses the official aggregate.")
-    st.write("Quarter-end inflation and policy rates; quarterly-average exchange rates; summed monetary flows. Employment uses the rolling quarters ending March, June, September and December.")
-    st.write("Forecast evaluation must match survey dates to target periods. No claim of forecast accuracy is made until historical evaluation is complete.")
-    st.link_button("Banco Central statistical database","https://si3.bcentral.cl/siete")
-    st.link_button("API activation instructions","https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/acceso_api.html")
-    st.dataframe(pd.DataFrame(json.loads((ROOT/"registry.json").read_text())),hide_index=True)
-rows=[{"series":key,"date":d,"value":v,"unit":s["unit"],"publisher":s["publisher"],"retrieved_at":s["retrieved_at"]} for key,s in series.items() for d,v in s["rows"]]
-if rows: st.download_button("Download source observations",pd.DataFrame(rows).to_csv(index=False),"chile-observations.csv","text/csv")
+    st.subheader("Sources, dates & transformations")
+    st.write("Banco Central supplies the principal API. Original producers remain credited. Complete calendar quarters only; each series keeps its own latest available date. Missing periods are not interpolated.")
+    st.write("Quarterly monetary flows are summed. Volume indices and FX are averaged. CPI and policy rates use quarter-end observations. Growth = 100 × (current / same quarter last year − 1). GDP components use official chained-volume aggregates, never subtraction of growth rates.")
+    st.write("Quarterly penetration = sum(online index) / sum(online index / monthly share). This preserves sales weights within each series; zero or missing shares invalidate that month. In-store relative sales = online index × (1 − share) / share. No cross-category sums of independently based indices.")
+    st.write("Automatic refresh: 1st and 16th, 08:17 America/Chicago. Last-success time advances only when all configured inputs refresh successfully; unchanged observations still count as successful retrieval.")
+    if data.get('failures'): st.json(data['failures'])
+    st.dataframe(pd.DataFrame([{'Series':label(k),'Publisher':s['publisher'],'Unit':s['unit'],'Native frequency':s['frequency'],'Latest observation':s['rows'][-1][0],'Retrieved':s['retrieved_at'],'Source':s.get('source_url','')} for k,s in series.items()]),hide_index=True)
+    st.subheader("How accurate were the EEE expectations?")
+    pairs,metrics=evaluate(data)
+    if len(metrics):
+        st.dataframe(metrics,hide_index=True)
+        st.download_button('Download matched forecasts',pairs.to_csv(index=False),'eee-evaluation.csv')
+    st.caption("Retrospective errors against revised actuals, in percentage points. GDP errors are separated by survey month within the target quarter. Inflation is matched to the exact month 11 months after issuance. This is not a real-time vintage backtest or evidence of superiority to a benchmark.")
+    st.link_button("BCCh methodology: online retail","https://www.bcentral.cl/documents/d/banco-central/nota_tecnica_ivocm")
+rows=[{'series':k,'date':d,'value':v,'unit':s['unit'],'publisher':s['publisher'],'retrieved_at':s['retrieved_at']} for k,s in series.items() for d,v in s['rows']]
+if rows: st.download_button('Download source observations',pd.DataFrame(rows).to_csv(index=False),'chile-observations.csv','text/csv')
