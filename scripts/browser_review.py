@@ -21,7 +21,7 @@ with sync_playwright() as p:
     page.wait_for_timeout(1200)
     page.get_by_text('Economic activity',exact=True).scroll_into_view_if_needed()
     capture('macro-five-years')
-    page.get_by_role('radio',name='Retail outlook',exact=True).check()
+    page.get_by_text('Retail outlook',exact=True).click()
     page.get_by_text('Consumer demand',exact=True).wait_for()
     page.wait_for_timeout(2000)
     page.get_by_text('Latest signals',exact=True).scroll_into_view_if_needed()
@@ -32,3 +32,4 @@ with sync_playwright() as p:
     (OUT/'checks.json').write_text(json.dumps({'url':url,'history_changed':True,'retail_navigation':True,'exceptions':errors},indent=2))
     assert not errors,errors
     browser.close()
+
