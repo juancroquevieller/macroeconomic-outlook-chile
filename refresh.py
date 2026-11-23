@@ -27,7 +27,7 @@ def refresh():
         raise RuntimeError("Set BCCH_API_TOKEN in GitHub Actions Secrets before refreshing.")
     for spec in registry:
         try:
-            raw=request({"function":"GetSeries","timeseries":spec["id"],"firstdate":"2009-01-01"})
+            raw=request({"function":"GetSeries","timeseries":spec["id"],"firstdate":"1900-01-01"})
             series=raw["Series"]
             if series["seriesId"]!=spec["id"]: raise ValueError("Unexpected series ID")
             rows=[]
