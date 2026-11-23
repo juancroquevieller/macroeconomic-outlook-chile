@@ -20,7 +20,13 @@ class FrequencyTests(unittest.TestCase):
         a=AppTest.from_file('app.py',default_timeout=60).run();self.assertFalse(a.exception)
         self.assertEqual(a.title[0].value,'Macroeconomic - Chile');self.assertEqual(len(a.metric),0)
         a.sidebar.radio[1].set_value('Quarterly').run();self.assertFalse(a.exception)
-        a.sidebar.date_input[0].set_value((date(2018,1,1),date(2020,12,31))).run();self.assertFalse(a.exception)
+        a.sidebar.date_input[0].set_value(date(2018,1,1)).run()
+        a.sidebar.date_input[1].set_value(date(2020,12,31)).run();self.assertFalse(a.exception)
+        for chart in a.get('plotly_chart'):
+            spec=json.loads(chart.proto.spec)
+            for trace in spec['data']:
+                for x in trace.get('x',[]):
+                    self.assertLessEqual(pd.Timestamp(x),pd.Timestamp('2020-12-31'))
         a.sidebar.radio[0].set_value('Retail outlook').run();self.assertFalse(a.exception)
         a.sidebar.radio[1].set_value('Monthly').run();self.assertFalse(a.exception)
         demand=next(r for r in a.radio if r.label=='Demand measure');demand.set_value('Goods consumption').run();self.assertFalse(a.exception)

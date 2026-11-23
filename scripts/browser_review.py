@@ -18,7 +18,7 @@ with sync_playwright() as p:
     ui.locator('.js-plotly-plot').first.wait_for(timeout=60000);page.wait_for_timeout(1500)
     errors=[]
     def capture(name,heading):
-        ui.get_by_text(heading,exact=True).first.scroll_into_view_if_needed();page.wait_for_timeout(600)
+        ui.get_by_text(heading,exact=True).first.evaluate('(el)=>el.scrollIntoView({block: "center"})');page.wait_for_timeout(600)
         errors.extend(ui.locator('[data-testid="stException"]').all_text_contents())
         page.screenshot(path=str(OUT/(name+'.png')),full_page=True)
     def click(name):ui.get_by_text(name,exact=True).first.click();page.wait_for_timeout(1000)

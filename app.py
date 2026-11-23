@@ -29,9 +29,8 @@ history=st.sidebar.selectbox('History',['5 years','10 years','Since 2018','All a
 today=pd.Timestamp.now().normalize()
 earliest=min(pd.Timestamp(s['rows'][0][0]) for s in series.values() if s['rows'])
 default_start={'5 years':today-pd.DateOffset(years=5),'10 years':today-pd.DateOffset(years=10),'Since 2018':pd.Timestamp('2018-01-01'),'All available':earliest}[history]
-chosen=st.sidebar.date_input('Start / end',(max(earliest,default_start).date(),today.date()),min_value=earliest.date(),max_value=today.date(),key='dates_'+history,format='YYYY-MM-DD')
-if len(chosen)!=2: st.info('Select both a start and an end date.');st.stop()
-start,end=map(pd.Timestamp,chosen)
+start=pd.Timestamp(st.sidebar.date_input('Start date',max(earliest,default_start).date(),min_value=earliest.date(),max_value=today.date(),key='start_'+history,format='YYYY-MM-DD'))
+end=pd.Timestamp(st.sidebar.date_input('End date',today.date(),min_value=earliest.date(),max_value=today.date(),key='end_'+history,format='YYYY-MM-DD'))
 if start>end: st.error('The start date must precede the end date.');st.stop()
 st.sidebar.caption('Edit either date above. Each chart uses its own available history; missing periods are not filled.')
 st.sidebar.caption('Monthly: IMACEC activity proxy. Quarterly: GDP. Panels containing GDP or goods consumption stay quarterly.')
@@ -92,8 +91,11 @@ def draw(title,keys,growth=None,unit=None,target=None,f=None,forecast=None):
     if target is not None: fig.add_hline(y=target,line_dash='dot',line_color='#74858e',annotation_text='3% inflation target' if target==3 else f'{target:g} neutral',annotation_position='top left')
     render(fig,unit or ', '.join(sorted(units)))
     k,s,u=plotted[0];d=s.index[-1];prior=d-pd.DateOffset(months=3 if f=='Quarterly' else 1)
-    if prior in s:
-        difference=s[d]-s[prior];changeunit='pp' if '%' in u else 'CLP' if k=='fx' else 'index points' if 'Index' in u else u
+    if k=='retail_value':
+        previous=observations(data,k,f,False).get(d-pd.DateOffset(years=1))
+        if previous is not None and previous!=0: st.caption(f'Nominal sales: {100*(s[d]/previous-1):+.1f}% vs the same period a year earlier. Not inflation-adjusted.')
+    elif prior in s:
+        difference=s[d]-s[prior];changeunit='pp' if '%' in u else 'CLP' if k=='fx' else 'index points' if 'index' in u.lower() else u
         st.caption(f'{label(k)}: {difference:+.2f} {changeunit} vs {period(prior,f)}'+(' in the YoY growth rate.' if u=='% YoY' else '.'))
     if forecast: expectation(forecast)
     source(keys+([forecast] if forecast else []),f)

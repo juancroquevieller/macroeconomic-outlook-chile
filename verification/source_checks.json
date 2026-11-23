@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-23T00:48:27.624321+00:00",
+  "checked_at": "2026-11-23T01:33:13.644975+00:00",
   "checks": [
     {
       "series": "retail",
@@ -383,6 +383,39 @@
       "display_scale": 1,
       "api_value": 326.785,
       "absolute_difference": 0.014999999999986358,
+      "rounding_tolerance": 0.050000001,
+      "status": "PASS"
+    },
+    {
+      "series": "imacec_total",
+      "url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_IMACEC_01_A?idSerie=F032.IMC.IND.Z.Z.EP18.Z.Z.0.M",
+      "published_period": "Sep.2026",
+      "published_value": "109,8",
+      "display_scale": 1,
+      "api_value": 109.765210119708,
+      "absolute_difference": 0.0347898802919957,
+      "rounding_tolerance": 0.050000001,
+      "status": "PASS"
+    },
+    {
+      "series": "imacec_mining",
+      "url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_IMACEC_01_A?idSerie=F032.IMC.IND.Z.Z.EP18.03.Z.0.M",
+      "published_period": "Sep.2026",
+      "published_value": "77,3",
+      "display_scale": 1,
+      "api_value": 77.2835776475079,
+      "absolute_difference": 0.01642235249209989,
+      "rounding_tolerance": 0.050000001,
+      "status": "PASS"
+    },
+    {
+      "series": "imacec_commerce",
+      "url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_IMACEC_01_A?idSerie=F032.IMC.IND.Z.Z.EP18.COM.Z.0.M",
+      "published_period": "Sep.2026",
+      "published_value": "118,1",
+      "display_scale": 1,
+      "api_value": 118.147915727824,
+      "absolute_difference": 0.047915727824005216,
       "rounding_tolerance": 0.050000001,
       "status": "PASS"
     }
