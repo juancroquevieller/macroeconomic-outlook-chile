@@ -250,7 +250,7 @@ def draw(title,keys,growth=None,unit=None,target=None,f=None,forecast=None):
             fig.add_trace(go.Scatter(x=[due],y=[survey.iloc[-1]],name='Survey target '+period(due,'Monthly' if forecast=='eee_inflation' else 'Quarterly'),customdata=[period(due,'Monthly' if forecast=='eee_inflation' else 'Quarterly')],meta={'forecast':forecast},mode='markers',marker=dict(symbol='diamond-open',size=11,color=COLORS[3]),hovertemplate='Survey consensus: %{y:.1f}%<br>Target %{customdata}<extra></extra>'))
     if target is not None:
         fig.add_hline(y=target,line_dash='dot',line_color=COLORS[3])
-        fig.add_annotation(x=0,y=1.08,xref='paper',yref='paper',text='Central bank inflation target: 3%' if target==3 else f'Neutral sentiment: {target:g}',showarrow=False,xanchor='left',yanchor='bottom',bgcolor='white',borderpad=3,font=dict(color=COLORS[0],size=12))
+        fig.add_annotation(x=0,y=1.01,xref='paper',yref='paper',text='Central bank inflation target: 3%' if target==3 else f'Neutral sentiment: {target:g}',showarrow=False,xanchor='left',yanchor='bottom',bgcolor='white',borderpad=3,font=dict(color=COLORS[0],size=12))
     render(fig,unit or ', '.join(sorted(units)),title=title)
     st.markdown(readout_html,unsafe_allow_html=True)
     if forecast: expectation(forecast)
