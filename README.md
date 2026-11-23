@@ -29,7 +29,7 @@ To refresh locally, set `BCCH_API_TOKEN` in the process environment, then run `p
 
 GitHub Actions retrieves the official series at 08:17 America/Chicago on the **1st and 16th** of every month. Scheduling can be delayed by GitHub. Use Actions > Refresh official data > Run workflow for an immediate attempt. Commits containing new snapshots trigger Streamlit's deployment update. GitHub may disable scheduled workflows after prolonged repository inactivity; check Actions if the last-attempt timestamp stops advancing.
 
-The app distinguishes successful-refresh time, attempt time, retrieval time per series, and observation dates. A successful fetch advances the success timestamp even if the source data is unchanged. Failed series retain their last valid data, show a partial-refresh warning, and fail the Actions run. Never interpret retrieval time as the release date. Token expiry or revocation requires replacing the same GitHub secret. The BLS endpoint is attempted first for US CPI; BCCh's republication of that series is the fallback, replacing the entire CPI history to avoid splicing bases.
+The app distinguishes successful-refresh time, attempt time, retrieval time per series, and observation dates. A successful fetch advances the success timestamp even if the source data is unchanged. Failed series retain their last valid data, show a partial-refresh warning, and fail the Actions run. Never interpret retrieval time as the release date. Token expiry or revocation requires replacing the same GitHub secret. US CPI is retrieved from BLS and cross-checked with the Federal Reserve's FRED republication. The freshest validated full history is used; BCCh is a last-resort fallback subject to the same freshness and history checks.
 
 ## Economic choices
 
