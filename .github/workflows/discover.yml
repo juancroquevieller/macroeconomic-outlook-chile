@@ -30,7 +30,9 @@ jobs:
                   rows=data['SeriesInfos']
                   (root/(freq.lower()+'.json')).write_text(json.dumps(rows,ensure_ascii=False),encoding='utf-8')
                   print(freq, len(rows),'series retrieved')
-              except Exception:
+              except Exception as exc:
+                  print('Failure type:',type(exc).__name__)
+                  print('HTTP status:',getattr(exc,'code',None))
                   raise SystemExit('Catalog request failed; credentials and URL withheld')
           PY
       - name: Save catalog
