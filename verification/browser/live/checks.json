@@ -1,13 +1,5 @@
 {
   "url": "https://macroeconomic-outlook-chile-2nx6g2qvukrcaexz7ycssk.streamlit.app/",
-  "status": "passed",
-  "requested_source_commit": "23721495b32373deeb864c4a2bbfcdccdbbab316",
-  "frequencies": [
-    "Monthly",
-    "Quarterly",
-    "Annual"
-  ],
-  "history": "Period selector and expanded chart workspace",
-  "chart_modes_checked": true,
-  "exceptions": []
+  "requested_source_commit": "91efba6a957cab284c561ca54432097cbb434395",
+  "status": "running"
 }
