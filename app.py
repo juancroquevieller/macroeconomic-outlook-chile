@@ -94,6 +94,7 @@ def chart_description(fig):
     if any(k.startswith('consumption_') for k in keys):return 'Real household goods consumption and non-mining GDP | Growth vs a year earlier (%) | Quarterly'
     if 'imacec_commerce' in keys:return 'Real activity growth vs a year earlier (%) | Commerce includes wholesale, retail and vehicles'
     if 'retail' in keys:return 'Retail sales volume | Inflation-adjusted growth vs the same period last year (%)'
+    if any(k.startswith('penetration_') and k!='penetration_all' for k in keys):return "Online share of each channel's nominal sales (%) | BCCh experimental coverage"
     if any(k.startswith('penetration_') for k in keys):return 'Online share of nominal retail sales (%) | Experimental BCCh coverage'
     if 'online_all' in keys:return 'Nominal sales growth vs the same period last year (%) | Online and implied in-store sales'
     if any(k.startswith('online_') for k in keys):return 'Channel online sales | Nominal growth vs the same period last year (%)'
