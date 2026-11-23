@@ -855,7 +855,7 @@
           128.141386055554
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Índice de actividad del comercio al por menor, INE (prom 2018=100)",
       "key": "retail",
       "label": "Real retail sales",
@@ -1482,7 +1482,7 @@
           151.080833563013
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Índice de actividad del comercio al por menor, durables, INE (prom 2018=100)",
       "key": "durables",
       "label": "Durable retail sales",
@@ -2109,7 +2109,7 @@
           123.19669106458
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Índice de actividad del comercio al por menor, no durables, INE (prom 2018=100)",
       "key": "nondurables",
       "label": "Non-durable retail sales",
@@ -2936,7 +2936,7 @@
           114.13
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Serie Empalmada IPC Diciembre 2009 a la fecha, base 2023 = 100",
       "key": "cpi",
       "label": "Consumer prices",
@@ -20783,7 +20783,7 @@
           1017.17
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Tipo de cambio nominal (dólar observado $CLP/USD)\\ tipo de cambio \\ precio \\ diario \\ BCCh",
       "key": "fx",
       "label": "CLP per USD",
@@ -38634,7 +38634,7 @@
           4.5
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Tasa de política monetaria (TPM) (porcentaje)",
       "key": "tpm",
       "label": "Monetary policy rate",
@@ -39509,7 +39509,7 @@
           3.5
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Expectativas de inflación en 11 meses (variación 12 meses, mediana)",
       "key": "eee_inflation",
       "label": "Expected inflation in 11 months",
@@ -40384,7 +40384,7 @@
           0.9
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Expectativas PIB (variaciones 12 meses), en el trimestre calendario de la encuesta, mediana",
       "key": "eee_gdp",
       "label": "Expected current-quarter GDP growth",
@@ -40827,7 +40827,7 @@
           1.6
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Expectativas PIB No Minero, en el trimestre calendario de la encuesta",
       "key": "eee_nonmining",
       "label": "Expected current-quarter non-mining growth",
@@ -41698,7 +41698,7 @@
           50.0
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "IMCE:  Comercio   ",
       "key": "confidence",
       "label": "Commerce confidence",
@@ -41997,7 +41997,7 @@
           51309.7521565613
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "PIB, volumen a precios del año anterior encadenado, referencia 2018 (miles de millones de pesos encadenados)",
       "key": "gdp",
       "label": "Total GDP",
@@ -42297,7 +42297,7 @@
           3112.00690065764
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "PIB minería, volumen a precios del año anterior encadenado, referencia 2018 (miles de millones de pesos encadenados)",
       "key": "mining",
       "label": "Mining GDP",
@@ -42597,7 +42597,7 @@
           49295.9829316977
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "PIB no minero, volumen a precios del año anterior encadenado, referencia 2018 (miles de millones de pesos encadenados)",
       "key": "nonmining",
       "label": "Non-mining GDP",
@@ -42897,7 +42897,7 @@
           2709.51646921131
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Consumo bienes durables, a precios constantes serie empalmada, referencia 2018  (miles de millones de pesos encadenados)",
       "key": "consumption_durable",
       "label": "Durable goods consumption",
@@ -43197,7 +43197,7 @@
           13585.0601808355
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Consumo bienes no durables, a precios constantes serie empalmada, referencia 2018  (miles de millones de pesos encadenados)",
       "key": "consumption_nondurable",
       "label": "Non-durable goods consumption",
@@ -44065,7 +44065,7 @@
           115.279728298461
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Imacec no minero, serie empalmada (Indice 2018=100)",
       "key": "imacec",
       "label": "Non-mining IMACEC",
@@ -44933,7 +44933,7 @@
           108.209705853992
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Índice de tipo de cambio real - TCR (promedio 1986=100)",
       "key": "tcr",
       "label": "Real exchange rate",
@@ -45745,7 +45745,7 @@
           9.80262482382071
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Tasa de desocupación, total | No Ajustada | INE | Mensual | Porcentaje",
       "key": "unemployment",
       "label": "Unemployment",
@@ -46557,7 +46557,7 @@
           10.2827183724804
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Fuerza de trabajo, total | No Ajustada | INE | Mensual | Miles de Personas",
       "key": "workforce",
       "label": "Workforce",
@@ -47369,7 +47369,7 @@
           16.6991580155665
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Población de 15 años y más, INE ",
       "key": "population",
       "label": "Working-age population",
@@ -47801,7 +47801,7 @@
           6403.40161431683
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Total \\ Comercio minorista, ventas nominales por desglose de actividad económica, comercio , Indicador de Ventas por Estrato (IVE) \\ BCCh \\ Mensual \\ Millones de pesos chilenos",
       "key": "retail_value",
       "label": "Retail sales",
@@ -48673,7 +48673,7 @@
           59.8039215686275
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "IMCE: Comercio, Expectativas, Ventas",
       "key": "sales_expectations",
       "label": "Commerce sales expectations",
@@ -49109,7 +49109,7 @@
           423.291675274104
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Comercio Minorista | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
       "key": "online_all",
       "label": "Total retail",
@@ -49545,7 +49545,7 @@
           12.8167262483855
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Comercio Minorista | Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
       "key": "penetration_all",
       "label": "Total retail",
@@ -49981,7 +49981,7 @@
           2158.09907557288
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Supermercados | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
       "key": "online_supermarkets",
       "label": "Supermarkets",
@@ -50417,7 +50417,7 @@
           9.95104335312038
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Supermercados | Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
       "key": "penetration_supermarkets",
       "label": "Supermarkets",
@@ -50853,7 +50853,7 @@
           195.605350074605
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Grandes tiendas  | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
       "key": "online_department",
       "label": "Department & home-improvement stores",
@@ -51289,7 +51289,7 @@
           14.3346682508892
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Grandes tiendas  | Penetración de ventas online mensual | BCCh| Mensual | Porcentaje",
       "key": "penetration_department",
       "label": "Department & home-improvement stores",
@@ -51725,7 +51725,7 @@
           298.279387065203
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Vestuario, calzado y eq. Doméstico | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
       "key": "online_specialists",
       "label": "Apparel, footwear & household specialists",
@@ -52161,7 +52161,7 @@
           13.7437696206327
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Vestuario, calzado y eq. Doméstico| Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
       "key": "penetration_specialists",
       "label": "Apparel, footwear & household specialists",
@@ -52597,7 +52597,7 @@
           583.177551462174
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Plataformas de venta online | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
       "key": "online_platforms",
       "label": "Online platforms",
@@ -53033,7 +53033,7 @@
           100.0
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Plataformas de venta online mensual | Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
       "key": "penetration_platforms",
       "label": "Online platforms",
@@ -53469,7 +53469,7 @@
           344.143395271098
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Resto minoristas | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
       "key": "online_other",
       "label": "Other retailers",
@@ -53905,7 +53905,7 @@
           7.16190648024748
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "source_title": "Resto minoristas | Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
       "key": "penetration_other",
       "label": "Other retailers",
@@ -54743,7 +54743,7 @@
           326.785
         ]
       ],
-      "retrieved_at": "2026-11-23T00:44:28.062799+00:00",
+      "retrieved_at": "2026-11-23T00:50:59.539283+00:00",
       "publisher": "BLS via BCCh",
       "unit": "Index, 1982-84=100",
       "frequency": "MONTHLY",
@@ -54753,7 +54753,7 @@
       "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EI/MN_EI11/EI_IndicePrecios_EEUU?idSerie=F019.IPC.IND.10.M"
     }
   },
-  "last_attempt": "2026-11-23T00:44:28.062799+00:00",
+  "last_attempt": "2026-11-23T00:50:59.539283+00:00",
   "failures": [],
-  "last_success": "2026-11-23T00:44:28.062799+00:00"
+  "last_success": "2026-11-23T00:50:59.539283+00:00"
 }
