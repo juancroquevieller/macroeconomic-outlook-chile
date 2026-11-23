@@ -44,4 +44,15 @@ class FrequencyTests(unittest.TestCase):
         self.assertFalse(a.exception)
         self.assertEqual(a.multiselect[0].value,['Total IMACEC','Non-mining IMACEC'])
         self.assertTrue(any(v.label=='Left axis' for v in a.selectbox))
+    def test_expanded_frequency_is_independent(self):
+        from streamlit.testing.v1 import AppTest
+        a=AppTest.from_file('app.py',default_timeout=60).run()
+        a.session_state['chart_frequency_Economic activity']='Quarterly'
+        a.button(key='expand_Economic activity').click().run()
+        self.assertFalse(a.exception)
+        specs=[json.loads(c.proto.spec) for c in a.get('plotly_chart')]
+        self.assertEqual(specs[0]['data'][0]['name'],'Total IMACEC')
+        self.assertEqual(specs[-1]['data'][0]['name'],'Total GDP')
+        self.assertEqual(specs[-1]['layout']['xaxis']['tickformat'],'Q%q %Y')
+        self.assertRegex(specs[-1]['data'][0]['customdata'][-1],r'^Q[1-4] [0-9]{4}$')
 if __name__=='__main__':unittest.main()
