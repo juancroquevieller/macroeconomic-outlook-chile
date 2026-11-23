@@ -54,6 +54,11 @@ def refs(snapshot):
         s=pd.Series({pd.Timestamp(d):v for d,v in data},dtype=float)
         if not s.empty: result[start+' to '+end]=s.reindex(pd.date_range(s.index.min(),s.index.max(),freq='MS'))
     return result
+def quarterly_reference(s):
+    result=s.resample('QS').mean().where(s.resample('QS').count()==3)
+    if not result.notna().any():return result.iloc[:0]
+    return result.loc[result.first_valid_index():result.last_valid_index()]
+
 def evaluate(snapshot):
     records=[]
     for fk,actual in [('eee_gdp','gdp'),('eee_nonmining','nonmining')]:

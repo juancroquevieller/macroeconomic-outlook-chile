@@ -4,7 +4,7 @@ import json
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
-from model import monthly,quarterly,observations,refs,evaluate
+from model import monthly,quarterly,observations,refs,evaluate,quarterly_reference
 ROOT=Path(__file__).parent
 st.set_page_config(page_title='Chile | Macro & Retail',page_icon='CL',layout='wide')
 st.markdown('''<style>
@@ -143,7 +143,7 @@ def chart_workspace(fig,unit,title):
             trace.customdata=None
         elif 'anchor' in meta:
             obs=list(refs(data).values())[meta['anchor']]
-            if chart_frequency=='Quarterly':obs=obs.resample('QS').mean().where(obs.resample('QS').count()==3).dropna()
+            if chart_frequency=='Quarterly':obs=quarterly_reference(obs)
             trace.x=ends(obs.index,chart_frequency);trace.y=obs;trace.customdata=None
     fig.update_layout(meta={'frequency':chart_frequency})
     fig=style(fig,unit,560)
@@ -280,7 +280,7 @@ def dual(title,left_key,right_key,left_unit,right_unit):
         fig.add_trace(go.Scatter(x=ends(full.index,timeframe),y=full,name=label(k),meta={'key':k,'growth':False},yaxis='y' if i==0 else 'y2',line=dict(color=COLORS[i],width=2.2),connectgaps=False))
     if left_key=='fx':
         for i,(name,rs) in enumerate(refs(data).items()):
-            if timeframe=='Quarterly':rs=rs.resample('QS').mean().where(rs.resample('QS').count()==3).dropna()
+            if timeframe=='Quarterly':rs=quarterly_reference(rs)
             fig.add_trace(go.Scatter(x=ends(rs.index,timeframe),y=rs,name=['Anchor 2010–14','Anchor 2015–Sep 2019'][i],meta={'anchor':i},visible=True,line=dict(color=COLORS[i+2],dash='dot')))
     fig.update_layout(yaxis2=dict(title=right_unit,overlaying='y',side='right',showgrid=False,zeroline=False,tickformat='.1f',nticks=5))
     render(fig,left_unit,title=title)

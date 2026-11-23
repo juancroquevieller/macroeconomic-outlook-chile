@@ -32,6 +32,13 @@ class ModelTests(unittest.TestCase):
         d['series']['cpi']['rows']=[row for row in d['series']['cpi']['rows'] if not row[0].startswith('2020-02')]
         for reference_line in refs(d).values():
             self.assertTrue(pd.isna(reference_line.loc['2020-02-01']))
+    def test_quarter_reference_retains_incomplete_interior_quarter(self):
+        from model import quarterly_reference
+        monthly=pd.Series(100.,index=pd.date_range('2025-07-01','2026-10-01',freq='MS'))
+        monthly.loc['2025-10-01']=float('nan')
+        result=quarterly_reference(monthly)
+        self.assertTrue(pd.isna(result.loc['2025-10-01']))
+        self.assertEqual(result.index[-1],pd.Timestamp('2026-07-01'))
 class StreamlitTests(unittest.TestCase):
     def test_populated_views(self):
         from streamlit.testing.v1 import AppTest
