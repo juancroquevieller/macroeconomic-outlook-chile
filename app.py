@@ -195,7 +195,11 @@ def draw(title,keys,growth=None,unit=None,target=None,f=None,forecast=None):
         all_obs=observations(data,k,f,growth)
         full=all_obs.reindex(pd.date_range(all_obs.index.min(),all_obs.index.max(),freq='QS' if f=='Quarterly' else 'MS'))
         fig.add_trace(go.Scatter(x=ends(full.index,f),y=full,name=label(k),meta={'key':k,'growth':growth},visible='legendonly' if k in ['mining','imacec_mining'] else True,mode='lines',connectgaps=False,line=dict(color=COLORS[i%5],width=2.3,shape='hv' if k=='tpm' else 'linear'),hovertemplate='%{x|%b %Y}: %{y:,.2f}<extra>%{fullData.name}</extra>'))
-    if not plotted: st.info('No observations in the selected range. Try an earlier/later date or a longer history.');return
+    if not plotted:
+        st.subheader(title)
+        st.info('No observations in the selected range. Try an earlier/later date or a longer history.')
+        source(keys,f,title)
+        return
     readout_html='<div class="readout">'+''.join(r for r,k in zip(readouts,[p[0] for p in plotted]) if k not in ['mining','imacec_mining'])+'</div>'
     date_text=dates[0] if len(set(dates))==1 else ' · '.join(label(k)+': '+period(s.index[-1],f) for k,s,u in plotted)
 
