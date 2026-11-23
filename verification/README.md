@@ -8,6 +8,13 @@
 
 Reproduce with `python -m unittest -v` and `python verify_sources.py`. API refresh requires the repository secret and can be run from Actions. No credentials are required to render the saved snapshot.
 
-Remaining deployment checks: record the public Streamlit URL, inspect the desktop/mobile layout in a browser, and capture a screenshot of the app. Streamlit's automated AppTest checks execution and widgets, not rendered pixel layout.
+Remaining deployment checks: inspect the desktop/mobile layout in a browser and capture a screenshot of the app. Streamlit's automated AppTest checks execution and widgets, not rendered pixel layout.
 
 Final deployed-code refresh passed in GitHub Actions: https://github.com/juancroquevieller/macroeconomic-outlook-chile/actions/runs/45091115516
+
+## Public deployment
+
+- URL: https://macroeconomic-outlook-chile-2nx6g2qvukrcaexz7ycssk.streamlit.app/
+- Checked 2026-11-23T00:54:09.654417+00:00: public root returned HTTP 200 with Streamlit HTML.
+- The /_stcore/health path also returned the HTML shell, so it was not accepted as independent application-health evidence.
+- Interactive rendering could not be inspected with the available tools. The previously passing populated AppTest checks remain the execution evidence; they do not prove live rendering.

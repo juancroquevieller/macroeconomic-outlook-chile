@@ -1,5 +1,7 @@
 # Chile Economy & Retail
 
+[Open the live dashboard](https://macroeconomic-outlook-chile-2nx6g2qvukrcaexz7ycssk.streamlit.app/)
+
 A personal and professional dashboard of Chile's macroeconomic backdrop and goods retail activity, built with Streamlit and official statistics. Four views: Macroeconomic outlook, Retail outlook, an eight-indicator Assignment view, and Sources & methodology.
 
 ## Deploy
@@ -48,4 +50,4 @@ The two lines provide sensitivity to historical anchors, not a confidence interv
 
 `registry.json` records verified API IDs, units, original producers, source links and transformations. `data/raw` contains BCCh responses; `data/snapshot.json` is the rendering input. `verify_sources.py` independently discovers public BDE table links and compares one published observation for each series with the API, respecting displayed rounding and unit scaling.
 
-See [verification](verification/README.md), [source checks](verification/source_checks.json), and [design prompts](PROMPTS.md). Automated Streamlit checks exercise the populated views; browser layout review and the public deployment URL remain to be recorded after deployment.
+See [verification](verification/README.md), [source checks](verification/source_checks.json), and [design prompts](PROMPTS.md). Automated Streamlit checks exercise the populated views; the public deployment URL is recorded above. Browser layout review remains outstanding.
