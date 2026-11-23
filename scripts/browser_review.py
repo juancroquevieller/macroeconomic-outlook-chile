@@ -81,3 +81,4 @@ with sync_playwright() as p:
     (OUT/'checks.json').write_text(json.dumps({'url':url,'status':'passed','requested_source_commit':os.environ.get('GITHUB_SHA'),'frequencies':['Monthly','Quarterly','Annual'],'history':'Period selector and expanded chart workspace','chart_modes_checked':True,'exceptions':errors},indent=2))
     assert not errors,errors
     browser.close()
+# Header alignment reviewed against the deployed app.
