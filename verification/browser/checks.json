@@ -1,13 +1,5 @@
 {
   "url": "http://127.0.0.1:8501",
-  "status": "passed",
-  "requested_source_commit": "99136090fa4cfc9c6c7cbe30f567ebf5d04aea7a",
-  "frequencies": [
-    "Monthly",
-    "Quarterly",
-    "Annual"
-  ],
-  "history": "Period selector and expanded chart workspace",
-  "chart_modes_checked": true,
-  "exceptions": []
+  "requested_source_commit": "efae3cec9f0181a7db796aa8b0297de9b817f001",
+  "status": "running"
 }
