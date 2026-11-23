@@ -25,7 +25,12 @@ jobs:
           for freq in ['MONTHLY','QUARTERLY','DAILY']:
               url='https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?'+urllib.parse.urlencode(dict(token=token,function='SearchSeries',frequency=freq))
               try:
-                  data=json.load(urllib.request.urlopen(url,timeout=120))
+                  response=urllib.request.urlopen(url,timeout=120)
+                  body=response.read()
+                  encoding=response.headers.get_content_charset() or 'utf-8-sig'
+                  try: text=body.decode(encoding)
+                  except UnicodeDecodeError: text=body.decode('cp1252')
+                  data=json.loads(text)
                   if data.get('Codigo')!=0: raise ValueError('API rejected request')
                   rows=data['SeriesInfos']
                   (root/(freq.lower()+'.json')).write_text(json.dumps(rows,ensure_ascii=False),encoding='utf-8')
