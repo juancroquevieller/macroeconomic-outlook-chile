@@ -20,8 +20,10 @@ class FrequencyTests(unittest.TestCase):
         a=AppTest.from_file('app.py',default_timeout=60).run();self.assertFalse(a.exception)
         self.assertEqual(a.title[0].value,'Macroeconomic - Chile');self.assertEqual(len(a.metric),0)
         a.radio[1].set_value('Quarterly').run();self.assertFalse(a.exception)
-        a.selectbox(key='from_Q').set_value(pd.Period('2018Q1')).run()
-        a.selectbox(key='to_Q').set_value(pd.Period('2020Q4')).run();self.assertFalse(a.exception)
+        a.selectbox(key='from_Q_year').set_value(2018).run()
+        a.selectbox(key='from_Q_part').set_value(1).run()
+        a.selectbox(key='to_Q_year').set_value(2020).run()
+        a.selectbox(key='to_Q_part').set_value(4).run();self.assertFalse(a.exception)
         self.assertEqual(len(a.date_input),0)
         self.assertFalse(any(r.label=='History' for r in a.selectbox))
         for chart in a.get('plotly_chart'):

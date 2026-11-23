@@ -23,9 +23,9 @@ h3{font-size:1.2rem!important;letter-spacing:-.02em}
 </style>''',unsafe_allow_html=True)
 data=json.loads((ROOT/'data/snapshot.json').read_text(encoding='utf-8'))
 series=data['series']
-nav,freq=st.columns([4,1])
-with nav: view=st.radio('Explore',['Macroeconomic outlook','Retail outlook','Sources & methodology'],horizontal=True,label_visibility='collapsed')
-with freq: timeframe=st.radio('Timeframe',['Monthly','Quarterly'],horizontal=True,label_visibility='collapsed')
+view=st.radio('Explore',['Macroeconomic outlook','Retail outlook','Sources & methodology'],horizontal=True,label_visibility='collapsed')
+freq,left,right,spacer=st.columns([1,1,1,2],vertical_alignment='bottom')
+with freq: timeframe=st.radio('Timeframe',['Monthly','Quarterly'],horizontal=True)
 today=pd.Timestamp.now(tz='America/Chicago').tz_localize(None).normalize()
 earliest=min(pd.Timestamp(v['rows'][0][0]) for v in series.values() if v['rows'])
 code='Q' if timeframe=='Quarterly' else 'M'
@@ -33,11 +33,22 @@ limit=(today.to_period('M')+12).end_time.normalize()
 periods=pd.period_range(earliest,limit,freq=code)
 periods=periods[periods.end_time.normalize()<=limit]
 def period_label(p): return f'{p.year} Q{p.quarter}' if code=='Q' else p.strftime('%Y · %b')
-left,right,note=st.columns([1,1,3])
-with left: first=st.selectbox('From',periods,index=max(0,len(periods)-72 if code=='M' else len(periods)-24),format_func=period_label,key='from_'+code)
-with right: last=st.selectbox('To',periods,index=periods.get_loc(today.to_period(code)),format_func=period_label,key='to_'+code)
+def pick_period(name,default,key):
+    year_col,part_col=st.columns([1,1],gap='small')
+    years=sorted(set(periods.year))
+    with year_col: year=st.selectbox(name+' year',years,index=years.index(default.year),key=key+'_year')
+    available=[p for p in periods if p.year==year]
+    parts=[p.quarter if code=='Q' else p.month for p in available]
+    preferred=default.quarter if code=='Q' else default.month
+    part_key=key+'_part'
+    if part_key in st.session_state and st.session_state[part_key] not in parts:
+        st.session_state[part_key]=min(parts,key=lambda v:abs(v-st.session_state[part_key]))
+    with part_col:
+        part=st.selectbox(name+(' quarter' if code=='Q' else ' month'),parts,index=parts.index(preferred) if preferred in parts else len(parts)-1,format_func=lambda n:f'Q{n}' if code=='Q' else pd.Timestamp(2000,n,1).strftime('%b'),key=part_key)
+    return available[parts.index(part)]
+with left: first=pick_period('From',periods[max(0,len(periods)-72 if code=='M' else len(periods)-24)],'from_'+code)
+with right: last=pick_period('To',today.to_period(code),'to_'+code)
 start=first.start_time;end=last.end_time.normalize()
-with note: st.caption('Choose months or quarters · end dates extend up to 12 months ahead for expectations. Actual data retain their publication lags.')
 if start>end: st.error('Choose a starting period before the ending period.');st.stop()
 def stamp(v): return pd.Timestamp(v).tz_convert('America/Chicago').strftime('%d %b %Y · %H:%M %Z') if v else 'Not completed'
 def period(d,f): return str(d.to_period('Q')) if f=='Quarterly' else d.strftime('%b %Y')
@@ -77,8 +88,8 @@ def chart_workspace(fig,unit,title):
     names=[t.name for t in fig.data]
     chosen=st.multiselect('Variables',names,default=[t.name for t in fig.data if t.visible!='legendonly'])
     ca,cb=st.columns(2)
-    with ca: fp=st.selectbox('Chart from',periods,index=periods.get_loc(first),format_func=period_label)
-    with cb: tp=st.selectbox('Chart to',periods,index=periods.get_loc(last),format_func=period_label)
+    with ca: fp=pick_period('Chart from',first,'chart_from_'+code)
+    with cb: tp=pick_period('Chart to',last,'chart_to_'+code)
     if fp>tp: st.error('Chart from must precede Chart to.');return
     edited=go.Figure(fig)
     for trace in edited.data: trace.visible=trace.name in chosen
