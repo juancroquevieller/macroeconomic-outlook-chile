@@ -2,7 +2,7 @@ name: Browser visual review
 on:
   workflow_dispatch:
   push:
-    paths: ['data/snapshot.json', 'us_cpi.py', 'app.py', 'scripts/browser_review.py', '.github/workflows/browser.yml']
+    paths: ['data/snapshot.json', 'us_cpi.py', 'app.py', 'model.py', 'scripts/browser_review.py', '.github/workflows/browser.yml']
 permissions:
   contents: write
 concurrency:
@@ -24,7 +24,6 @@ jobs:
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8501/_stcore/health && break || sleep 1; done
       - run: python scripts/browser_review.py
       - name: Capture deployed Streamlit app
-        continue-on-error: true
         env:
           DASHBOARD_URL: https://macroeconomic-outlook-chile-2nx6g2qvukrcaexz7ycssk.streamlit.app/
           SCREENSHOT_DIR: verification/browser/live
