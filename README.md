@@ -79,3 +79,7 @@ Dates filter observation period-ends. Source history outside the displayed range
 - Missing calendar periods remain gaps in charts; dates, units, and source definitions remain attached to each panel.
 
 [BCCh describes IMACEC as an approximation of GDP evolution](https://www.bcentral.cl/es/web/banco-central/areas/estadisticas/imacec). [INE publishes labor estimates for rolling quarters](https://www.ine.gob.cl/estadisticas-por-tema/mercado-laboral/ocupacion-y-desocupacion).
+
+
+### Compact dashboard and chart workspace
+Three views: Macroeconomic, Retail, Sources & methodology. Navigation, frequency and month/quarter selectors sit above the dashboard. The end selector extends at most twelve months ahead; EEE points retain explicit target dates. Each plot offers Expand / customize with independent period, variable and axis controls, clipped-observation warnings, CSV and PNG downloads. Mining and the two historical FX anchors are available but hidden initially. FX and labor use labeled dual axes. Refresh time and newest available period appear beside the page title; individual releases may lag.

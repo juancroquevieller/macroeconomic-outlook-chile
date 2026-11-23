@@ -31,4 +31,15 @@ class FrequencyTests(unittest.TestCase):
         a.radio[1].set_value('Monthly').run();self.assertFalse(a.exception)
         demand=next(r for r in a.radio if r.label=='Demand measure');demand.set_value('Goods consumption').run();self.assertFalse(a.exception)
         self.assertTrue(any('Quarterly' in c.value for c in a.caption))
+    def test_chart_workspace_controls_and_dual_axes(self):
+        from streamlit.testing.v1 import AppTest
+        a=AppTest.from_file('app.py',default_timeout=60).run()
+        specs=[json.loads(c.proto.spec) for c in a.get('plotly_chart')]
+        self.assertTrue(any(t.get('yaxis')=='y2' for t in specs[2]['data']))
+        self.assertTrue(any(t.get('yaxis')=='y2' for t in specs[3]['data']))
+        self.assertEqual(specs[0]['data'][1]['visible'],'legendonly')
+        a.button(key='expand_Economic activity').click().run()
+        self.assertFalse(a.exception)
+        self.assertEqual(a.multiselect[0].value,['Total IMACEC','Non-mining IMACEC'])
+        self.assertTrue(any(v.label=='Left axis' for v in a.selectbox))
 if __name__=='__main__':unittest.main()
