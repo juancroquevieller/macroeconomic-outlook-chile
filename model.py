@@ -46,6 +46,52 @@ def quarterly(snapshot,key,growth=None):
         full=s.reindex(pd.date_range(s.index.min(),s.index.max(),freq='QS')) if len(s) else s
         s=100*(full/full.shift(4)-1)
     return s.dropna()
+def annual(snapshot,key,growth=None):
+    """Calendar-year aggregates, never a partial year or a mean of growth rates.
+
+    GDP flows sum four quarters; monthly flow totals sum twelve months;
+    indices and FX average twelve months. CPI, TPM and labor use December
+    endpoints (labor is explicitly Oct-Dec, not annual-average employment).
+    """
+    if key=='participation':
+        return (100*annual(snapshot,'workforce',False)/annual(snapshot,'population',False)).dropna()
+    if key.startswith('penetration_'):
+        on=monthly(snapshot,'online_'+key[len('penetration_'):])
+        share=monthly(snapshot,key)/100
+        joint=pd.concat([on.rename('on'),share.rename('share')],axis=1).dropna()
+        joint=joint[(joint.share>0)&(joint.share<=1)]
+        s=100*joint.on.resample('YS').sum(min_count=12)/(joint.on/joint.share).resample('YS').sum(min_count=12)
+    elif key=='offline':
+        on,share=monthly(snapshot,'online_all'),monthly(snapshot,'penetration_all')/100
+        s=(on*(1-share)/share).where((share>0)&(share<=1)).resample('YS').sum(min_count=12)
+    else:
+        spec=snapshot.get('series',{}).get(key)
+        if not spec:return pd.Series(dtype=float)
+        raw=monthly(snapshot,key)
+        if raw.empty:return raw
+        agg=spec.get('aggregation','mean')
+        if spec['frequency']=='QUARTERLY':
+            s=raw.resample('YS').sum(min_count=4).where(raw.resample('YS').count()==4)
+        elif agg in ['last','rolling']:
+            s=raw[raw.index.month==12].copy()
+            s.index=s.index.to_period('Y').start_time
+        else:
+            s=raw.resample('YS').sum(min_count=12) if agg=='sum' else raw.resample('YS').mean()
+            s=s.where(raw.resample('YS').count()==12)
+    s=s[s.index.year<pd.Timestamp.now().year].sort_index()
+    isgrowth=growth if growth is not None else snapshot.get('series',{}).get(key,{}).get('growth',key=='offline')
+    if isgrowth and len(s):
+        s=s.reindex(pd.date_range(s.index.min(),s.index.max(),freq='YS'))
+        s=100*(s/s.shift(1).where(s.shift(1)!=0)-1)
+    return s.dropna()
+
+def annual_reference(s):
+    if s.empty:return s
+    result=s.resample('YS').mean().where(s.resample('YS').count()==12)
+    result=result[result.index.year<pd.Timestamp.now().year]
+    if not result.notna().any():return result.iloc[:0]
+    return result.loc[result.first_valid_index():result.last_valid_index()]
+
 def refs(snapshot):
     def rows(key): return [(d.strftime('%Y-%m-%d'),float(v)) for d,v in monthly(snapshot,key).items()]
     result={}
@@ -86,6 +132,7 @@ def evaluate(snapshot):
 
 def observations(snapshot,key,timeframe='Monthly',growth=None):
     """Display-frequency values; never upsample quarterly GDP into monthly data."""
+    if timeframe=='Annual': return annual(snapshot,key,growth)
     if timeframe=='Quarterly': return quarterly(snapshot,key,growth)
     if snapshot.get('series',{}).get(key,{}).get('frequency')=='QUARTERLY':
         raise ValueError('Quarterly source requires a quarterly panel: '+key)
