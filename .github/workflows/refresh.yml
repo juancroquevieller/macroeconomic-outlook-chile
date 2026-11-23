@@ -2,7 +2,7 @@ name: Refresh official data
 on:
   workflow_dispatch:
   push:
-    paths: ["refresh.py", "registry.json", ".github/workflows/refresh.yml"]
+    paths: ["refresh.py", "us_cpi.py", "registry.json", ".github/workflows/refresh.yml"]
   schedule:
     - cron: '17 8 1,16 * *'
       timezone: America/Chicago
@@ -33,7 +33,7 @@ jobs:
           git config user.email "dashboard@users.noreply.github.com"
           if [ -d data ]; then
             git add data
-            git diff --cached --quiet || (git commit -m "Refresh official statistics" && git push)
+            git diff --cached --quiet || (git commit -m "Refresh official statistics" && git pull --rebase origin main && git push)
           fi
       - name: Report failed refresh
         if: steps.fetch.outcome == 'failure'

@@ -23,6 +23,11 @@ def period_date(p):
 def check(item):
     key,spec=item
     try:
+        if key=='us_cpi':
+            from us_cpi import fred_rows
+            published_rows=dict(fred_rows(datetime.now(timezone.utc)))
+            saved=dict(spec['rows']);date=max(set(published_rows)&set(saved));difference=abs(saved[date]-published_rows[date])
+            return dict(series=key,url='https://fred.stlouisfed.org/series/CPIAUCNS',published_period=date,published_value=published_rows[date],api_value=saved[date],absolute_difference=difference,status='PASS' if difference<=0.0011 else 'MISMATCH')
         url,rows=published(spec['id'])
         api=dict(spec['rows'])
         for period,value in rows:

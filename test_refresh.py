@@ -13,7 +13,7 @@ class RefreshTests(unittest.TestCase):
             (root/'data/snapshot.json').write_text(json.dumps(prior))
             response=Mock();response.json.return_value={'status':'REQUEST_SUCCEEDED','Results':{'series':[{'data':[{'year':'2020','period':'M01','value':'100'}]}]}}
             raw={'Series':{'seriesId':'TEST','Obs':[{'statusCode':'OK','indexDateString':'01-01-2020','value':'100'}]}}
-            with patch.object(refresh,'ROOT',root),patch.dict('os.environ',{'BCCH_API_TOKEN':'test-only'}),patch.object(refresh,'request',side_effect=RuntimeError('test failure') if fail else None,return_value=raw),patch.object(refresh.requests,'post',return_value=response),patch('builtins.print'):
+            with patch.object(refresh,'ROOT',root),patch.dict('os.environ',{'BCCH_API_TOKEN':'test-only'}),patch.object(refresh,'request',side_effect=RuntimeError('test failure') if fail else None,return_value=raw),patch('us_cpi.retrieve',return_value={'rows':[['2020-01-01',100]]}),patch('builtins.print'):
                 result=refresh.refresh()
             after=json.loads((root/'data/snapshot.json').read_text(encoding='utf-8'))
             self.assertEqual(result,fail)

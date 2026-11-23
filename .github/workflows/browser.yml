@@ -2,7 +2,7 @@ name: Browser visual review
 on:
   workflow_dispatch:
   push:
-    paths: ['app.py', 'scripts/browser_review.py', '.github/workflows/browser.yml']
+    paths: ['data/snapshot.json', 'us_cpi.py', 'app.py', 'scripts/browser_review.py', '.github/workflows/browser.yml']
 permissions:
   contents: write
 concurrency:

@@ -97233,16 +97233,63 @@
         [
           "2026-02-01",
           326.785
+        ],
+        [
+          "2026-03-01",
+          330.213
+        ],
+        [
+          "2026-04-01",
+          333.02
+        ],
+        [
+          "2026-05-01",
+          335.123
+        ],
+        [
+          "2026-06-01",
+          333.952
+        ],
+        [
+          "2026-07-01",
+          333.918
+        ],
+        [
+          "2026-08-01",
+          334.98
+        ],
+        [
+          "2026-09-01",
+          336.94
+        ],
+        [
+          "2026-10-01",
+          337.511
         ]
       ],
-      "retrieved_at": "2026-11-23T01:29:43.928856+00:00",
-      "publisher": "BLS via BCCh",
+      "retrieved_at": "2026-11-23T05:28:37.312459+00:00",
+      "publisher": "BLS",
       "unit": "Index, 1982-84=100",
       "frequency": "MONTHLY",
       "aggregation": "mean",
       "growth": false,
-      "id": "F019.IPC.IND.10.M",
-      "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EI/MN_EI11/EI_IndicePrecios_EEUU?idSerie=F019.IPC.IND.10.M"
+      "source_url": "https://data.bls.gov/timeseries/CUUR0000SA0",
+      "source_id": "CUUR0000SA0",
+      "seasonal_adjustment": "Not seasonally adjusted",
+      "source_title": "US city average, all items CPI-U",
+      "source_checks": [
+        {
+          "source": "BLS",
+          "status": "ok",
+          "latest": "2026-10-01"
+        },
+        {
+          "source": "BLS via FRED",
+          "status": "ok",
+          "latest": "2026-10-01"
+        }
+      ],
+      "cross_checked_observations": 213
     },
     "imacec_total": {
       "rows": [

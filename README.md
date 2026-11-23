@@ -90,3 +90,6 @@ The visual palette is navy #014169, green #37968C, cyan #00C1D5 and teal #00859B
 
 
 Submission mode (November 2026): expectations are hidden from charts, controls, source tables and public downloads; refresh collection remains intact. Date controls end in December 2026. Retail uses INE sales volume by durability, BCCh nominal turnover bars, online/in-store growth or a stacked penetration chart, and channel growth/penetration lines. Zero is included by default for inflation, monetary policy rates, labor rates, shares and nominal turnover; negative observations remain visible. FX anchors start visible. IPC inflation is the 12-month index change, using the quarter-end month in quarterly mode.
+
+
+US CPI retrieval now reads BLS CUUR0000SA0 and FRED CPIAUCNS (both all-items CPI-U, not seasonally adjusted, 1982-84=100). Missing BLS values such as the October 2025 dash remain gaps. Complete history is selected from the freshest validated source, never spliced across series. Overlapping BLS/FRED values are cross-checked. A feed more than two calendar months behind, a shorter endpoint than the saved series, incomplete anchor history, or inconsistent values fails the refresh rather than advancing its success timestamp. BCCh is only a last-resort fallback subject to the same freshness guard. Updates remain scheduled on the 1st and 16th.
