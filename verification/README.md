@@ -1,31 +1,37 @@
 # Verification record
 
-- All 35 series passed an independent public-table comparison in `source_checks.json`. Values are checked at a common observation date, with the published rounding precision and any display-unit scaling.
-- Thirteen automated tests passed locally, including all populated Streamlit views, quarterly completeness, missing-quarter alignment, weighted online penetration, FX reference cutoffs, EEE target alignment, failure preservation and unchanged-data refresh timestamps.
-- Authenticated GitHub refresh succeeded: https://github.com/juancroquevieller/macroeconomic-outlook-chile/actions/runs/45090494806
-- Successful refresh timestamp: 2026-11-23T00:44:28.062799+00:00. Retrieved 35 series; failures: []. Git commit: 40ca2d1.
-- The first authenticated run revealed a BLS endpoint failure on the GitHub runner. BCCh's republication was added as the complete-series fallback; the subsequent full refresh passed.
+The current dashboard passes **17 automated tests** and **38 independent published-source comparisons**. The source check covers every retrieved series, including total, mining and commerce IMACEC, at a common observation date with rounding and display-unit scaling accounted for.
 
-Reproduce with `python -m unittest -v` and `python verify_sources.py`. API refresh requires the repository secret and can be run from Actions. No credentials are required to render the saved snapshot.
+## Data and computation
 
-Desktop and mobile browser screenshots are now captured and directly reviewed. AppTest remains the separate execution/widget check.
+- Authenticated full-history refresh succeeded: https://github.com/juancroquevieller/macroeconomic-outlook-chile/actions/runs/45094832655
+- Full available BCCh series are requested from 1900, replacing the previous 2009 cutoff. The selected source definitions determine actual coverage: FX starts in August 1982, GDP/IMACEC in 1996, and retail activity in 2005.
+- Tests cover quarterly aggregation, missing calendar periods, sales-weighted penetration, reference-period cutoffs, forecast target alignment, failed-fetch preservation, and successful unchanged-data refreshes.
+- New tests cover monthly same-calendar-month YoY comparisons, rejection of monthly GDP upsampling, derived monthly participation/in-store sales, both UI frequencies, quarterly-only consumption panels and a historical end-date assertion on plotted timestamps.
+- See `source_checks.json` and `test-output.txt`. Run `python -m unittest -v` and `python verify_sources.py` to reproduce. The rendering tests require no API secret.
 
-Final deployed-code refresh passed in GitHub Actions: https://github.com/juancroquevieller/macroeconomic-outlook-chile/actions/runs/45091115516
+## Direct visual review
 
-## Public deployment
+Final successful browser run: https://github.com/juancroquevieller/macroeconomic-outlook-chile/actions/runs/45095507575
 
-- URL: https://macroeconomic-outlook-chile-2nx6g2qvukrcaexz7ycssk.streamlit.app/
-- Checked 2026-11-23T00:54:09.654417+00:00: public root returned HTTP 200 with Streamlit HTML.
-- The /_stcore/health path also returned the HTML shell, so it was not accepted as independent application-health evidence.
-- Initial verification was limited to HTTP and AppTest. The subsequent Chromium workflow below resolves the direct visual-inspection limitation.
+Chromium rendered both the source version and the actual public Streamlit deployment. The assistant directly inspected the resulting PNGs, not another agent's descriptions. Both `browser/checks.json` and `browser/live/checks.json` report no Streamlit exceptions.
 
+The browser exercised monthly and quarterly modes, full and five-year history, both FX/labor measures, activity/consumption/sentiment demand views, real and nominal retail measures, online penetration/growth/sales mix, channel detail and mobile layout. The source-commit field in live metadata is the version requested for review, not an independently queried deployment hash; the deployed features were also checked visually.
 
-## Direct visual review completed
+Current screenshots:
 
-Successful browser run: https://github.com/juancroquevieller/macroeconomic-outlook-chile/actions/runs/45093810442
+- [Monthly macro](browser/live/macro-monthly-top.png)
+- [FX references and employment](browser/live/macro-monthly-bottom.png)
+- [Quarterly macro](browser/live/macro-quarterly-top.png)
+- [Monthly retail](browser/live/retail-monthly-top.png)
+- [Online trend and channel table](browser/live/retail-monthly-bottom.png)
+- [Quarterly goods consumption with monthly nominal retail](browser/live/retail-consumption-nominal.png)
+- [Retail expectations](browser/live/retail-expectations.png)
+- [Online/in-store growth](browser/live/retail-online-growth.png)
+- [Channel history](browser/live/retail-channel-detail.png)
+- [Full history](browser/live/macro-full-history.png)
+- [Mobile](browser/live/mobile-macro.png)
 
-The assistant directly opened and inspected the actual PNG files, including the live macro view, retail channel table, mobile metric grid and mobile employment chart. Both source-version and live-site `checks.json` report no Streamlit exceptions. The live app's iframe required explicit frame selection; a prior root-only locator timed out.
+Visual findings corrected: the oversized introduction and signal strip were removed; date controls were separated to avoid clipping; forecasts were separated from observed series; FX references moved into the main view; policy rates use steps; nominal sales compare year over year; online share has a readable trend view; channel rows use a common date. GDP/consumption panels are explicitly quarterly even in monthly mode, and labor rolling-window semantics are disclosed.
 
-Screenshots: [live macro](browser/live/macro-top.png), [live retail](browser/live/retail-bottom.png), [live mobile](browser/live/mobile-macro.png), [live mobile chart](browser/live/mobile-chart.png). These are browser captures, not mockups or descriptions generated by another agent. They verify the captured viewports and controls; they do not constitute exhaustive testing of every screen size or interaction.
-
-All 13 regression tests passed after the final interface changes. No source-data calculations or refresh credentials were changed during the visual pass.
+The captures verify the tested viewports and modes, not every possible browser or screen size. Data remains revised official history, not a real-time-vintage archive. Credentials stay solely in GitHub Secrets.

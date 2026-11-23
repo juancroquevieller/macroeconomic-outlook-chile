@@ -33,9 +33,9 @@ The app distinguishes successful-refresh time, attempt time, retrieval time per 
 
 ## Economic choices
 
-- **Quarterly main charts**, complete calendar quarters only, with a separate latest-month signals strip. Publication lags differ across series. Monetary flows are summed; indices and monthly FX are averaged; CPI and TPM are quarter-end. Daily FX is averaged within each month first. Labor uses March/June/September/December rolling-quarter observations, not overlapping-quarter averages.
+- **Monthly by default, with a Monthly / Quarterly switch.** Monthly activity uses total, mining and non-mining IMACEC; quarterly activity uses official GDP. Every panel containing a quarterly-only series stays quarterly for all its inputs. Monetary flows are summed; indices and monthly FX are averaged; CPI and TPM are period-end. Daily FX is averaged within each month first. Monthly labor observations are overlapping rolling quarters; quarterly mode selects March/June/September/December endpoints. No interpolation or monthly GDP fabrication.
 - **Official direct mining/non-mining GDP** in chained volume terms. Growth rates are not additive. Indirect mining estimates would require assumptions and input-output vintages that make an automated historical comparison less robust.
-- **EEE non-mining current-quarter growth** provides the relevant forward-looking activity measure; the inflation forecast targets 11 months after the survey. Historical errors are separated by survey month, with matched-sample naive benchmarks. Selection emphasizes relevance, a clear horizon and usable history; it is not a claim of optimal predictive performance. Revised actuals are used, not real-time vintages.
+- **EEE forecasts appear as separate dated callouts**, so a quarterly GDP forecast is never drawn as a monthly IMACEC forecast and a distant inflation forecast does not stretch the historical chart. Non-mining current-quarter growth provides the relevant forward-looking activity measure; the inflation forecast targets 11 months after the survey. Historical errors are separated by survey month, with matched-sample naive benchmarks. Selection emphasizes relevance, a clear horizon and usable history; it is not a claim of optimal predictive performance. Revised actuals are used, not real-time vintages.
 - **Inflation** is year-over-year CPI with a 3% target and TPM. **Labor** includes unemployment, participation and workforce size.
 - **Retail** distinguishes real INE retail activity, nominal IVE sales, household durable/non-durable goods consumption, and experimental online retail measures. These populations are not interchangeable.
 - Quarterly online share is sales weighted: sum(online index) / sum(online index / share). In-store growth is implied within that same series population. Rounded source shares introduce approximation. We do not multiply IVE sales by IVOCM shares to invent monetary channel totals. Independently based category indices cannot establish channel market size, company shares or marketplace GMV.
@@ -59,4 +59,23 @@ The `Browser visual review` GitHub Action runs Chromium using Playwright. It ren
 
 Screenshots are saved under `verification/browser/`, with live-site images in `verification/browser/live/`. An assistant can pull these image files and inspect them directly; the user does not need to supply screenshots. The workflow runs after app or browser-script edits and supports manual dispatch. Its source checks and live-host checks are distinct; review step outcomes and `checks.json`, not just overall workflow status.
 
-The visual pass shortened labels, distinguished online sales from online share, replaced repetitive metadata with source expanders, added current values above charts, separated labor-rate views, made the channel table fit, and arranged mobile metrics in two columns. The default five-year view emphasizes recent developments; longer history remains selectable.
+The visual pass shortened labels, distinguished online sales from online share, replaced repetitive metadata with source expanders, added current values above charts, separated labor-rate views, made the channel table fit, removed the introductory hero and signal cards, and kept compact titles for each view. The default five-year view emphasizes recent developments; longer history remains selectable.
+
+
+## Historical range controls
+
+Choose a preset (5 years, 10 years, Since 2018, All available), then edit **Start date** and **End date** independently. The source retrieval requests full available BCCh histories, replacing the previous 2009 cutoff. Selected series include FX from August 1982, GDP/IMACEC from 1996, and INE retail activity from 2005. Growth begins only when a prior-year observation exists.
+
+Dates filter observation period-ends. Source history outside the displayed range remains available for valid YoY calculations and fixed FX anchors. Short series retain their true coverage; no backfilling or splicing is used. Historical views use revised data, not historical publication vintages. EEE callouts use surveys available by the chosen end month and show their target period explicitly.
+
+## Chart review decisions
+
+- Policy rates use step lines; CPI retains the 3% target.
+- FX displays both historical reference lines with observed CLP/USD by default; the separate TCR view retains its own units.
+- Retail demand separates broad commerce activity from quarterly household goods consumption and survey expectations. The sentiment view includes a neutral 50 line.
+- Online penetration defaults to a readable line chart; growth and 100% sales-mix views remain available.
+- Channel tables use one common date across all rows, one decimal place, and YoY percentage-point changes in online share.
+- Nominal retail sales are compared with the same period one year earlier, not interpreted from unadjusted month-to-month changes.
+- Missing calendar periods remain gaps in charts; dates, units, and source definitions remain attached to each panel.
+
+[BCCh describes IMACEC as an approximation of GDP evolution](https://www.bcentral.cl/es/web/banco-central/areas/estadisticas/imacec). [INE publishes labor estimates for rolling quarters](https://www.ine.gob.cl/estadisticas-por-tema/mercado-laboral/ocupacion-y-desocupacion).

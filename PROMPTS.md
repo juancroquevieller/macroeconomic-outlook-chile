@@ -14,3 +14,5 @@ This is a concise record of the user instructions and implementation decisions, 
 Scope choices: indirect mining postponed; no fabricated channel CLP totals; online measures retain BCCh experimental-series definitions; FX anchors are historical sensitivity rather than fair-value predictions.
 
 9. User requested autonomous visual inspection and improvement without having to send screenshots. Implemented Chromium screenshot capture in GitHub Actions, then inspected source-version and live Streamlit desktop/mobile PNGs and revised the interface. Retained Streamlit after proving that direct visual review works.
+
+10. User requested a critical review of every graph, monthly data where available, a Monthly / Quarterly switch using IMACEC as the monthly GDP proxy, removal of the hero and latest-signals section, sober view titles, and editable beginning/end dates with full available history. Implemented these choices, preserved quarterly-only comparisons, and expanded the browser review across chart modes.
