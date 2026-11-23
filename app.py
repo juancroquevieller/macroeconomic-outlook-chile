@@ -23,7 +23,12 @@ h3{font-size:1.3rem!important;letter-spacing:-.02em}
 .channel-table th{font-size:12px;color:#536872;font-weight:600;text-align:right;border-bottom:1px solid #dfe7e7;padding:9px 5px}
 .channel-table td{padding:12px 5px;border-bottom:1px solid #edf1f1;text-align:right;font-variant-numeric:tabular-nums}
 .channel-table td:first-child,.channel-table th:first-child{text-align:left;width:42%}
-@media(max-width:700px){.block-container{padding:4rem 1rem 1rem}h1{font-size:2rem!important}.readout{gap:9px}}
+@media(max-width:700px){
+[data-testid="stHorizontalBlock"]:has(> [data-testid="stColumn"] [data-testid="stMetric"]) {gap:12px!important}
+[data-testid="stHorizontalBlock"]:has(> [data-testid="stColumn"] [data-testid="stMetric"]) > [data-testid="stColumn"] {min-width:calc(50% - 6px)!important;width:calc(50% - 6px)!important;flex:1 1 calc(50% - 6px)!important}
+[data-testid="stMetric"]{padding:12px!important;min-height:105px}
+[data-testid="stMetricLabel"] p{font-size:.85rem!important}
+.block-container{padding:4rem 1rem 1rem}h1{font-size:2rem!important}.readout{gap:9px}}
 </style>""",unsafe_allow_html=True)
 st.caption("CHILE  /  ECONOMIC OBSERVATORY")
 st.title("Economy & Retail")
@@ -49,7 +54,9 @@ SHORT={'gdp':'Total GDP','mining':'Mining','nonmining':'Non-mining','cpi':'Infla
 def label(k): return SHORT.get(k,series.get(k,{}).get('label',k))
 def source(keys):
     with st.expander("Sources & definitions"):
-        for key in keys:
+        dependencies={'participation':['workforce','population'],'offline':['online_all','penetration_all']}
+        expanded=list(dict.fromkeys(k for key in keys for k in dependencies.get(key,[key])))
+        for key in expanded:
             spec=series.get(key)
             if spec:
                 st.caption(f"{label(key)} · {spec['publisher']} · {spec['frequency'].lower()} · latest source observation {spec['rows'][-1][0]} · [Original series]({spec.get('source_url','')})")
