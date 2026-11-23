@@ -23,7 +23,11 @@ h3{font-size:1.2rem!important;letter-spacing:-.02em}
 </style>''',unsafe_allow_html=True)
 data=json.loads((ROOT/'data/snapshot.json').read_text(encoding='utf-8'))
 series={k:v for k,v in data['series'].items() if not k.startswith('eee_') and k not in ['confidence','sales_expectations']}
-view=st.radio('Explore',['Macroeconomic outlook','Retail outlook','Sources & methodology'],horizontal=True,label_visibility='collapsed')
+brand,navigation=st.columns([1,3],vertical_alignment='center',gap='small')
+with brand:
+    st.markdown('<div style="display:flex;align-items:center;gap:9px;white-space:nowrap;height:32px;color:#014169;font-size:22px;font-weight:650;line-height:1"><svg role="img" aria-label="Chilean flag" width="30" height="20" viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="white"/><path d="M0 10h30v10H0z" fill="#D52B1E"/><path d="M0 0h10v10H0z" fill="#0039A6"/><path d="m5 1.5.8 2.5h2.6L6.3 5.5l.8 2.5L5 6.5 2.9 8l.8-2.5L1.6 4h2.6z" fill="white"/><rect width="30" height="20" fill="none" stroke="#d5dce0" stroke-width=".5"/></svg><span>Chile at a Glance</span></div>',unsafe_allow_html=True)
+with navigation:
+    view=st.radio('Explore',['Macroeconomic outlook','Retail outlook','Sources & methodology'],horizontal=True,label_visibility='collapsed')
 freq,left,right,spacer=st.columns([1.5,1,1,1.5],vertical_alignment='bottom')
 with freq: timeframe=st.radio('Timeframe',['Monthly','Quarterly','Annual'],horizontal=True)
 today=pd.Timestamp.now(tz='America/Chicago').tz_localize(None).normalize()
