@@ -1,0 +1,11 @@
+# Verification record
+
+- All 35 series passed an independent public-table comparison in `source_checks.json`. Values are checked at a common observation date, with the published rounding precision and any display-unit scaling.
+- Eleven automated tests passed locally, including all populated Streamlit views, quarterly completeness, missing-quarter alignment, weighted online penetration, FX reference cutoffs and EEE target alignment.
+- Authenticated GitHub refresh succeeded: https://github.com/juancroquevieller/macroeconomic-outlook-chile/actions/runs/45090494806
+- Successful refresh timestamp: 2026-11-23T00:44:28.062799+00:00. Retrieved 35 series; failures: []. Git commit: 40ca2d1.
+- The first authenticated run revealed a BLS endpoint failure on the GitHub runner. BCCh's republication was added as the complete-series fallback; the subsequent full refresh passed.
+
+Reproduce with `python -m unittest -v` and `python verify_sources.py`. API refresh requires the repository secret and can be run from Actions. No credentials are required to render the saved snapshot.
+
+Remaining deployment checks: record the public Streamlit URL, inspect the desktop/mobile layout in a browser, and capture a screenshot of the app. Streamlit's automated AppTest checks execution and widgets, not rendered pixel layout.

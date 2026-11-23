@@ -28,7 +28,7 @@ def source(keys):
     for key in keys:
         spec=series.get(key)
         if spec:
-            st.caption(f"{label(key)} · {spec['publisher']} · native {spec['frequency'].lower()} · latest observation {spec['rows'][-1][0]}")
+            st.caption(f"{label(key)} · {spec['publisher']} · native {spec['frequency'].lower()} · latest observation {spec['rows'][-1][0]} · [Source]({spec.get('source_url','')})")
 def draw(title,keys,growth=None,unit=None,target=None,forecast=None):
     st.subheader(title)
     fig=go.Figure()
@@ -37,6 +37,7 @@ def draw(title,keys,growth=None,unit=None,target=None,forecast=None):
         s=quarterly(data,k,growth);s=s[s.index>=cut]
         if not len(s): continue
         fig.add_trace(go.Scatter(x=s.index+pd.offsets.QuarterEnd(0),y=s,name=label(k),line=dict(color=COLORS[i%5],width=2.5),hovertemplate='%{x|%Y Q%q}: %{y:,.2f}<extra>%{fullData.name}</extra>'))
+        st.caption(label(k)+' · latest plotted quarter '+str(s.index[-1].to_period('Q')))
         units.add('% YoY' if (growth if growth is not None else series.get(k,{}).get('growth',k=='offline')) else series.get(k,{}).get('unit','%'))
     if target is not None: fig.add_hline(y=target,line_dash='dot',annotation_text=f"{target:g}% inflation target")
     if forecast:
@@ -65,7 +66,7 @@ def fx_details():
         st.write("Two anchors: January 2010–December 2014 and January 2015–September 2019. The second ends before the October 2019 social unrest.")
         result=refs(data);fig=go.Figure()
         for i,(name,s) in enumerate(result.items()):
-            s=s.resample('QS').mean();s=s[(s.index>=cut)&(s.index.to_period('Q')<pd.Timestamp.now().to_period('Q'))]
+            counts=s.resample('QS').count();s=s.resample('QS').mean().where(counts==3).dropna();s=s[(s.index>=cut)&(s.index.to_period('Q')<pd.Timestamp.now().to_period('Q'))]
             fig.add_trace(go.Scatter(x=s.index+pd.offsets.QuarterEnd(0),y=s,name=name,fill='tonexty' if i else None,line=dict(dash='dot')))
         observed=quarterly(data,'fx',False);observed=observed[observed.index>=cut]
         if len(observed): fig.add_trace(go.Scatter(x=observed.index+pd.offsets.QuarterEnd(0),y=observed,name='Observed CLP/USD',line=dict(color=COLORS[0])))
@@ -146,7 +147,7 @@ else:
     if len(metrics):
         st.dataframe(metrics,hide_index=True)
         st.download_button('Download matched forecasts',pairs.to_csv(index=False),'eee-evaluation.csv')
-    st.caption("Retrospective errors against revised actuals, in percentage points. GDP errors are separated by survey month within the target quarter. Inflation is matched to the exact month 11 months after issuance. This is not a real-time vintage backtest or evidence of superiority to a benchmark.")
+    st.caption("Retrospective errors against revised actuals, in percentage points. GDP errors are separated by survey month within the target quarter. Inflation is matched to the exact month 11 months after issuance. Benchmarks use the same matched sample: previous-year same-quarter growth for GDP; previous-month inflation for CPI. Actuals are revised, so this is not a real-time vintage backtest. The non-mining survey is selected for relevance to retail and sufficient history, not a claim that it outperforms every alternative.")
     st.link_button("BCCh methodology: online retail","https://www.bcentral.cl/documents/d/banco-central/nota_tecnica_ivocm")
 rows=[{'series':k,'date':d,'value':v,'unit':s['unit'],'publisher':s['publisher'],'retrieved_at':s['retrieved_at']} for k,s in series.items() for d,v in s['rows']]
 if rows: st.download_button('Download source observations',pd.DataFrame(rows).to_csv(index=False),'chile-observations.csv','text/csv')

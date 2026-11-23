@@ -61,15 +61,20 @@ def evaluate(snapshot):
         for d,f in monthly(snapshot,fk).items():
             q=d.to_period('Q').start_time
             if q in target:
-                records.append(dict(series=fk,issued=d,target=q,forecast=f,actual=target[q],lead_group='Quarter month '+str((d.month-1)%3+1)))
+                records.append(dict(series=fk,issued=d,target=q,forecast=f,actual=target[q],lead_group='Quarter month '+str((d.month-1)%3+1),baseline=target.get(q-pd.DateOffset(years=1),float('nan'))))
     cpi=monthly(snapshot,'cpi')
+    if len(cpi): cpi=cpi.reindex(pd.date_range(cpi.index.min(),cpi.index.max(),freq='MS'))
     actual=100*(cpi/cpi.shift(12)-1)
     for d,f in monthly(snapshot,'eee_inflation').items():
         target=d+pd.DateOffset(months=11)
         if target in actual and pd.notna(actual[target]):
-            records.append(dict(series='eee_inflation',issued=d,target=target,forecast=f,actual=actual[target],lead_group='11 months'))
+            records.append(dict(series='eee_inflation',issued=d,target=target,forecast=f,actual=actual[target],lead_group='11 months',baseline=actual.get(d-pd.DateOffset(months=1),float('nan'))))
     frame=pd.DataFrame(records)
     if frame.empty: return frame,pd.DataFrame()
     frame['error']=frame.forecast-frame.actual
     metrics=frame.groupby(['series','lead_group']).error.agg(n='count',MAE=lambda x:x.abs().mean(),RMSE=lambda x:(x.pow(2).mean())**.5,Bias='mean').reset_index()
+    frame['baseline_error']=frame.baseline-frame.actual
+    matched=frame.dropna(subset=['baseline_error'])
+    benchmark=matched.groupby(['series','lead_group']).agg(common_n=('error','count'),EEE_MAE_common=('error',lambda x:x.abs().mean()),Baseline_MAE_common=('baseline_error',lambda x:x.abs().mean())).reset_index()
+    metrics=metrics.merge(benchmark,on=['series','lead_group'],how='left')
     return frame,metrics

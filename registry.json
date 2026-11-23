@@ -9,7 +9,7 @@
     "publisher": "INE",
     "growth": true,
     "source_title": "Índice de actividad del comercio al por menor, INE (prom 2018=100)",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VCC.IND.INE.2018.0.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_MACRO/MN_EST_MACRO_IV/PEM_INDSEC?idSerie=F034.VCC.IND.INE.2018.0.M"
   },
   {
     "key": "durables",
@@ -21,7 +21,7 @@
     "publisher": "INE",
     "growth": true,
     "source_title": "Índice de actividad del comercio al por menor, durables, INE (prom 2018=100)",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDU.IND.INE.2018.0.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_MACRO/MN_EST_MACRO_IV/PEM_INDSEC?idSerie=F034.VDU.IND.INE.2018.0.M"
   },
   {
     "key": "nondurables",
@@ -33,7 +33,7 @@
     "publisher": "INE",
     "growth": true,
     "source_title": "Índice de actividad del comercio al por menor, no durables, INE (prom 2018=100)",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VND.IND.INE.2018.0.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_MACRO/MN_EST_MACRO_IV/PEM_INDSEC?idSerie=F034.VND.IND.INE.2018.0.M"
   },
   {
     "key": "cpi",
@@ -45,7 +45,7 @@
     "publisher": "INE",
     "growth": true,
     "source_title": "Serie Empalmada IPC Diciembre 2009 a la fecha, base 2023 = 100",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F074.IPC.IND.Z.EP23.C.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_PRECIOS/MN_CAP_PRECIOS/IPC_EMP_2023?idSerie=F074.IPC.IND.Z.EP23.C.M"
   },
   {
     "key": "fx",
@@ -57,7 +57,7 @@
     "publisher": "BCCh",
     "growth": false,
     "source_title": "Tipo de cambio nominal (dólar observado $CLP/USD)\\ tipo de cambio \\ precio \\ diario \\ BCCh",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F073.TCO.PRE.Z.D"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_TIPO_CAMBIO/MN_TIPO_CAMBIO4/DOLAR_OBS_ADO?idSerie=F073.TCO.PRE.Z.D"
   },
   {
     "key": "tpm",
@@ -69,7 +69,7 @@
     "publisher": "BCCh",
     "growth": false,
     "source_title": "Tasa de política monetaria (TPM) (porcentaje)",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F022.TPM.TIN.D001.NO.Z.D"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EST_OMA/MN_EST_OMA/EM_OMA_30?idSerie=F022.TPM.TIN.D001.NO.Z.D"
   },
   {
     "key": "eee_inflation",
@@ -81,7 +81,7 @@
     "publisher": "BCCh",
     "growth": false,
     "source_title": "Expectativas de inflación en 11 meses (variación 12 meses, mediana)",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F089.IPC.V12.14.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EXP_ECO/MN_EXP_EC11/EXE_BCCH_01?idSerie=F089.IPC.V12.14.M"
   },
   {
     "key": "eee_gdp",
@@ -93,7 +93,7 @@
     "publisher": "BCCh",
     "growth": false,
     "source_title": "Expectativas PIB (variaciones 12 meses), en el trimestre calendario de la encuesta, mediana",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F089.PIB.V12.33.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EXP_ECO/MN_EXP_EC11/EXE_BCCH_05?idSerie=F089.PIB.V12.33.M"
   },
   {
     "key": "eee_nonmining",
@@ -105,7 +105,7 @@
     "publisher": "BCCh",
     "growth": false,
     "source_title": "Expectativas PIB No Minero, en el trimestre calendario de la encuesta",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F089.PIBNM.V12.33.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EXP_ECO/MN_EXP_EC11/EXE_BCCH_05?idSerie=F089.PIBNM.V12.33.M"
   },
   {
     "key": "confidence",
@@ -117,7 +117,7 @@
     "publisher": "ICARE/UAI",
     "growth": false,
     "source_title": "IMCE:  Comercio   ",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=G089.IME.IND.A1.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EXP_ECO/MN_EXP_EC11/EXE_IMCE_TOTAL?idSerie=G089.IME.IND.A1.M"
   },
   {
     "key": "gdp",
@@ -130,7 +130,7 @@
     "growth": true,
     "scale": 1,
     "source_title": "PIB, volumen a precios del año anterior encadenado, referencia 2018 (miles de millones de pesos encadenados)",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F032.PIB.FLU.R.CLP.EP18.Z.Z.0.T"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_P2?idSerie=F032.PIB.FLU.R.CLP.EP18.Z.Z.0.T"
   },
   {
     "key": "mining",
@@ -143,7 +143,7 @@
     "growth": true,
     "scale": 1,
     "source_title": "PIB minería, volumen a precios del año anterior encadenado, referencia 2018 (miles de millones de pesos encadenados)",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F032.PIB.FLU.R.CLP.EP18.03.Z.0.T"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_P2?idSerie=F032.PIB.FLU.R.CLP.EP18.03.Z.0.T"
   },
   {
     "key": "nonmining",
@@ -156,7 +156,7 @@
     "growth": true,
     "scale": 1,
     "source_title": "PIB no minero, volumen a precios del año anterior encadenado, referencia 2018 (miles de millones de pesos encadenados)",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F032.PIB.FLU.R.CLP.EP18.N03.Z.0.T"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_P2?idSerie=F032.PIB.FLU.R.CLP.EP18.N03.Z.0.T"
   },
   {
     "key": "consumption_durable",
@@ -169,7 +169,7 @@
     "growth": true,
     "scale": 1,
     "source_title": "Consumo bienes durables, a precios constantes serie empalmada, referencia 2018  (miles de millones de pesos encadenados)",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F033.CDU.FLU.R.CLP.EP18.0.T"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_G2?idSerie=F033.CDU.FLU.R.CLP.EP18.0.T"
   },
   {
     "key": "consumption_nondurable",
@@ -182,7 +182,7 @@
     "growth": true,
     "scale": 1,
     "source_title": "Consumo bienes no durables, a precios constantes serie empalmada, referencia 2018  (miles de millones de pesos encadenados)",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F033.CND.FLU.R.CLP.EP18.0.T"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_G2?idSerie=F033.CND.FLU.R.CLP.EP18.0.T"
   },
   {
     "key": "imacec",
@@ -195,7 +195,7 @@
     "growth": true,
     "scale": 1,
     "source_title": "Imacec no minero, serie empalmada (Indice 2018=100)",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F032.IMC.IND.Z.Z.EP18.N03.Z.0.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_IMACEC_01_A?idSerie=F032.IMC.IND.Z.Z.EP18.N03.Z.0.M"
   },
   {
     "key": "tcr",
@@ -208,7 +208,7 @@
     "growth": false,
     "scale": 1,
     "source_title": "Índice de tipo de cambio real - TCR (promedio 1986=100)",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F073.TCR.IND.199101.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_TIPO_CAMBIO/MN_TIPO_CAMBIO4/TCB_531_IND_TCRYCOMP?idSerie=F073.TCR.IND.199101.M"
   },
   {
     "key": "unemployment",
@@ -221,7 +221,7 @@
     "growth": false,
     "scale": 1,
     "source_title": "Tasa de desocupación, total | No Ajustada | INE | Mensual | Porcentaje",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F049.DES.TAS.INE9.10.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EI/MN_EI11/EI_DES_MEN?idSerie=F049.DES.TAS.INE9.10.M"
   },
   {
     "key": "workforce",
@@ -234,7 +234,7 @@
     "growth": false,
     "scale": 0.001,
     "source_title": "Fuerza de trabajo, total | No Ajustada | INE | Mensual | Miles de Personas",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F049.FTR.PMT.INE9.01.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EMP_REM_DEM/MN_EMP_REM_DEM13/ED_FT_GEN?idSerie=F049.FTR.PMT.INE9.01.M"
   },
   {
     "key": "population",
@@ -247,7 +247,7 @@
     "growth": false,
     "scale": 0.001,
     "source_title": "Población de 15 años y más, INE ",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F049.POB.PMT.INE9.01.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EMP_REM_DEM/MN_EMP_REM_DEM13/ED_FTM2?idSerie=F049.POB.PMT.INE9.01.M"
   },
   {
     "key": "retail_value",
@@ -260,7 +260,7 @@
     "growth": false,
     "scale": 0.001,
     "source_title": "Total \\ Comercio minorista, ventas nominales por desglose de actividad económica, comercio , Indicador de Ventas por Estrato (IVE) \\ BCCh \\ Mensual \\ Millones de pesos chilenos",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.IVEA203.FLU.BCCH.Z.ETTOT.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_IVE_03?idSerie=F034.IVEA203.FLU.BCCH.Z.ETTOT.M"
   },
   {
     "key": "sales_expectations",
@@ -273,7 +273,7 @@
     "growth": false,
     "scale": 1,
     "source_title": "IMCE: Comercio, Expectativas, Ventas",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=G089.IME.IND.A1A.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_EXP_ECO/MN_EXP_EC11/EXE_IMCE_COMER?idSerie=G089.IME.IND.A1A.M"
   },
   {
     "key": "online_all",
@@ -286,7 +286,7 @@
     "growth": true,
     "scale": 1,
     "source_title": "Comercio Minorista | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.IND.BCCH.2018.SA1.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_003?idSerie=F034.VDCM.IND.BCCH.2018.SA1.M"
   },
   {
     "key": "penetration_all",
@@ -299,7 +299,7 @@
     "growth": false,
     "scale": 1,
     "source_title": "Comercio Minorista | Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.POR.BCCH.2018.SA1.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_004?idSerie=F034.VDCM.POR.BCCH.2018.SA1.M"
   },
   {
     "key": "online_supermarkets",
@@ -312,7 +312,7 @@
     "growth": true,
     "scale": 1,
     "source_title": "Supermercados | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.IND.BCCH.2018.SA2.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_003?idSerie=F034.VDCM.IND.BCCH.2018.SA2.M"
   },
   {
     "key": "penetration_supermarkets",
@@ -325,7 +325,7 @@
     "growth": false,
     "scale": 1,
     "source_title": "Supermercados | Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.POR.BCCH.2018.SA2.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_004?idSerie=F034.VDCM.POR.BCCH.2018.SA2.M"
   },
   {
     "key": "online_department",
@@ -338,7 +338,7 @@
     "growth": true,
     "scale": 1,
     "source_title": "Grandes tiendas  | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.IND.BCCH.2018.SA3.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_003?idSerie=F034.VDCM.IND.BCCH.2018.SA3.M"
   },
   {
     "key": "penetration_department",
@@ -351,7 +351,7 @@
     "growth": false,
     "scale": 1,
     "source_title": "Grandes tiendas  | Penetración de ventas online mensual | BCCh| Mensual | Porcentaje",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.POR.BCCH.2018.SA3.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_004?idSerie=F034.VDCM.POR.BCCH.2018.SA3.M"
   },
   {
     "key": "online_specialists",
@@ -364,7 +364,7 @@
     "growth": true,
     "scale": 1,
     "source_title": "Vestuario, calzado y eq. Doméstico | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.IND.BCCH.2018.SA5.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_003?idSerie=F034.VDCM.IND.BCCH.2018.SA5.M"
   },
   {
     "key": "penetration_specialists",
@@ -377,7 +377,7 @@
     "growth": false,
     "scale": 1,
     "source_title": "Vestuario, calzado y eq. Doméstico| Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.POR.BCCH.2018.SA5.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_004?idSerie=F034.VDCM.POR.BCCH.2018.SA5.M"
   },
   {
     "key": "online_platforms",
@@ -390,7 +390,7 @@
     "growth": true,
     "scale": 1,
     "source_title": "Plataformas de venta online | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.IND.BCCH.2018.SA7.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_003?idSerie=F034.VDCM.IND.BCCH.2018.SA7.M"
   },
   {
     "key": "penetration_platforms",
@@ -403,7 +403,7 @@
     "growth": false,
     "scale": 1,
     "source_title": "Plataformas de venta online mensual | Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.POR.BCCH.2018.SA7.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_004?idSerie=F034.VDCM.POR.BCCH.2018.SA7.M"
   },
   {
     "key": "online_other",
@@ -416,7 +416,7 @@
     "growth": true,
     "scale": 1,
     "source_title": "Resto minoristas | Índice de ventas online del comercio minorista  | BCCh| Mensual | Índice",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.IND.BCCH.2018.SA8.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_003?idSerie=F034.VDCM.IND.BCCH.2018.SA8.M"
   },
   {
     "key": "penetration_other",
@@ -429,6 +429,6 @@
     "growth": false,
     "scale": 1,
     "source_title": "Resto minoristas | Penetración de ventas online mensual  | BCCh| Mensual | Porcentaje",
-    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_IND_SEC/MN_IND_SEC20/IS_COM1?idSerie=F034.VDCM.POR.BCCH.2018.SA8.M"
+    "source_url": "https://si3.bcentral.cl/siete/ES/Siete/Cuadro/CAP_ESTADIST_EXPERIM/MN_EXPERIM01/EST_EXP_004?idSerie=F034.VDCM.POR.BCCH.2018.SA8.M"
   }
 ]
