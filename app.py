@@ -15,6 +15,7 @@ h3{font-size:1.2rem!important;letter-spacing:-.02em}
 [data-testid="stCaptionContainer"] p{color:#526773!important;font-size:.86rem!important}
 [data-testid="stCaptionContainer"]{color:#526773!important} .readout{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;line-height:1.6;margin:0 0 3px}
 .chart-description{font-size:13px;color:#435b68;line-height:1.4;margin:0 0 2px}.readout b{font-size:14px;margin-left:4px}
+@media(min-width:701px){.dashboard-brand{transform:translateY(-8px)}}
 .st-key-dashboard_header [data-testid="stMarkdownContainer"] p{margin:0!important}
 .st-key-dashboard_header [role="radiogroup"]{min-height:32px;align-items:center;margin:0!important}
 .st-key-dashboard_header [data-testid="stRadio"]{margin:0!important;padding:0!important}
@@ -30,7 +31,7 @@ header=st.container(key='dashboard_header')
 with header:
     brand,navigation=st.columns([1.5,3.5],vertical_alignment='center',gap='medium')
 with brand:
-    st.markdown('<div style="display:flex;align-items:center;gap:9px;white-space:nowrap;height:32px;color:#014169;font-size:22px;font-weight:650;line-height:1"><svg role="img" aria-label="Chilean flag" width="30" height="20" viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="white"/><path d="M0 10h30v10H0z" fill="#D52B1E"/><path d="M0 0h10v10H0z" fill="#0039A6"/><path d="m5 1.5.8 2.5h2.6L6.3 5.5l.8 2.5L5 6.5 2.9 8l.8-2.5L1.6 4h2.6z" fill="white"/><rect width="30" height="20" fill="none" stroke="#d5dce0" stroke-width=".5"/></svg><span>Chile at a Glance</span></div>',unsafe_allow_html=True)
+    st.markdown('<div class="dashboard-brand" style="display:flex;align-items:center;gap:9px;white-space:nowrap;height:32px;color:#014169;font-size:22px;font-weight:650;line-height:1"><svg role="img" aria-label="Chilean flag" width="30" height="20" viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="white"/><path d="M0 10h30v10H0z" fill="#D52B1E"/><path d="M0 0h10v10H0z" fill="#0039A6"/><path d="m5 1.5.8 2.5h2.6L6.3 5.5l.8 2.5L5 6.5 2.9 8l.8-2.5L1.6 4h2.6z" fill="white"/><rect width="30" height="20" fill="none" stroke="#d5dce0" stroke-width=".5"/></svg><span>Chile at a Glance</span></div>',unsafe_allow_html=True)
 with navigation:
     view=st.radio('Explore',['Macroeconomic outlook','Retail outlook','Sources & methodology'],horizontal=True,label_visibility='collapsed')
 freq,controls=st.columns([1.5,3.5],vertical_alignment='bottom',gap='medium')
