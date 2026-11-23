@@ -200,7 +200,17 @@ def render(fig,unit,height=350,title=None):
     with button:
         if st.button('Expand / customize',key='expand_'+title,use_container_width=True): chart_workspace(fig,unit,title)
     st.markdown('<div class="chart-description">'+escape(chart_description(fig))+'</div>',unsafe_allow_html=True)
-    st.plotly_chart(fig,width='stretch',config={'displayModeBar':'hover','displaylogo':False,'modeBarButtonsToRemove':['select2d','lasso2d']})
+    # Keep full history for the editor, but let the overview autoscale its visible
+    # window when the user toggles a legend item (including initially hidden lines).
+    displayed=go.Figure(fig)
+    for trace in displayed.data:
+        indices=[i for i,x in enumerate(trace.x) if start<=pd.Timestamp(x)<=end]
+        original_x,original_y,original_custom=list(trace.x),list(trace.y),list(trace.customdata) if trace.customdata is not None else None
+        trace.x=[original_x[i] for i in indices];trace.y=[original_y[i] for i in indices]
+        if original_custom is not None:trace.customdata=[original_custom[i] for i in indices]
+        if not indices and 'forecast' in (trace.meta or {}):trace.showlegend=False
+    if displayed.layout.barmode!='stack':displayed.update_yaxes(range=None,autorange=True)
+    st.plotly_chart(displayed,width='stretch',config={'displayModeBar':'hover','displaylogo':False,'modeBarButtonsToRemove':['select2d','lasso2d']})
 
 def expectation(key):
     s=monthly(data,key);s=s[s.index<=end]
