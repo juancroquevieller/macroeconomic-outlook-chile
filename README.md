@@ -50,4 +50,13 @@ The two lines provide sensitivity to historical anchors, not a confidence interv
 
 `registry.json` records verified API IDs, units, original producers, source links and transformations. `data/raw` contains BCCh responses; `data/snapshot.json` is the rendering input. `verify_sources.py` independently discovers public BDE table links and compares one published observation for each series with the API, respecting displayed rounding and unit scaling.
 
-See [verification](verification/README.md), [source checks](verification/source_checks.json), and [design prompts](PROMPTS.md). Automated Streamlit checks exercise the populated views; the public deployment URL is recorded above. Browser layout review remains outstanding.
+See [verification](verification/README.md), [source checks](verification/source_checks.json), and [design prompts](PROMPTS.md). Automated Streamlit checks exercise the populated views; the public deployment URL is recorded above. Desktop and mobile layouts have also been reviewed directly from Chromium screenshots of the live deployment.
+
+
+## Visual review workflow
+
+The `Browser visual review` GitHub Action runs Chromium using Playwright. It renders the checked-out source, changes the history filter, navigates between macro and retail views, and captures desktop (1440px) and mobile (390px) images. It also repeats the capture against the public Streamlit URL, locating the application inside its hosting iframe.
+
+Screenshots are saved under `verification/browser/`, with live-site images in `verification/browser/live/`. An assistant can pull these image files and inspect them directly; the user does not need to supply screenshots. The workflow runs after app or browser-script edits and supports manual dispatch. Its source checks and live-host checks are distinct; review step outcomes and `checks.json`, not just overall workflow status.
+
+The visual pass shortened labels, distinguished online sales from online share, replaced repetitive metadata with source expanders, added current values above charts, separated labor-rate views, made the channel table fit, and arranged mobile metrics in two columns. The default five-year view emphasizes recent developments; longer history remains selectable.

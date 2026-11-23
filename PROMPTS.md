@@ -12,3 +12,5 @@ This is a concise record of the user instructions and implementation decisions, 
 8. Validation: independently compare published observations to API values, test missing-period and aggregation behavior, evaluate forecast errors against precisely matched targets and simple baselines, and preserve refresh evidence.
 
 Scope choices: indirect mining postponed; no fabricated channel CLP totals; online measures retain BCCh experimental-series definitions; FX anchors are historical sensitivity rather than fair-value predictions.
+
+9. User requested autonomous visual inspection and improvement without having to send screenshots. Implemented Chromium screenshot capture in GitHub Actions, then inspected source-version and live Streamlit desktop/mobile PNGs and revised the interface. Retained Streamlit after proving that direct visual review works.
