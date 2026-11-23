@@ -2,7 +2,7 @@
 
 [Open the live dashboard](https://macroeconomic-outlook-chile-2nx6g2qvukrcaexz7ycssk.streamlit.app/)
 
-A personal and professional dashboard of Chile's macroeconomic backdrop and goods retail activity, built with Streamlit and official statistics. Four views: Macroeconomic outlook, Retail outlook, an eight-indicator Assignment view, and Sources & methodology.
+A personal and professional dashboard of Chile's macroeconomic backdrop and goods retail activity, built with Streamlit and official statistics. Three views: Macroeconomic outlook, Retail outlook, and Sources & methodology.
 
 ## Deploy
 
@@ -35,7 +35,7 @@ The app distinguishes successful-refresh time, attempt time, retrieval time per 
 
 - **Monthly by default, with a Monthly / Quarterly switch.** Monthly activity uses total, mining and non-mining IMACEC; quarterly activity uses official GDP. Every panel containing a quarterly-only series stays quarterly for all its inputs. Monetary flows are summed; indices and monthly FX are averaged; CPI and TPM are period-end. Daily FX is averaged within each month first. Monthly labor observations are overlapping rolling quarters; quarterly mode selects March/June/September/December endpoints. No interpolation or monthly GDP fabrication.
 - **Official direct mining/non-mining GDP** in chained volume terms. Growth rates are not additive. Indirect mining estimates would require assumptions and input-output vintages that make an automated historical comparison less robust.
-- **EEE forecasts appear as separate dated callouts**, so a quarterly GDP forecast is never drawn as a monthly IMACEC forecast and a distant inflation forecast does not stretch the historical chart. Non-mining current-quarter growth provides the relevant forward-looking activity measure; the inflation forecast targets 11 months after the survey. Historical errors are separated by survey month, with matched-sample naive benchmarks. Selection emphasizes relevance, a clear horizon and usable history; it is not a claim of optimal predictive performance. Revised actuals are used, not real-time vintages.
+- **EEE forecasts retain explicit target dates** in callouts and diamond markers within the selected window. Quarterly GDP forecasts are never plotted as monthly IMACEC forecasts. Non-mining current-quarter growth provides the relevant forward-looking activity measure; the inflation forecast targets 11 months after the survey. Historical errors are separated by survey month, with matched-sample naive benchmarks. Selection emphasizes relevance, a clear horizon and usable history; it is not a claim of optimal predictive performance. Revised actuals are used, not real-time vintages.
 - **Inflation** is year-over-year CPI with a 3% target and TPM. **Labor** includes unemployment, participation and workforce size.
 - **Retail** distinguishes real INE retail activity, nominal IVE sales, household durable/non-durable goods consumption, and experimental online retail measures. These populations are not interchangeable.
 - Quarterly online share is sales weighted: sum(online index) / sum(online index / share). In-store growth is implied within that same series population. Rounded source shares introduce approximation. We do not multiply IVE sales by IVOCM shares to invent monetary channel totals. Independently based category indices cannot establish channel market size, company shares or marketplace GMV.
@@ -64,7 +64,7 @@ The visual pass shortened labels, distinguished online sales from online share, 
 
 ## Historical range controls
 
-Choose a preset (5 years, 10 years, Since 2018, All available), then edit **Start date** and **End date** independently. The source retrieval requests full available BCCh histories, replacing the previous 2009 cutoff. Selected series include FX from August 1982, GDP/IMACEC from 1996, and INE retail activity from 2005. Growth begins only when a prior-year observation exists.
+Choose **From** and **To** months or quarters independently at the top of the app. The source retrieval requests full available BCCh histories, replacing the previous 2009 cutoff. Selected series include FX from August 1982, GDP/IMACEC from 1996, and INE retail activity from 2005. Growth begins only when a prior-year observation exists.
 
 Dates filter observation period-ends. Source history outside the displayed range remains available for valid YoY calculations and fixed FX anchors. Short series retain their true coverage; no backfilling or splicing is used. Historical views use revised data, not historical publication vintages. EEE callouts use surveys available by the chosen end month and show their target period explicitly.
 
