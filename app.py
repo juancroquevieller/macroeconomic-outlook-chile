@@ -11,7 +11,7 @@ st.markdown('''<style>
 .block-container{padding:2.7rem 2rem 1rem;max-width:1900px}
 h1{font-size:1.9rem!important;font-weight:600!important;letter-spacing:-.025em;padding-bottom:.4rem!important}
 h3{font-size:1.2rem!important;letter-spacing:-.02em}
-[data-testid="stDialog"] [role="dialog"]{width:calc(100vw - 32px)!important;max-width:calc(100vw - 32px)!important;height:94vh;overflow:auto} [data-testid="stDialog"] [data-testid="stVerticalBlock"]{max-width:100%;min-width:0} [data-testid="stDialog"] [data-testid="stPlotlyChart"]{max-width:100%} [data-testid="stVerticalBlock"]{gap:.65rem} .readout{margin-top:4px}
+[data-testid="stDialog"] div:has(> [role="dialog"]){width:calc(100vw - 32px)!important;max-width:calc(100vw - 32px)!important} [data-testid="stDialog"] [role="dialog"]{width:100%!important;max-width:100%!important;height:94vh;overflow:auto} [data-testid="stDialog"] [data-testid="stVerticalBlock"]{max-width:100%;min-width:0} [data-testid="stDialog"] [data-testid="stPlotlyChart"]{max-width:100%} [data-testid="stVerticalBlock"]{gap:.65rem} .readout{margin-top:4px}
 [data-testid="stCaptionContainer"] p{color:#526773!important;font-size:.86rem!important}
 [data-testid="stCaptionContainer"]{color:#526773!important} .readout{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;line-height:1.6;margin:0 0 3px}
 .readout b{font-size:14px;margin-left:4px}
@@ -43,7 +43,7 @@ def stamp(v): return pd.Timestamp(v).tz_convert('America/Chicago').strftime('%d 
 def period(d,f): return str(d.to_period('Q')) if f=='Quarterly' else d.strftime('%b %Y')
 relevant=['imacec_total','cpi','fx','unemployment'] if view=='Macroeconomic outlook' else ['retail','retail_value','online_all']
 latest=max((observations(data,k,timeframe).index.max() for k in relevant),default=pd.NaT)
-heading,meta=st.columns([3,2])
+heading,meta=st.columns([3,2],vertical_alignment='bottom')
 with heading: st.title({'Macroeconomic outlook':'Macroeconomic - Chile','Retail outlook':'Retail - Chile','Sources & methodology':'Sources & methodology - Chile'}[view])
 with meta: st.caption('Refreshed '+stamp(data.get('last_success'))+'  |  Newest available: '+period(latest,timeframe)+' · '+timeframe.lower())
 if data.get('failures'): st.warning('Partial refresh: some series retain previous observations. See Sources & methodology.')
@@ -173,7 +173,7 @@ def dual(title,left_key,right_key,left_unit,right_unit):
         for i,(name,rs) in enumerate(refs(data).items()):
             if timeframe=='Quarterly':rs=rs.resample('QS').mean().where(rs.resample('QS').count()==3).dropna()
             fig.add_trace(go.Scatter(x=ends(rs.index,timeframe),y=rs,name=['Anchor 2010–14','Anchor 2015–Sep 2019'][i],visible='legendonly',line=dict(color=COLORS[i+2],dash='dot')))
-    fig.update_layout(yaxis2=dict(title=right_unit,overlaying='y',side='right',showgrid=False,zeroline=False))
+    fig.update_layout(yaxis2=dict(title=right_unit,overlaying='y',side='right',showgrid=False,zeroline=False,tickformat='.1f',nticks=5))
     render(fig,left_unit,title=title)
     for k in [left_key,right_key]:
         obs=values(k,growth=False)

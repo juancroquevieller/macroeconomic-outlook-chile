@@ -30,7 +30,8 @@ with sync_playwright() as p:
     ui.get_by_label('Left axis maximum',exact=True).fill('1');ui.get_by_label('Left axis maximum',exact=True).press('Enter');page.wait_for_timeout(600)
     assert ui.get_by_text('selected observations fall outside',exact=False).count()
     capture('expanded-activity','Expanded chart workspace')
-    (OUT/'dialog-dimensions.json').write_text(json.dumps(ui.locator('[role=dialog]').evaluate_all('(els)=>els.map(e=>({width:e.clientWidth,scroll:e.scrollWidth,html:e.outerHTML.slice(0,1000)}))')))
+    (OUT/'dialog-dimensions.json').write_text(json.dumps(ui.locator('[role=dialog]').evaluate_all('(els)=>els.map(e=>({width:e.clientWidth,scroll:e.scrollWidth,parentWidth:e.parentElement.clientWidth,html:e.parentElement.outerHTML.slice(0,500)}))')))
+    assert ui.locator('[role=dialog]').evaluate('(e)=>e.clientWidth <= e.parentElement.clientWidth'), 'Dialog overflows parent'
     ui.get_by_role('button',name='Close',exact=True).click();page.wait_for_timeout(600)
     click('Monthly');click('Retail outlook');capture('retail-monthly-top','Retail - Chile');capture('retail-monthly-bottom','Retail channels')
     click('Goods consumption');click('Nominal sales');capture('retail-consumption-nominal','Retail - Chile')
