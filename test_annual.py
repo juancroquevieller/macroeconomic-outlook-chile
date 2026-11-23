@@ -1,5 +1,6 @@
 import json
 import unittest
+from pathlib import Path
 import pandas as pd
 from model import observations, annual_reference
 
@@ -47,6 +48,30 @@ class AnnualTests(unittest.TestCase):
         self.assertTrue(pd.isna(r.loc['2021-01-01']))
         self.assertEqual(r.iloc[-1],100.)
 
+    def test_2025_shutdown_exception_uses_exactly_eleven_real_months(self):
+        s=pd.Series(range(100,112),dtype=float,index=pd.date_range('2025-01-01','2025-12-01',freq='MS'))
+        s.loc['2025-10-01']=float('nan')
+        result=annual_reference(s)
+        self.assertAlmostEqual(result.loc['2025-01-01'],s.mean())
+        self.assertEqual(result.attrs['month_counts'],{'2025':11})
+        self.assertTrue(pd.isna(s.loc['2025-10-01']))
+        # Do not depend on an explicit NaN row being present in the source.
+        self.assertAlmostEqual(annual_reference(s.dropna()).iloc[0],s.mean())
+        # A subsequently published October value restores twelve-month weighting.
+        s.loc['2025-10-01']=200.
+        restored=annual_reference(s)
+        self.assertAlmostEqual(restored.iloc[0],s.mean())
+        self.assertEqual(restored.attrs['month_counts'],{'2025':12})
+
+    def test_shutdown_exception_rejects_other_missing_months(self):
+        base=pd.Series(100.,index=pd.date_range('2025-01-01','2025-12-01',freq='MS'))
+        for missing in [['2025-09-01'],['2025-10-01','2025-11-01']]:
+            self.assertTrue(annual_reference(base.drop(pd.to_datetime(missing))).empty)
+        other_year=pd.Series(100.,index=pd.date_range('2024-01-01','2024-12-01',freq='MS'))
+        self.assertTrue(annual_reference(other_year.drop(pd.Timestamp('2024-10-01'))).empty)
+        current=pd.Series(100.,index=pd.date_range(f'{pd.Timestamp.now().year}-01-01',periods=12,freq='MS'))
+        self.assertTrue(annual_reference(current).empty)
+
     def test_annual_dashboard_and_independent_workspace(self):
         from streamlit.testing.v1 import AppTest
         a=AppTest.from_file('app.py',default_timeout=60).run()
@@ -58,6 +83,11 @@ class AnnualTests(unittest.TestCase):
         self.assertEqual(specs[0]['data'][0]['name'],'Total GDP')
         self.assertTrue(all(s['layout']['xaxis']['tickformat']=='%Y' for s in specs))
         self.assertEqual(specs[0]['data'][0]['customdata'][-1],'2025')
+        source=json.loads(Path('data/snapshot.json').read_text(encoding='utf-8'))
+        coverage=12 if any(d=='2025-10-01' for d,v in source['series']['us_cpi']['rows']) else 11
+        for trace in specs[2]['data'][2:]:
+            self.assertEqual(trace['meta']['months_by_year']['2025'],coverage)
+            self.assertEqual('11-month average' in trace['customdata'][-1],coverage==11)
         a.radio[0].set_value('Retail outlook').run()
         self.assertFalse(a.exception)
         self.assertEqual(next(r for r in a.radio if r.label=='Online / in-store measure').value,'Sales growth')

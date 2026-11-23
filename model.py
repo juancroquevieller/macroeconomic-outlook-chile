@@ -86,11 +86,27 @@ def annual(snapshot,key,growth=None):
     return s.dropna()
 
 def annual_reference(s):
+    """Mean monthly FX references, with a documented 2025 shutdown exception.
+
+    BLS computes its 2025 annual CPI average from 11 published months.
+    Apply that available-month principle to our derived FX references only
+    when October 2025 is the sole missing month. Never fill monthly inputs.
+    All other years still require 12 observations; current years stay absent.
+    """
     if s.empty:return s
-    result=s.resample('YS').mean().where(s.resample('YS').count()==12)
+    counts=s.resample('YS').count()
+    means=s.resample('YS').mean()
+    result=means.where(counts==12)
+    expected=pd.date_range('2025-01-01','2025-12-01',freq='MS')
+    missing=set(expected)-set(s.dropna().index)
+    shutdown_year=pd.Timestamp('2025-01-01')
+    if missing=={pd.Timestamp('2025-10-01')} and counts.get(shutdown_year)==11:
+        result.loc[shutdown_year]=means.loc[shutdown_year]
     result=result[result.index.year<pd.Timestamp.now().year]
     if not result.notna().any():return result.iloc[:0]
-    return result.loc[result.first_valid_index():result.last_valid_index()]
+    result=result.loc[result.first_valid_index():result.last_valid_index()]
+    result.attrs['month_counts']={str(d.year):int(counts[d]) for d in result.dropna().index}
+    return result
 
 def refs(snapshot):
     def rows(key): return [(d.strftime('%Y-%m-%d'),float(v)) for d,v in monthly(snapshot,key).items()]

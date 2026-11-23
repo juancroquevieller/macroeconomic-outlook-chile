@@ -118,7 +118,11 @@ def coverage_note(fig,f):
     anchors=[t for t in fig.data if 'anchor' in (t.meta or {})]
     if anchors:
         dates=[pd.Timestamp(x) for t in anchors for x in t.x]
-        if dates:st.caption('FX reference coverage: '+period(min(dates),f)+' to '+period(max(dates),f)+'. Limited by common CPI data; not forecasts.')
+        if dates:
+            note='FX reference coverage: '+period(min(dates),f)+' to '+period(max(dates),f)+'. Limited by common CPI data; not forecasts.'
+            if f=='Annual' and any((t.meta or {}).get('months_by_year',{}).get('2025')==11 for t in anchors):
+                note+=' 2025 anchors: 11-month average (October missing).'
+            st.caption(note)
 
 def zero_default(fig,axis='y'):
     keys=[(t.meta or {}).get('key','') for t in fig.data if (t.yaxis or 'y')==axis]
@@ -131,7 +135,8 @@ def style(fig,unit,height=350):
     fig.update_xaxes(dtick='M'+str(12*max(1,(end.year-start.year+6)//7)) if f=='Annual' else None,tick0=f'{start.year}-12-31' if f=='Annual' else None)
     for trace in fig.data:
         if trace.customdata is None:
-            trace.customdata=[period(pd.Timestamp(x),f) for x in trace.x]
+            counts=(trace.meta or {}).get('months_by_year',{})
+            trace.customdata=[period(pd.Timestamp(x),f)+(' | 11-month average (Oct missing)' if f=='Annual' and counts.get(str(pd.Timestamp(x).year))==11 else '') for x in trace.x]
             trace.hovertemplate='%{customdata}: %{y:,.2f}<extra>%{fullData.name}</extra>'
     fig.update_yaxes(gridcolor='#e6eded',zeroline=True,zerolinecolor='#b3c4c7')
     return fig
@@ -161,6 +166,7 @@ def chart_workspace(fig,unit,title):
             if chart_frequency=='Quarterly':obs=quarterly_reference(obs)
             elif chart_frequency=='Annual':obs=annual_reference(obs)
             trace.x=ends(obs.index,chart_frequency);trace.y=obs;trace.customdata=None
+            trace.meta={**meta,'months_by_year':obs.attrs.get('month_counts',{})}
     fig.update_layout(meta={'frequency':chart_frequency})
     fig=style(fig,unit,560)
     st.markdown('<div class="chart-description">'+'<b>'+escape(chart_source(fig))+'</b> · '+escape(chart_description(fig))+'</div>',unsafe_allow_html=True)
@@ -199,7 +205,7 @@ def chart_workspace(fig,unit,title):
     if clipped: st.warning(f'{clipped} selected observations fall outside the custom axes. They remain in the data download; reset to Automatic to see them.')
     edited.update_layout(height=560)
     st.plotly_chart(edited,width='stretch',config={'displayModeBar':True,'displaylogo':False,'scrollZoom':True})
-    rows=[{'series':t.name,'period':x,'value':y} for t in edited.data if t.name in chosen for x,y in zip(t.x,t.y) if fp.start_time<=pd.Timestamp(x)<=tp.end_time]
+    rows=[{'series':t.name,'period':x,'value':y,'reference_months':(t.meta or {}).get('months_by_year',{}).get(str(pd.Timestamp(x).year))} for t in edited.data if t.name in chosen for x,y in zip(t.x,t.y) if fp.start_time<=pd.Timestamp(x)<=tp.end_time]
     st.download_button('Download selected data',pd.DataFrame(rows).to_csv(index=False),title.lower().replace(' ','-')+'.csv','text/csv')
     st.caption('CSV includes the selected traces and periods. No observations are removed when axes are narrowed. Historical values use the latest revised data.')
 
@@ -299,7 +305,7 @@ def dual(title,left_key,right_key,left_unit,right_unit):
         for i,(name,rs) in enumerate(refs(data).items()):
             if timeframe=='Quarterly':rs=quarterly_reference(rs)
             elif timeframe=='Annual':rs=annual_reference(rs)
-            fig.add_trace(go.Scatter(x=ends(rs.index,timeframe),y=rs,name=['Anchor 2010–14','Anchor 2015–Sep 2019'][i],meta={'anchor':i},visible=True,line=dict(color=COLORS[i+2],dash='dot')))
+            fig.add_trace(go.Scatter(x=ends(rs.index,timeframe),y=rs,name=['Anchor 2010–14','Anchor 2015–Sep 2019'][i],meta={'anchor':i,'months_by_year':rs.attrs.get('month_counts',{})},visible=True,line=dict(color=COLORS[i+2],dash='dot')))
     fig.update_layout(yaxis2=dict(title=right_unit,overlaying='y',side='right',showgrid=False,zeroline=False,tickformat='.1f',nticks=5))
     render(fig,left_unit,title=title)
     coverage_note(fig,timeframe)
@@ -325,7 +331,8 @@ if view=='Macroeconomic outlook':
         with source_panels['Exchange rates']:
             st.caption('Higher = weaker peso. Dotted historical anchors are available through the legend or Expand; they are not forecasts.')
         with source_panels['Exchange rates']:
-            st.write('Two bilateral price-adjusted reference periods: January 2010–December 2014 and January 2015–September 2019, excluding the social unrest from October 2019. Each uses median(S × US CPI / Chile CPI) in its anchor period, translated with each historical month’s relative CPI. The lines are retrospective comparisons, including dates before the reference period ended; they were not forecasts available at those dates. These are sensitivity references, not fair-value estimates or confidence bounds. They differ from the multilateral BCCh real FX index and end at the latest common CPI month. Quarterly references require all three monthly inputs; Annual requires all twelve. The missing US CPI observation in October 2025 prevents a complete 2025 annual anchor. Annual FX values average monthly means; they may differ slightly from daily-weighted published annual averages.')
+            st.caption('[BLS shutdown explanation and 2025 annual-average method (section 10)](https://www.bls.gov/cpi/additional-resources/2025-federal-government-shutdown-impact-cpi-faq.htm)')
+            st.write('Two bilateral price-adjusted reference periods: January 2010–December 2014 and January 2015–September 2019, excluding the social unrest from October 2019. Each uses median(S × US CPI / Chile CPI) in its anchor period, translated with each historical month’s relative CPI. The lines are retrospective comparisons, including dates before the reference period ended; they were not forecasts available at those dates. These are sensitivity references, not fair-value estimates or confidence bounds. They differ from the multilateral BCCh real FX index and end at the latest common CPI month. Quarterly references require all three monthly inputs; Annual normally requires twelve. The October 2025 US CPI was not published because the federal shutdown prevented data collection. For 2025 only, if October is the sole gap, the annual anchors average the eleven available monthly references. BLS likewise uses eleven published months for its 2025 annual CPI average; applying that principle to FX references is our calculation, not a BLS FX estimate. The chart and CSV identify eleven-month coverage. Observed annual FX and real FX still average twelve months, so their month coverage differs from the 2025 anchors. No monthly CPI is estimated or filled. If an official October observation is later published, the automatic refresh restores the usual twelve-month calculation. Annual FX values average monthly means; they may differ slightly from daily-weighted published annual averages.')
     with b,st.container(border=True):
         dual('Employment','unemployment','participation','Unemployment (% workforce)','Participation (% age 15+)')
         w=values('workforce',growth=False)
